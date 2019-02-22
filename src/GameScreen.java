@@ -11,8 +11,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.*;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -36,7 +38,7 @@ Dimension myBufferedDimension;
   dungeonColumns = columns;
    dungeonRows = rows;
   
-       currentTiles = new Tile[dungeonColumns][dungeonRows];
+   /*    currentTiles = new Tile[dungeonColumns][dungeonRows];
     for(int i = 0; i < dungeonColumns; i++)
     {
       for(int j = 0; j < dungeonRows; j++)
@@ -44,11 +46,11 @@ Dimension myBufferedDimension;
         currentTiles[i][j] = new Tile(); 
       }
     }
-   
+   */
   }
   
   
-  public GameScreen()
+  public GameScreen() throws IOException
   {    
     //dungeonColumns = 4;
     //dungeonRows = 4;   
@@ -63,13 +65,14 @@ Dimension myBufferedDimension;
     initScreen();
   }
   
-  private void initScreen() 
+  private void initScreen() throws IOException
   { 
     myBufferedDimension = new Dimension(640, 320);
     myStatus = new StatusScreen();
     addKeyListener(new TAdapter());
     addMouseListener(new OtherAdapter());
     engine = new GameEngine(this);
+    currentTiles = engine.myTiles;
     setBackground(Color.BLACK);
     this.setFocusable(true);
     //this.setSize(1,1);
@@ -116,7 +119,7 @@ Dimension myBufferedDimension;
       //  {
         for (int layer = 0; layer < 4; layer++)
         {
-          if(currentTiles[i][j].imageName[layer] != "Resources/empty.png")
+          if(currentTiles[i][j].imageName[layer] != "/empty.png")
         {
        // g2d.drawImage(currentTiles[i][j].image[layer],((this.getSize().width / dungeonColumns) * i), (this.getSize().height / dungeonRows) * j  ,this.getSize().width / dungeonColumns ,this.getSize().height / dungeonRows, null);
          g.drawImage(currentTiles[i][j].image[layer],((myWidth / dungeonColumns) * i), (myHeight / dungeonRows) * j  ,myWidth / dungeonColumns , myHeight / dungeonRows, null);
@@ -147,7 +150,7 @@ Dimension myBufferedDimension;
   }
   
     
-  public class Tile
+  /*public class Tile
   {
     String[] imageName;
     Image[] image;
@@ -156,8 +159,8 @@ Dimension myBufferedDimension;
     {
       imageName = new String[4];
       image = new Image[4];
-      loadImage("Resources/dngn/floor/Crystal_floor0.png", 0);
-      loadImage("Resources/empty.png", 1);
+      loadImage("/dngn/floor/Crystal_floor0.png", 0);
+      loadImage("/empty.png", 1);
 
     }
 
@@ -167,13 +170,29 @@ Dimension myBufferedDimension;
       if(myImageName != null)
       {
       imageName[priority] = myImageName;
-      ImageIcon ii = new ImageIcon(myImageName);
-      image[priority] = ii.getImage();
+      //ImageIcon ii = new ImageIcon(myImageName);  //this is my old semi trusty way of reading images
+      //image[priority] = ii.getImage();   //this is my old semi trusty way of reading images
+      
+      
+      
+      		try {
+			image[priority] = ImageIO.read(
+				getClass().getResourceAsStream(myImageName) //this is the new way
+			);
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+      
+      
+      
+      
       hasChanged = true;
       }
     }  
   }
-
+*/
 
 
 

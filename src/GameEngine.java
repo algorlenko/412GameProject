@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.awt.Image;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class GameEngine{
   
   public GameScreen thisScreen;
@@ -15,7 +19,9 @@ public class GameEngine{
   public int dungeonColumns;
   public int dungeonRows;
   
-  public GameEngine(GameScreen myScreen)
+  public Image emptyImage;
+  
+  public GameEngine(GameScreen myScreen) throws IOException
   {
     dungeonColumns = 10;
     dungeonRows = 10;
@@ -23,12 +29,13 @@ public class GameEngine{
     thisScreen.changeSize(dungeonColumns, dungeonRows);
     myTiles = new Tile[dungeonColumns][dungeonRows];
     thisScreen = myScreen;
+    //emptyImage = generateImage
     for(int i = 0; i < dungeonColumns; i++)
     {
       for(int j = 0; j < dungeonRows; j++)
       {
-        myTiles[i][j] = new Tile(i, j); 
-        myTiles[i][j].syncTileWithScreen(); 
+        myTiles[i][j] = new Tile(i, j);
+        //myTiles[i][j].syncTileWithScreen(); 
       }
       
     }
@@ -41,7 +48,7 @@ public class GameEngine{
   
   
   
-  public class Tile
+  /*public class Tile
   {
     int x;
     int y;
@@ -53,11 +60,13 @@ public class GameEngine{
       imageName = new String[4];
       myContents = new MapObject[4];
       
-      imageName[0] = "Resources/dngn/floor/Crystal_floor0.png";
-      imageName[1] = "Resources/empty.png";
+      imageName[0] = "/dngn/floor/Crystal_floor0.png";
+      imageName[1] = "/empty.png";
       x = myX;
       y = myY;
     }
+ 
+    
     
     public void syncTileWithScreen()
     {
@@ -70,7 +79,7 @@ public class GameEngine{
     }
     
     
-  }
+  } */
   
   
   public class MapObject
@@ -78,13 +87,14 @@ public class GameEngine{
         String unitImage;
     int x;
     int y;
-    
+    Image image;
    public void loadIntoTile(int myX, int myY)
     {
       
       myTiles[myX][myY].imageName[1] = unitImage;
       myTiles[myX][myY].myContents[1] = this;
-      myTiles[myX][myY].syncTileWithScreen();
+      myTiles[myX][myY].image[1] = image;
+  //    myTiles[myX][myY].syncTileWithScreen();
     }
     
     
@@ -95,9 +105,10 @@ public class GameEngine{
   public class Unit extends MapObject
   {
 
-    public Unit(int myX, int myY)
+    public Unit(int myX, int myY) throws IOException
     {
-      unitImage = "Resources/player/base/elf_m.png"; 
+      unitImage = "/elf_m.png";
+      image = generateImage(unitImage);
       x = myX;
       y = myY;
       loadIntoTile(x, y);
@@ -127,10 +138,10 @@ public class GameEngine{
           x = futureX;
           y = futureY;
           myTiles[pastX][pastY].myContents[1] = null;
-          myTiles[pastX][pastY].imageName[1] = "Resources/empty.png";
-          myTiles[pastX][pastY].syncTileWithScreen();
+          myTiles[pastX][pastY].imageName[1] = "/empty.png";
+         // myTiles[pastX][pastY].syncTileWithScreen();
           loadIntoTile(x, y);
-          thisScreen.myStatus.message = "you have moved into coordinate" + x + " " + y; 
+          thisScreen.myStatus.message = "you have moved into coordinate" + x + " " + y + "and your current error is: " + myTiles[5][5].myError; 
         }
       }
     }    
@@ -142,9 +153,10 @@ public class GameEngine{
     //int x;
     //int y;
     //String unitImage;
-    public Wall(int myX, int myY)
+    public Wall(int myX, int myY) throws IOException
     {
-      unitImage = "Resources/dngn/wall/crystal_wall00.png"; 
+      unitImage = "/dngn/wall/crystal_wall00.png"; 
+      image = generateImage(unitImage);
       x = myX;
       y = myY;
       loadIntoTile(x, y);
@@ -218,5 +230,20 @@ public class GameEngine{
     if (key == KeyEvent.VK_DOWN) {
       
     }   
-  }  
+  }
+  
+  
+  
+          public Image generateImage(String myImageName) throws IOException {
+            Image myResult = null;
+      try{
+			myResult = ImageIO.read( getClass().getResourceAsStream(myImageName) ); //this is the new way
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+      //hasChanged = true;
+      return myResult;
+        }
+  
 }

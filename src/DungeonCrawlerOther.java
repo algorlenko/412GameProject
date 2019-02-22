@@ -1,3 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Sasha
+ */
+
 
 import java.util.*;
 import java.awt.*;
@@ -12,11 +23,19 @@ public class DungeonCrawlerOther extends JFrame {
         initUI();
     }
     
-    private void initUI() {    
+    private void initUI() {   
+        try
+        {
       GameScreen myScreen = new GameScreen();
-      setSize(640, 340);
+            setSize(640, 340);
       //StatusScreen myStatus = new StatusScreen();
         add(myScreen);
+            }
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+
+
         
       //  add(myStatus);
         //setSize(400, 300);
