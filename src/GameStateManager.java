@@ -11,9 +11,9 @@ public class GameStateManager {
     public GameScreen myScreen;
     private int currentState;
     //public Design.Hero hero;
-    public static final int MENUSTATE = 1;
+    public static final int MENUSTATE = 2;
     public static final int ADVENTURESTATE = 0; // these numbers will be flipped later
- //   public static final int INVENTORYSTATE = 2;
+    public static final int INVENTORYSTATE = 1;
  //   public static final int SPELLBOOKTATE = 3;
  //   public static final int NEWCHARACTERSTATE = 4;
 
@@ -24,7 +24,8 @@ public class GameStateManager {
         myScreen = passedScreen;
         currentState = ADVENTURESTATE;
         //currentState = ADVENTURESTATE;
-        gameStates.add(new GameEngine(myScreen));
+        gameStates.add(new GameEngine(myScreen, this) );
+        gameStates.add(new InventoryState(myScreen, this) );
         setState(ADVENTURESTATE);
         //gameStates.add(new AdventureState(this));
         //gameStates.add(new InventoryState(this));
