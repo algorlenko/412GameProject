@@ -3,23 +3,12 @@ import java.awt.Image;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-  public class MapObject
-  {
-        String unitImage;
-    int x;
-    int y;
+public class InventoryItem {
+
+    String imageName;
     Image image;
-   public void loadIntoTile(int myX, int myY, Tile[][] myTiles)
-    {
-      
-      myTiles[myX][myY].imageName[1] = unitImage;
-      myTiles[myX][myY].myContents[1] = this;
-      myTiles[myX][myY].image[1] = image;
-  //    myTiles[myX][myY].syncTileWithScreen();
-    }
-    
-   
-       public Image generateImage(String myImageName) throws IOException {
+    String itemName; 
+    public Image generateImage(String myImageName) throws IOException {
             Image myResult = null;
       
             try
@@ -35,4 +24,4 @@ import javax.imageio.ImageIO;
         }
     
     
-  }
+}

@@ -43,16 +43,7 @@ Dimension myBufferedDimension;
   
   public GameScreen() throws IOException
   {    
-    //dungeonColumns = 4;
-    //dungeonRows = 4;   
-   /* currentTiles = new Tile[dungeonColumns][dungeonRows];
-    for(int i = 0; i < dungeonColumns; i++)
-    {
-      for(int j = 0; j < dungeonRows; j++)
-      {
-        currentTiles[i][j] = new Tile(); 
-      }
-    }*/
+    
     initScreen();
   }
   
@@ -86,14 +77,15 @@ Dimension myBufferedDimension;
 
         // Creates the buffered image.
 
-
+myGSM.draw();
     
     //drawTiles(gbi);
     //drawStatus(gbi);
     g2d.drawImage(buffImage, 0, 0, this.getSize().width, this.getSize().height, null);
     //buffImg = new BufferedImage(myBufferedDimension.width, myBufferedDimension.height, BufferedImage.TYPE_INT_RGB);
-    buffImage = new BufferedImage(myBufferedDimension.width, myBufferedDimension.height, BufferedImage.TYPE_INT_RGB);
-    gbi = buffImage.createGraphics();
+    
+    gbi.clearRect(0, 0, myBufferedDimension.width, myBufferedDimension.height);
+   // gbi = buffImage.createGraphics();
   } 
   
   @Override
@@ -105,52 +97,7 @@ Dimension myBufferedDimension;
   
  
   
-    
-  /*public class Tile
-  {
-    String[] imageName;
-    Image[] image;
-    boolean hasChanged;
-    public Tile()
-    {
-      imageName = new String[4];
-      image = new Image[4];
-      loadImage("/dngn/floor/Crystal_floor0.png", 0);
-      loadImage("/empty.png", 1);
-
-    }
-
-     
-    
-    public void loadImage(String myImageName, int priority) {
-      if(myImageName != null)
-      {
-      imageName[priority] = myImageName;
-      //ImageIcon ii = new ImageIcon(myImageName);  //this is my old semi trusty way of reading images
-      //image[priority] = ii.getImage();   //this is my old semi trusty way of reading images
-      
-      
-      
-      		try {
-			image[priority] = ImageIO.read(
-				getClass().getResourceAsStream(myImageName) //this is the new way
-			);
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-      
-      
-      
-      
-      hasChanged = true;
-      }
-    }  
-  }
-*/
-
-
+ 
 
    
 

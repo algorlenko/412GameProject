@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 public class GameEngine extends GameState{
   
   public GameScreen thisScreen;
-  public Unit myHero;
+  public Hero myHero;
   Tile[][] myTiles;
   
   public int dungeonColumns;
@@ -46,12 +46,10 @@ public class GameEngine extends GameState{
       }
       
     }
-    myHero = new Unit(0, 0);
-    Wall myWall = new Wall(2, 2);
-    Wall myOtherWall = new Wall(3,3);
+    myHero = new Hero(0, 0, myTiles);
+    Wall myWall = new Wall(2, 2, myTiles);
+    Wall myOtherWall = new Wall(3,3, myTiles);
     myStatus = new StatusScreen();
-    draw();
-    //thisScreen.currentTiles[0][0].loadImage(myHero.unitImage, 1);
   }
   
   
@@ -59,105 +57,44 @@ public class GameEngine extends GameState{
   
 
   
-  public class MapObject
-  {
-        String unitImage;
-    int x;
-    int y;
-    Image image;
-   public void loadIntoTile(int myX, int myY)
-    {
-      
-      myTiles[myX][myY].imageName[1] = unitImage;
-      myTiles[myX][myY].myContents[1] = this;
-      myTiles[myX][myY].image[1] = image;
-    }
-    
-    
-  }
+ 
   
   
+ 
   
-  public class Unit extends MapObject
-  {
 
-    public Unit(int myX, int myY) throws IOException
-    {
-      unitImage = "/elf_m.png";
-      image = generateImage(unitImage);
-      x = myX;
-      y = myY;
-      loadIntoTile(x, y);
-    }
-    
-    
-    public void move(int dx, int dy)
-    {   
-      int futureX = x + dx;
-      int futureY = y + dy;
-      int pastX = x;
-      int pastY = y;
-      
-      
-      if(! (futureX < 0 || futureX > dungeonColumns - 1 || futureY < 0 || futureY > dungeonRows - 1) )
-      {
-        if(!(myTiles[futureX][futureY].myContents[1] instanceof Wall))
-        {
-          x = futureX;
-          y = futureY;
-          myTiles[pastX][pastY].myContents[1] = null;
-          myTiles[pastX][pastY].imageName[1] = "/empty.png";
-        
-          loadIntoTile(x, y);
-          myStatus.message = "you have moved into coordinate" + x + " " + y + "and your current error is: " + myTiles[5][5].myError; 
-        }
-      }
-    }    
-  }
-  
-  
-  public class Wall extends MapObject
-  {
 
-    public Wall(int myX, int myY) throws IOException
-    {
-      unitImage = "/dngn/wall/crystal_wall00.png"; 
-      image = generateImage(unitImage);
-      x = myX;
-      y = myY;
-      loadIntoTile(x, y);
-    }
-    
-
-    
-    
-  }
   
   
  @Override
   public void keyPressed(KeyEvent e) {   
     int key = e.getKeyCode();
 
-    if (key == KeyEvent.VK_SPACE) {
-      myGSM.setState(1);
+    if (key == KeyEvent.VK_I) {
+      myGSM.setState(1); // Goes to Inventory Screen
     }   
     if (key == KeyEvent.VK_LEFT) {
-      myHero.move(-1, 0);
-      draw();
+      myHero.move(-1, 0, myTiles, dungeonColumns, dungeonRows, myStatus);
+     
     }    
     if (key == KeyEvent.VK_RIGHT) {
-      myHero.move(1, 0);
-    draw();
+      myHero.move(1, 0, myTiles, dungeonColumns, dungeonRows, myStatus);
+    
     }   
     if (key == KeyEvent.VK_UP) {
-      myHero.move(0, -1);
-    draw();
+      myHero.move(0, -1, myTiles, dungeonColumns, dungeonRows, myStatus);
+    
     }    
     if (key == KeyEvent.VK_DOWN) {
-      myHero.move(0, 1);
-    draw();
+      myHero.move(0, 1, myTiles, dungeonColumns, dungeonRows, myStatus);
+    
     }   
 
+       if (key == KeyEvent.VK_ESCAPE) {
+      myGSM.setState(2); // Goes to Main Menu
+    
+    }  
+    
     
   }
   
@@ -168,9 +105,8 @@ public class GameEngine extends GameState{
       Point selectedTile = calculateTile(e.getX(), e.getY());
     if(selectedTile.x < dungeonColumns && selectedTile.x >= 0 && selectedTile.y < dungeonRows && selectedTile.y >= 0)
     {
-    myHero.move(selectedTile.x - myHero.x, selectedTile.y - myHero.y);
+    myHero.move(selectedTile.x - myHero.x, selectedTile.y - myHero.y, myTiles, dungeonColumns, dungeonRows, myStatus);
     }
-    draw();
   }
   
     public Point calculateTile(int x, int y)

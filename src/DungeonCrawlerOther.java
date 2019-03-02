@@ -28,40 +28,11 @@ public class DungeonCrawlerOther extends JFrame {
         {
       GameScreen myScreen = new GameScreen();
             setSize(640, 340);
-      //StatusScreen myStatus = new StatusScreen();
         add(myScreen);
             }
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-
-
-        
-      //  add(myStatus);
-        //setSize(400, 300);
-        
-     
-
-//RelativeLayout rl = new RelativeLayout(RelativeLayout.Y_AXIS);
-//myStatus.setPreferredSize(new Dimension(25,25) );
-
-
-// JPanel container = new JPanel(rl);
-
-
-
-
-//myScreen.setPreferredSize(new Dimension(400, 400));
-
-//myStatus.setPreferredSize(new Dimension(400, 400));
-
-//container.add(myStatus, new Float(1));
-//container.add(myScreen, new Float(5));
-
-
-        
-//add(container);
-//          pack();
 
         
         setResizable(true);

@@ -19,7 +19,7 @@ public class Tile {
     int y;
     String[] imageName;
     Image[] image;
-    GameEngine.MapObject[] myContents;
+    MapObject[] myContents;
     boolean hasChanged;
     
     public Tile(int myX, int myY) throws IOException
@@ -27,7 +27,7 @@ public class Tile {
         
       imageName = new String[4];
       image = new Image[4];
-      myContents = new GameEngine.MapObject[4];
+      myContents = new MapObject[4];
       
       imageName[0] = "/dngn/floor/crystal_floor0.png";
       imageName[1] = "/empty.png";
