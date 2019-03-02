@@ -11,7 +11,7 @@ public class GameStateManager {
     public GameScreen myScreen;
     private int currentState;
     //public Design.Hero hero;
-    public static final int MENUSTATE = 2;
+    public static final int MAINMENUSTATE = 2;
     public static final int ADVENTURESTATE = 0; // these numbers will be flipped later
     public static final int INVENTORYSTATE = 1;
  //   public static final int SPELLBOOKTATE = 3;
@@ -22,11 +22,13 @@ public class GameStateManager {
        // hero = new Design.Hero("/player/base/demonspawn_black_m.png");
         gameStates = new ArrayList<GameState>();
         myScreen = passedScreen;
-        currentState = ADVENTURESTATE;
+       // currentState = ADVENTURESTATE;
         //currentState = ADVENTURESTATE;
         gameStates.add(new GameEngine(myScreen, this) );
         gameStates.add(new InventoryState(myScreen, this) );
+        gameStates.add(new MainMenuState(myScreen, this) );
         setState(ADVENTURESTATE);
+        
         //gameStates.add(new AdventureState(this));
         //gameStates.add(new InventoryState(this));
         //gameStates.add(new SpellBookState(this));
@@ -36,6 +38,7 @@ public class GameStateManager {
 
     public void setState(int state) {
         currentState = state;
+        gameStates.get(currentState).draw(); //there is no reason this should not work
         //gameStates.get(currentState).init();
         myScreen.repaint();
     }
@@ -45,12 +48,13 @@ public class GameStateManager {
       //  gameStates.get(currentState).update();
     }
 
-    public void draw(Graphics2D g) {
-      //  gameStates.get(currentState).draw(g);
+    public void draw() {
+      gameStates.get(currentState).draw();
     }
 
     public void keyPressed(KeyEvent e) {
         gameStates.get(currentState).keyPressed(e);
+        gameStates.get(currentState).draw();
           myScreen.repaint();
     }
 
@@ -60,6 +64,7 @@ public class GameStateManager {
 
     public void mousePressed(MouseEvent e){
         gameStates.get(currentState).mousePressed(e);
+        gameStates.get(currentState).draw();
         myScreen.repaint();
     }
     
