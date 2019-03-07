@@ -7,11 +7,12 @@ public class Equipment extends InventoryItem{
 
 
     int PowerLevel;
-    public Equipment(String myimageName, int myPowerLevel) throws IOException
+    public Equipment(String myimageName, int myPowerLevel, String myDescription) throws IOException
             {
                 imageName = myimageName;
                 image = generateImage(imageName);
                 PowerLevel = myPowerLevel;
+                itemDescription = myDescription;
             }
     
 }

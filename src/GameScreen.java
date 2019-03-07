@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.*;
 import java.io.IOException;
 import java.util.*;
@@ -53,6 +54,7 @@ Dimension myBufferedDimension;
     myStatus = new StatusScreen();
     addKeyListener(new TAdapter());
     addMouseListener(new OtherAdapter());
+    addMouseMotionListener(new MotionAdapter());
     //engine = new GameEngine(this);
     //currentTiles = engine.myTiles;
     setBackground(Color.BLACK);
@@ -107,7 +109,7 @@ myGSM.draw();
     
     @Override
     public void keyReleased(KeyEvent e) {
-      engine.keyReleased(e);
+      myGSM.keyReleased(e);
     }
     
     @Override
@@ -137,7 +139,34 @@ myGSM.draw();
      myGSM.mousePressed(e); 
     }
     
+       @Override
+    public void mouseReleased(MouseEvent e)
+    {
+     myGSM.mouseReleased(e); 
+    }
+    
+       @Override
+    public void mouseClicked(MouseEvent e)
+    {
+     myGSM.mouseClicked(e); 
+    }
+    
   }
   
+    
+        private class MotionAdapter extends MouseMotionAdapter
+  {
+    
+    
+   @Override
+    public void mouseMoved(MouseEvent e)
+    {
+     myGSM.mouseMoved(e); 
+    }
+    
+  }
+    
+    
+    
   
 }

@@ -109,6 +109,22 @@ public class GameEngine extends GameState{
     }
   }
   
+      public void mouseMoved(MouseEvent e)
+    {
+       
+    }
+  
+      
+            public void mouseClicked(MouseEvent e)
+    {
+       
+    }
+      
+            public void mouseReleased(MouseEvent e)
+    {
+       
+    }
+  
     public Point calculateTile(int x, int y)
   {
     Point myReturn = new Point();
@@ -119,7 +135,7 @@ public class GameEngine extends GameState{
   
   
   
-  public static void keyReleased(KeyEvent e) {
+  public void keyReleased(KeyEvent e) {
     
     int key = e.getKeyCode();
     

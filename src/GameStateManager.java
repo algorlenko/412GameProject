@@ -58,12 +58,34 @@ public class GameStateManager {
           myScreen.repaint();
     }
 
-    public void keyReleased(int k) {
-       // gameStates.get(currentState).keyReleased(k);
+    public void keyReleased(KeyEvent e) {
+               gameStates.get(currentState).keyReleased(e);
+        gameStates.get(currentState).draw();
+          myScreen.repaint();
     }
 
     public void mousePressed(MouseEvent e){
         gameStates.get(currentState).mousePressed(e);
+        gameStates.get(currentState).draw();
+        myScreen.repaint();
+    }
+    
+        public void mouseReleased(MouseEvent e){
+        gameStates.get(currentState).mousePressed(e);
+        gameStates.get(currentState).draw();
+        myScreen.repaint();
+    }
+    
+        
+        public void mouseClicked(MouseEvent e){
+        gameStates.get(currentState).mousePressed(e);
+        gameStates.get(currentState).draw();
+        myScreen.repaint();
+    }
+        
+        
+        public void mouseMoved(MouseEvent e){
+        gameStates.get(currentState).mouseMoved(e);
         gameStates.get(currentState).draw();
         myScreen.repaint();
     }

@@ -7,7 +7,8 @@ public class InventoryItem {
 
     String imageName;
     Image image;
-    String itemName; 
+    String itemName;
+    String itemDescription;
     public Image generateImage(String myImageName) throws IOException {
             Image myResult = null;
       
