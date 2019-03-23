@@ -38,9 +38,9 @@ public class GameStateManager {
 
     public void setState(int state) {
         currentState = state;
-        gameStates.get(currentState).draw(); //there is no reason this should not work
+ //       gameStates.get(currentState).draw(); //there is no reason this should not work
         //gameStates.get(currentState).init();
-        myScreen.repaint();
+//        myScreen.repaint();
     }
 
     
@@ -54,40 +54,40 @@ public class GameStateManager {
 
     public void keyPressed(KeyEvent e) {
         gameStates.get(currentState).keyPressed(e);
-        gameStates.get(currentState).draw();
-          myScreen.repaint();
+//        gameStates.get(currentState).draw();
+//          myScreen.repaint();
     }
 
     public void keyReleased(KeyEvent e) {
                gameStates.get(currentState).keyReleased(e);
-        gameStates.get(currentState).draw();
-          myScreen.repaint();
+ //       gameStates.get(currentState).draw();
+ //         myScreen.repaint();
     }
 
     public void mousePressed(MouseEvent e){
         gameStates.get(currentState).mousePressed(e);
-        gameStates.get(currentState).draw();
-        myScreen.repaint();
+ //       gameStates.get(currentState).draw();
+ //       myScreen.repaint();
     }
     
         public void mouseReleased(MouseEvent e){
         gameStates.get(currentState).mousePressed(e);
-        gameStates.get(currentState).draw();
-        myScreen.repaint();
+   //     gameStates.get(currentState).draw();
+   //     myScreen.repaint();
     }
     
         
         public void mouseClicked(MouseEvent e){
         gameStates.get(currentState).mousePressed(e);
-        gameStates.get(currentState).draw();
-        myScreen.repaint();
+     //   gameStates.get(currentState).draw();
+    //    myScreen.repaint();
     }
         
         
         public void mouseMoved(MouseEvent e){
         gameStates.get(currentState).mouseMoved(e);
-        gameStates.get(currentState).draw();
-        myScreen.repaint();
+      //  gameStates.get(currentState).draw();
+      //  myScreen.repaint();
     }
     
 }
