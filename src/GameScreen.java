@@ -27,8 +27,8 @@ public class GameScreen extends JPanel implements ActionListener
   Tile[][] currentTiles;
   int dungeonRows;
   int dungeonColumns;
-  private Timer timer;
-  private final int DELAY = 10;
+  public Timer timer;
+  public final int DELAY = 1000/10;
   GameEngine engine;
  StatusScreen myStatus;
 Dimension myBufferedDimension;
@@ -50,7 +50,7 @@ Dimension myBufferedDimension;
   
   private void initScreen() throws IOException
   { 
-    myBufferedDimension = new Dimension(640, 320);
+    myBufferedDimension = new Dimension(1280, 720);
     myStatus = new StatusScreen();
     addKeyListener(new TAdapter());
     addMouseListener(new OtherAdapter());
@@ -66,8 +66,9 @@ Dimension myBufferedDimension;
     
     myGSM = new GameStateManager(this);
     //this.setSize(1,1);
-    //timer = new Timer(DELAY, this);
-    //timer.start();
+    timer = new Timer(DELAY,this);
+    timer.setRepeats(true);
+    timer.start();
   }
   
   @Override
@@ -90,10 +91,11 @@ myGSM.draw();
    // gbi = buffImage.createGraphics();
   } 
   
-  @Override
+@Override
   public void actionPerformed(ActionEvent e)
   { 
-   // repaint();
+      //myGSM.draw();
+      repaint();
   }
   
   

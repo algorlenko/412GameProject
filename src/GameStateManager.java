@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class GameStateManager {
 
-    private ArrayList<GameState> gameStates;
+    public ArrayList<GameState> gameStates;
     public GameScreen myScreen;
     private int currentState;
     //public Design.Hero hero;
@@ -25,7 +25,7 @@ public class GameStateManager {
        // currentState = ADVENTURESTATE;
         //currentState = ADVENTURESTATE;
         gameStates.add(new GameEngine(myScreen, this) );
-        gameStates.add(new InventoryState(myScreen, this) );
+        gameStates.add(new InventoryState(myScreen, this, gameStates.get(0).myHero.myInventory) );
         gameStates.add(new MainMenuState(myScreen, this) );
         setState(ADVENTURESTATE);
         

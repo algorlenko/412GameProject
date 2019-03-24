@@ -15,13 +15,13 @@ public class MainMenuState extends GameState {
     public MainMenuState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
-        menuImage = generateImage("/Main_Menu_Placeholder2.png");
+       // menuImage = generateImage("/Main_Menu_Placeholder2.png");
     }
 
     public void draw() {
         
         thisScreen.gbi.drawString(("Presss Enter To return to the Game. Press Z if you would like to exit the game."), 100, 100);
-        thisScreen.gbi.drawImage(menuImage, 0, 0, thisScreen.myBufferedDimension.width, thisScreen.myBufferedDimension.height, null);
+       // thisScreen.gbi.drawImage(menuImage, 0, 0, thisScreen.myBufferedDimension.width, thisScreen.myBufferedDimension.height, null);
     }
 
     public void keyPressed(KeyEvent e) {

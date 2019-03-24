@@ -39,6 +39,13 @@ public class Tile {
       y = myY;
     }
     
+    public void clearAtLayer(int deletionLayer)
+    {
+        myContents[deletionLayer] = null;
+        imageName[deletionLayer] = "/empty.png";
+    }
+    
+    
         public Image generateImage(String myImageName) throws IOException {
             Image myResult = null;
       

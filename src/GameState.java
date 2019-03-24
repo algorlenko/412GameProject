@@ -8,6 +8,9 @@ import java.awt.event.MouseEvent;
 
             //public abstract void init();
             //public abstract void update();
+            
+            public Hero myHero;
+            
             public abstract void draw();
             public abstract void keyPressed(KeyEvent e);
             public abstract void mousePressed(MouseEvent e);

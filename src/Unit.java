@@ -3,14 +3,36 @@ import java.io.IOException;
 
  public class Unit extends MapObject
   {
+int hp;
+boolean isAlive;
+int attackPower;
 
-    public Unit(int myX, int myY, Tile myTiles[][]) throws IOException
+    public Unit(int myX, int myY, Tile myTiles[][], String myImage) throws IOException
     {
-      unitImage = "/elf_m.png";
+      myLayer = 3; //if you change this unitLayer you need to change it in the GameEngine/AdventureState class as well.
+      unitImage = myImage;
       image = generateImage(unitImage);
       x = myX;
       y = myY;
       loadIntoTile(x, y, myTiles);
+      hp = 100;
+      isAlive = true;
+    }
+    
+    public void takeDamage(int damageAmount, Tile myTiles[][]) throws IOException
+    {
+        hp -= damageAmount;
+        if (hp <= 0)
+        {
+            deathFunction(myTiles);
+        }
+    }
+    
+    public void deathFunction(Tile myTiles[][]) throws IOException
+    {
+        myTiles[x][y].myContents[myLayer] = null;
+        myTiles[x][y].imageName[myLayer] = "/empty.png";
+        isAlive = false;
     }
     
     
@@ -24,12 +46,12 @@ import java.io.IOException;
       
       if(! (futureX < 0 || futureX > dungeonColumns - 1 || futureY < 0 || futureY > dungeonRows - 1) )
       {
-        if(!(myTiles[futureX][futureY].myContents[1] instanceof Wall))
+        if(!(myTiles[futureX][futureY].myContents[myLayer] instanceof Wall))
         {
           x = futureX;
           y = futureY;
-          myTiles[pastX][pastY].myContents[1] = null;
-          myTiles[pastX][pastY].imageName[1] = "/empty.png";
+          myTiles[pastX][pastY].myContents[myLayer] = null;
+          myTiles[pastX][pastY].imageName[myLayer] = "/empty.png";
         
           loadIntoTile(x, y, myTiles);
         }

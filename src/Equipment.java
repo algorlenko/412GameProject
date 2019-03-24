@@ -6,13 +6,11 @@ import javax.imageio.ImageIO;
 public class Equipment extends InventoryItem{
 
 
-    int PowerLevel;
-    public Equipment(String myimageName, int myPowerLevel, String myDescription) throws IOException
+    int powerLevel;
+    public Equipment(String myImageName, int myPowerLevel, String myDescription, String myItemName) throws IOException
             {
-                imageName = myimageName;
-                image = generateImage(imageName);
-                PowerLevel = myPowerLevel;
-                itemDescription = myDescription;
+              super(myImageName, myDescription, myItemName);
+              powerLevel = myPowerLevel;
             }
     
 }

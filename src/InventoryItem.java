@@ -9,6 +9,15 @@ public class InventoryItem {
     Image image;
     String itemName;
     String itemDescription;
+    
+    public InventoryItem(String myImageName, String myDescription, String myItemName) throws IOException
+    {
+                itemName = myItemName;
+                imageName = myImageName;
+                image = generateImage(imageName);
+                itemDescription = myDescription;
+    }
+    
     public Image generateImage(String myImageName) throws IOException {
             Image myResult = null;
       

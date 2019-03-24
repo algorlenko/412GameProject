@@ -27,7 +27,7 @@ public class DungeonCrawlerOther extends JFrame {
         try
         {
       GameScreen myScreen = new GameScreen();
-            setSize(640, 340);
+            setSize(1280, 720);
         add(myScreen);
             }
 		catch(Exception e) {

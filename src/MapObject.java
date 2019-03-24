@@ -8,13 +8,14 @@ import javax.imageio.ImageIO;
         String unitImage;
     int x;
     int y;
+    int myLayer;
     Image image;
    public void loadIntoTile(int myX, int myY, Tile[][] myTiles)
     {
       
-      myTiles[myX][myY].imageName[1] = unitImage;
-      myTiles[myX][myY].myContents[1] = this;
-      myTiles[myX][myY].image[1] = image;
+      myTiles[myX][myY].imageName[myLayer] = unitImage;
+      myTiles[myX][myY].myContents[myLayer] = this;
+      myTiles[myX][myY].image[myLayer] = image;
   //    myTiles[myX][myY].syncTileWithScreen();
     }
     
