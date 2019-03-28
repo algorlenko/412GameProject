@@ -50,7 +50,7 @@ Dimension myBufferedDimension;
   
   private void initScreen() throws IOException
   { 
-    myBufferedDimension = new Dimension(1280, 720);
+    myBufferedDimension = new Dimension(1920, 1080);
     myStatus = new StatusScreen();
     addKeyListener(new TAdapter());
     addMouseListener(new OtherAdapter());
