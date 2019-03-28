@@ -40,7 +40,7 @@ public class GameEngine extends GameState {
     public int heroFrame; // delete this
 
     public GameEngine(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
-        dungeonColumns = 10;
+        dungeonColumns = 20;
         dungeonRows = 10;
         thisScreen = myScreen;
         myTiles = new Tile[dungeonColumns][dungeonRows];
@@ -181,19 +181,29 @@ public class GameEngine extends GameState {
 
             if (myMonsters.get(i).isAlive == false) {
                 myMonsters.remove(i);
-                if(myMonsters.size() == 0)
-                {
+                if (i != myMonsters.size()) {
+                    i--;
+                    continue;
+                } else {
                     break;
                 }
+
             }
 
+            
+            if (myMonsters.size() == 0) {
+                    break;
+            }
+            
             turnHolder = myMonsters.get(i);
             selectedMonster = (Monster) turnHolder; //this may need improvments
             selectedMonster.aiAction(myTiles, myStatus);
 
             if (myMonsters.get(i).isAlive == false) {
                 myMonsters.remove(i);
-                i--;
+                if (i != myMonsters.size()) {
+                    i--;
+                }
             }
 
         }
@@ -289,12 +299,9 @@ public class GameEngine extends GameState {
         int myWidth = thisScreen.myBufferedDimension.width;
 
         myGraphic.drawString(myStatus.message, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
-        if(myMonsters.size() != 0)
-        {
-        myGraphic.drawString("Your current Hp is: " + myHero.hp + "The Monster's Hp is: " + myMonsters.get(0).hp, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
-        }
-        else
-        {
+        if (myMonsters.size() != 0) {
+            myGraphic.drawString("Your current Hp is: " + myHero.hp + "The Monster's Hp is: " + myMonsters.get(0).hp, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
+        } else {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + " All monsters on this floor are dead.", 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
         }
         myGraphic.drawString("the Current Frame is: " + heroFrame, 200, 50);
