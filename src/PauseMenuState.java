@@ -5,25 +5,23 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class MainMenuState extends GameState {
+public class PauseMenuState extends GameState {
 
     public GameStateManager myGSM;
     public GameScreen thisScreen;
     public Image menuImage;
     public Image selector;
 
-    public MainMenuState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
+    public PauseMenuState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
-        menuImage = generateImage("/Main_Menu_Placeholder2.png");
-        selector = generateImage("/selector.png");
+        menuImage = generateImage("/Pause_Menu_II.png");
     }
 
     public void draw() {
         
        // thisScreen.gbi.drawString(("Presss Enter To return to the Game. Press Z if you would like to exit the game."), 100, 100);
         thisScreen.gbi.drawImage(menuImage, 0, 0, thisScreen.myBufferedDimension.width, thisScreen.myBufferedDimension.height, null);
-        thisScreen.gbi.drawImage(selector, 20, 20, thisScreen.myBufferedDimension.width / 12, thisScreen.myBufferedDimension.height / 12, null);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -33,6 +31,9 @@ public class MainMenuState extends GameState {
         }
         if (key == KeyEvent.VK_Z) {
             System.exit(0); // Go to adventure screen
+        }
+        if (key == KeyEvent.VK_X){
+            
         }
 
     }
@@ -54,7 +55,7 @@ public class MainMenuState extends GameState {
     }
 
     public void mousePressed(MouseEvent e) {
-        System.out.println(e.getPoint());
+
     }
 
     public void mouseMoved(MouseEvent e) {

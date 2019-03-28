@@ -14,6 +14,7 @@ public class GameStateManager {
     public static final int MAINMENUSTATE = 2;
     public static final int ADVENTURESTATE = 0; // these numbers will be flipped later
     public static final int INVENTORYSTATE = 1;
+    public static final int PAUSEMENUSTATE = 4;
  //   public static final int SPELLBOOKTATE = 3;
  //   public static final int NEWCHARACTERSTATE = 4;
 
