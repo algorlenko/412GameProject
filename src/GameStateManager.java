@@ -1,9 +1,9 @@
+
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-
 
 public class GameStateManager {
 
@@ -14,43 +14,42 @@ public class GameStateManager {
     public static final int MAINMENUSTATE = 2;
     public static final int ADVENTURESTATE = 0; // these numbers will be flipped later
     public static final int INVENTORYSTATE = 1;
-    public static final int PAUSEMENUSTATE = 4;
- //   public static final int SPELLBOOKTATE = 3;
- //   public static final int NEWCHARACTERSTATE = 4;
+    public static final int PAUSEMENUSTATE = 3;
+    //   public static final int SPELLBOOKTATE = 3;
+    //   public static final int NEWCHARACTERSTATE = 4;
 
     public GameStateManager(GameScreen passedScreen) throws IOException {
 
-       // hero = new Design.Hero("/player/base/demonspawn_black_m.png");
+        // hero = new Design.Hero("/player/base/demonspawn_black_m.png");
         gameStates = new ArrayList<GameState>();
         myScreen = passedScreen;
-       // currentState = ADVENTURESTATE;
+        // currentState = ADVENTURESTATE;
         //currentState = ADVENTURESTATE;
-        gameStates.add(new GameEngine(myScreen, this) );
-        gameStates.add(new InventoryState(myScreen, this, gameStates.get(0).myHero.myInventory) );
-        gameStates.add(new MainMenuState(myScreen, this) );
+        gameStates.add(new GameEngine(myScreen, this));
+        gameStates.add(new InventoryState(myScreen, this, gameStates.get(0).myHero.myInventory));
+        gameStates.add(new MainMenuState(myScreen, this));
+        gameStates.add(new PauseMenuState(myScreen, this));
         setState(ADVENTURESTATE);
-        
+
         //gameStates.add(new AdventureState(this));
         //gameStates.add(new InventoryState(this));
         //gameStates.add(new SpellBookState(this));
         //gameStates.add(new NewCharacterState(this));
-
     }
 
     public void setState(int state) {
         currentState = state;
- //       gameStates.get(currentState).draw(); //there is no reason this should not work
+        //       gameStates.get(currentState).draw(); //there is no reason this should not work
         //gameStates.get(currentState).init();
 //        myScreen.repaint();
     }
 
-    
     public void update() {
-      //  gameStates.get(currentState).update();
+        //  gameStates.get(currentState).update();
     }
 
     public void draw() {
-      gameStates.get(currentState).draw();
+        gameStates.get(currentState).draw();
     }
 
     public void keyPressed(KeyEvent e) {
@@ -60,35 +59,33 @@ public class GameStateManager {
     }
 
     public void keyReleased(KeyEvent e) {
-               gameStates.get(currentState).keyReleased(e);
- //       gameStates.get(currentState).draw();
- //         myScreen.repaint();
+        gameStates.get(currentState).keyReleased(e);
+        //       gameStates.get(currentState).draw();
+        //         myScreen.repaint();
     }
 
-    public void mousePressed(MouseEvent e){
+    public void mousePressed(MouseEvent e) {
         gameStates.get(currentState).mousePressed(e);
- //       gameStates.get(currentState).draw();
- //       myScreen.repaint();
+        //       gameStates.get(currentState).draw();
+        //       myScreen.repaint();
     }
-    
-        public void mouseReleased(MouseEvent e){
+
+    public void mouseReleased(MouseEvent e) {
         gameStates.get(currentState).mousePressed(e);
-   //     gameStates.get(currentState).draw();
-   //     myScreen.repaint();
+        //     gameStates.get(currentState).draw();
+        //     myScreen.repaint();
     }
-    
-        
-        public void mouseClicked(MouseEvent e){
+
+    public void mouseClicked(MouseEvent e) {
         gameStates.get(currentState).mousePressed(e);
-     //   gameStates.get(currentState).draw();
-    //    myScreen.repaint();
+        //   gameStates.get(currentState).draw();
+        //    myScreen.repaint();
     }
-        
-        
-        public void mouseMoved(MouseEvent e){
+
+    public void mouseMoved(MouseEvent e) {
         gameStates.get(currentState).mouseMoved(e);
-      //  gameStates.get(currentState).draw();
-      //  myScreen.repaint();
+        //  gameStates.get(currentState).draw();
+        //  myScreen.repaint();
     }
-    
+
 }

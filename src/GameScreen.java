@@ -21,154 +21,117 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.ImageIcon;
 
-public class GameScreen extends JPanel implements ActionListener 
-{
-  
-  Tile[][] currentTiles;
-  int dungeonRows;
-  int dungeonColumns;
-  public Timer timer;
-  public final int DELAY = 1000/10;
-  GameEngine engine;
- StatusScreen myStatus;
-Dimension myBufferedDimension;
-  GameStateManager myGSM;
-  
-  
-      // Image Stuff
+public class GameScreen extends JPanel implements ActionListener {
+
+    Tile[][] currentTiles;
+    int dungeonRows;
+    int dungeonColumns;
+    public Timer timer;
+    public final int DELAY = 1000 / 10;
+    GameEngine engine;
+    StatusScreen myStatus;
+    Dimension myBufferedDimension;
+    GameStateManager myGSM;
+
+    // Image Stuff
     public BufferedImage buffImage;
     public Graphics2D gbi;
 
+    public GameScreen() throws IOException {
 
-  
-  
-  public GameScreen() throws IOException
-  {    
-    
-    initScreen();
-  }
-  
-  private void initScreen() throws IOException
-  { 
-    myBufferedDimension = new Dimension(1920, 1080);
-    myStatus = new StatusScreen();
-    addKeyListener(new TAdapter());
-    addMouseListener(new OtherAdapter());
-    addMouseMotionListener(new MotionAdapter());
-    //engine = new GameEngine(this);
-    //currentTiles = engine.myTiles;
-    setBackground(Color.BLACK);
-    this.setFocusable(true);
-    
-    buffImage = new BufferedImage(myBufferedDimension.width, myBufferedDimension.height, BufferedImage.TYPE_INT_RGB);
-    gbi = buffImage.createGraphics();
-    
-    
-    myGSM = new GameStateManager(this);
-    //this.setSize(1,1);
-    timer = new Timer(DELAY,this);
-    timer.setRepeats(true);
-    timer.start();
-  }
-  
-  @Override
-  public void paintComponent(Graphics g)
-  {
-    super.paintComponent(g); 
-    
-    Graphics2D g2d = (Graphics2D) g;
+        initScreen();
+    }
+
+    private void initScreen() throws IOException {
+        myBufferedDimension = new Dimension(1920, 1080);
+        myStatus = new StatusScreen();
+        addKeyListener(new TAdapter());
+        addMouseListener(new OtherAdapter());
+        addMouseMotionListener(new MotionAdapter());
+        //engine = new GameEngine(this);
+        //currentTiles = engine.myTiles;
+        setBackground(Color.BLACK);
+        this.setFocusable(true);
+
+        buffImage = new BufferedImage(myBufferedDimension.width, myBufferedDimension.height, BufferedImage.TYPE_INT_RGB);
+        gbi = buffImage.createGraphics();
+
+        myGSM = new GameStateManager(this);
+        //this.setSize(1,1);
+        timer = new Timer(DELAY, this);
+        timer.setRepeats(true);
+        timer.start();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2d = (Graphics2D) g;
 
         // Creates the buffered image.
+        myGSM.draw();
 
-myGSM.draw();
-    
-    //drawTiles(gbi);
-    //drawStatus(gbi);
-    g2d.drawImage(buffImage, 0, 0, this.getSize().width, this.getSize().height, null);
-    //buffImg = new BufferedImage(myBufferedDimension.width, myBufferedDimension.height, BufferedImage.TYPE_INT_RGB);
-    
-    gbi.clearRect(0, 0, myBufferedDimension.width, myBufferedDimension.height);
-   // gbi = buffImage.createGraphics();
-  } 
-  
-@Override
-  public void actionPerformed(ActionEvent e)
-  { 
-      //myGSM.draw();
-      repaint();
-  }
-  
-  
- 
-  
- 
+        //drawTiles(gbi);
+        //drawStatus(gbi);
+        g2d.drawImage(buffImage, 0, 0, this.getSize().width, this.getSize().height, null);
+        //buffImg = new BufferedImage(myBufferedDimension.width, myBufferedDimension.height, BufferedImage.TYPE_INT_RGB);
 
-   
+        gbi.clearRect(0, 0, myBufferedDimension.width, myBufferedDimension.height);
+        // gbi = buffImage.createGraphics();
+    }
 
-
-  private class TAdapter extends KeyAdapter
-  {
-    
     @Override
-    public void keyReleased(KeyEvent e) {
-      myGSM.keyReleased(e);
+    public void actionPerformed(ActionEvent e) {
+        //myGSM.draw();
+        repaint();
     }
-    
-    @Override
-    public void keyPressed(KeyEvent e) {
-      myGSM.keyPressed(e);
+
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            myGSM.keyReleased(e);
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            myGSM.keyPressed(e);
+        }
+
+        //   @Override
+        //   public void mousePressed(MouseEvent e)
+        // {
+        // engine.mousePressed(e); 
+        //}
     }
-    
- //   @Override
- //   public void mousePressed(MouseEvent e)
-   // {
-    // engine.mousePressed(e); 
-    //}
-    
-  }
-  
-  
-  
-  
-  
-    private class OtherAdapter extends MouseAdapter
-  {
-    
-    
-   @Override
-    public void mousePressed(MouseEvent e)
-    {
-     myGSM.mousePressed(e); 
+
+    private class OtherAdapter extends MouseAdapter {
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            myGSM.mousePressed(e);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            myGSM.mouseReleased(e);
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            myGSM.mouseClicked(e);
+        }
+
     }
-    
-       @Override
-    public void mouseReleased(MouseEvent e)
-    {
-     myGSM.mouseReleased(e); 
+
+    private class MotionAdapter extends MouseMotionAdapter {
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            myGSM.mouseMoved(e);
+        }
+
     }
-    
-       @Override
-    public void mouseClicked(MouseEvent e)
-    {
-     myGSM.mouseClicked(e); 
-    }
-    
-  }
-  
-    
-        private class MotionAdapter extends MouseMotionAdapter
-  {
-    
-    
-   @Override
-    public void mouseMoved(MouseEvent e)
-    {
-     myGSM.mouseMoved(e); 
-    }
-    
-  }
-    
-    
-    
-  
+
 }

@@ -19,21 +19,27 @@ public class PauseMenuState extends GameState {
     }
 
     public void draw() {
-        
-       // thisScreen.gbi.drawString(("Presss Enter To return to the Game. Press Z if you would like to exit the game."), 100, 100);
+
+        // thisScreen.gbi.drawString(("Presss Enter To return to the Game. Press Z if you would like to exit the game."), 100, 100);
         thisScreen.gbi.drawImage(menuImage, 0, 0, thisScreen.myBufferedDimension.width, thisScreen.myBufferedDimension.height, null);
     }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_ENTER) {
+        if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_R) {
             myGSM.setState(0); // Go to adventure screen
         }
-        if (key == KeyEvent.VK_Z) {
-            System.exit(0); // Go to adventure screen
+        if (key == KeyEvent.VK_S) {
+            // Spellbook
         }
-        if (key == KeyEvent.VK_X){
-            
+        if (key == KeyEvent.VK_I) {
+            myGSM.setState(1); // Inventory
+        }
+        if (key == KeyEvent.VK_X) { // lololol it spells out six
+            System.exit(0); // Exit
+        }
+        if (key == KeyEvent.VK_O) {
+            myGSM.setState(2); // PLACE. HOLDER. OPTIONS
         }
 
     }
@@ -49,7 +55,7 @@ public class PauseMenuState extends GameState {
         //hasChanged = true;
         return myResult;
     }
-    
+
     public void keyReleased(KeyEvent e) {
 
     }

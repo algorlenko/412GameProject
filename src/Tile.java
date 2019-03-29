@@ -8,12 +8,12 @@ import javax.imageio.ImageIO;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Sasha
  */
 public class Tile {
+
     String myError;
     int x;
     int y;
@@ -21,43 +21,38 @@ public class Tile {
     Image[] image;
     MapObject[] myContents;
     boolean hasChanged;
-    
-    public Tile(int myX, int myY) throws IOException
-    {
-        
-      imageName = new String[4];
-      image = new Image[4];
-      myContents = new MapObject[4];
-      
-      imageName[0] = "/dngn/floor/crystal_floor0.png";
-      imageName[1] = "/empty.png";
-      
-      image[0] = generateImage(imageName[0]);
-      image[1] = generateImage(imageName[0]);
-      
-      x = myX;
-      y = myY;
+
+    public Tile(int myX, int myY) throws IOException {
+
+        imageName = new String[4];
+        image = new Image[4];
+        myContents = new MapObject[4];
+
+        imageName[0] = "/dngn/floor/crystal_floor0.png";
+        imageName[1] = "/empty.png";
+
+        image[0] = generateImage(imageName[0]);
+        image[1] = generateImage(imageName[0]);
+
+        x = myX;
+        y = myY;
     }
-    
-    public void clearAtLayer(int deletionLayer)
-    {
+
+    public void clearAtLayer(int deletionLayer) {
         myContents[deletionLayer] = null;
         imageName[deletionLayer] = "/empty.png";
     }
-    
-    
-        public Image generateImage(String myImageName) throws IOException {
-            Image myResult = null;
-      
-            try
-            {
-			myResult = ImageIO.read( getClass().getResourceAsStream(myImageName) ); //this is the new way
-            }
-		catch(Exception e) {
-			e.printStackTrace();
-                        myError = e.getMessage();
-		}
-      //hasChanged = true;
-      return myResult;
+
+    public Image generateImage(String myImageName) throws IOException {
+        Image myResult = null;
+
+        try {
+            myResult = ImageIO.read(getClass().getResourceAsStream(myImageName)); //this is the new way
+        } catch (Exception e) {
+            e.printStackTrace();
+            myError = e.getMessage();
         }
+        //hasChanged = true;
+        return myResult;
+    }
 }

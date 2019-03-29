@@ -9,18 +9,16 @@
  * @author papa
  */
 public class StatusScreen {
+
     String message;
-    
-    public StatusScreen()
-    {
+
+    public StatusScreen() {
         message = "This is the Default Message";
-        
+
     }
-    
-    public void print()
-    {
-        
-    
+
+    public void print() {
+
     }
-    
+
 }

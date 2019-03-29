@@ -7,7 +7,6 @@ public class Hero extends Unit {
     Inventory myInventory;
     int inventorySpace;
 
-
     public Hero(int myX, int myY, Tile myTiles[][], String myImage) throws IOException {
         super(myX, myY, myTiles, myImage);
 

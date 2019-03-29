@@ -11,28 +11,74 @@ public class MainMenuState extends GameState {
     public GameScreen thisScreen;
     public Image menuImage;
     public Image selector;
+    public int selectorX;
+    public int selectorY;
+    public int menuGap;
+    public int selectedItem;
+    public int itemCount;
 
     public MainMenuState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
         menuImage = generateImage("/Main_Menu_Placeholder2.png");
         selector = generateImage("/selector.png");
+        selectorX = 990;
+        selectorY = 382;
+        menuGap = thisScreen.myBufferedDimension.height / 8;
+        selectedItem = 0;
+        itemCount = 3;
     }
 
     public void draw() {
-        
-       // thisScreen.gbi.drawString(("Presss Enter To return to the Game. Press Z if you would like to exit the game."), 100, 100);
+
+        // thisScreen.gbi.drawString(("Presss Enter To return to the Game. Press Z if you would like to exit the game."), 100, 100);
         thisScreen.gbi.drawImage(menuImage, 0, 0, thisScreen.myBufferedDimension.width, thisScreen.myBufferedDimension.height, null);
-        thisScreen.gbi.drawImage(selector, 20, 20, thisScreen.myBufferedDimension.width / 12, thisScreen.myBufferedDimension.height / 12, null);
+        drawArrow();
     }
 
+    public void drawArrow() {
+        // selector below
+        thisScreen.gbi.drawImage(selector, selectorX, selectorY + (menuGap * selectedItem), thisScreen.myBufferedDimension.width / 12, thisScreen.myBufferedDimension.height / 12, null);
+    }
+
+    @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
-            myGSM.setState(0); // Go to adventure screen
+            if (selectedItem == 0) {
+                myGSM.setState(0); // Go to adventure screen (New Game)
+            }
+            if (selectedItem == 1) {
+                myGSM.setState(1); // Inventory (will be Load Game)
+            }
+            if (selectedItem == 2) {
+                System.exit(0); // Exit
+            }
+            // myGSM.setState(0);
         }
-        if (key == KeyEvent.VK_Z) {
-            System.exit(0); // Go to adventure screen
+
+        //Shortcuts Below
+        if (key == KeyEvent.VK_X) {
+            System.exit(0); // Exit
+        }
+
+        if (key == KeyEvent.VK_L) {
+            myGSM.setState(1); // Inventory
+        }
+
+        if (key == KeyEvent.VK_N) {
+            myGSM.setState(0); // Go to adventure screen (New Game)
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+            selectedItem++;
+            selectedItem %= itemCount;
+// selectorY += thisScreen.myBufferedDimension.height / 8;
+        }
+        if (key == KeyEvent.VK_UP) {
+            selectedItem = (selectedItem + itemCount - 1) % 3;
+
+// selectorY -= thisScreen.myBufferedDimension.height / 8;
         }
 
     }
@@ -48,7 +94,7 @@ public class MainMenuState extends GameState {
         //hasChanged = true;
         return myResult;
     }
-    
+
     public void keyReleased(KeyEvent e) {
 
     }

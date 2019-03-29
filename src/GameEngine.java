@@ -84,6 +84,11 @@ public class GameEngine extends GameState {
             myGSM.setState(2); // Goes to Main Menu
 
         }
+
+        if (key == KeyEvent.VK_P) {
+            myGSM.setState(3);
+        }
+
         if (myHero.isAlive) {
             if (turnHolder == myHero) {
                 if (key == KeyEvent.VK_LEFT) {
@@ -190,11 +195,10 @@ public class GameEngine extends GameState {
 
             }
 
-            
             if (myMonsters.size() == 0) {
-                    break;
+                break;
             }
-            
+
             turnHolder = myMonsters.get(i);
             selectedMonster = (Monster) turnHolder; //this may need improvments
             selectedMonster.aiAction(myTiles, myStatus);

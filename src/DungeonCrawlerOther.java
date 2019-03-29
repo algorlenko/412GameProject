@@ -8,8 +8,6 @@
  *
  * @author Sasha
  */
-
-
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
@@ -19,25 +17,21 @@ import javax.swing.JFrame;
 
 public class DungeonCrawlerOther extends JFrame {
 
-    public DungeonCrawlerOther() {       
+    public DungeonCrawlerOther() {
         initUI();
     }
-    
-    private void initUI() {   
-        try
-        {
-      GameScreen myScreen = new GameScreen();
-            setSize(1280, 720);
-        add(myScreen);
-            }
-		catch(Exception e) {
-			e.printStackTrace();
-		}
 
-        
+    private void initUI() {
+        try {
+            GameScreen myScreen = new GameScreen();
+            setSize(1280, 720);
+            add(myScreen);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         setResizable(true);
-        
-      
+
         setTitle("Dungeon Crawler Other");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

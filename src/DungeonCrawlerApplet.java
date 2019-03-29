@@ -16,21 +16,20 @@ public class DungeonCrawlerApplet extends JApplet {
     /**
      * Initialization method that will be called after the applet is loaded into
      * the browser.
+     *
      * @throws java.io.IOException
      */
-    public void init(){
+    public void init() {
         // TODO start asynchronous download of heavy resources
-        try
-        {
-      GameScreen myScreen = new GameScreen();
+        try {
+            GameScreen myScreen = new GameScreen();
             setSize(640, 340);
-      //StatusScreen myStatus = new StatusScreen();
-        add(myScreen);
-        setVisible(true);
-      }
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+            //StatusScreen myStatus = new StatusScreen();
+            add(myScreen);
+            setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
