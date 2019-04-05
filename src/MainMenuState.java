@@ -20,7 +20,7 @@ public class MainMenuState extends GameState {
     public MainMenuState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
-        menuImage = generateImage("/Main_Menu_Placeholder2.png");
+        menuImage = generateImage("/Main_Menu_Placeholder3.png");
         selector = generateImage("/selector.png");
         selectorX = 990;
         selectorY = 382;
@@ -66,7 +66,7 @@ public class MainMenuState extends GameState {
             myGSM.setState(1); // Inventory
         }
 
-        if (key == KeyEvent.VK_N) {
+        if (key == KeyEvent.VK_N || key == KeyEvent.VK_ESCAPE) {
             myGSM.setState(0); // Go to adventure screen (New Game)
         }
 
@@ -77,8 +77,6 @@ public class MainMenuState extends GameState {
         }
         if (key == KeyEvent.VK_UP) {
             selectedItem = (selectedItem + itemCount - 1) % 3;
-
-// selectorY -= thisScreen.myBufferedDimension.height / 8;
         }
 
     }

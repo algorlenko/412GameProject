@@ -12,7 +12,7 @@ public class Hero extends Unit {
 
         attackPower = 20;
         inventorySpace = 10;
-        myInventory = new Inventory(10);
+        myInventory = new Inventory(25);
     }
 
     public boolean move(int dx, int dy, Tile myTiles[][], int dungeonColumns, int dungeonRows, StatusScreen myStatus) {

@@ -26,7 +26,7 @@ public class PauseMenuState extends GameState {
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_R) {
+        if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_R || key == KeyEvent.VK_P) {
             myGSM.setState(0); // Go to adventure screen
         }
         if (key == KeyEvent.VK_S) {

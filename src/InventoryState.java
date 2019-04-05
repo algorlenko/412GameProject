@@ -1,9 +1,11 @@
 
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.lang.Math;
+import javax.imageio.ImageIO;
 
 public class InventoryState extends GameState {
 
@@ -12,6 +14,8 @@ public class InventoryState extends GameState {
     public Equipment myTestItem;
     public int DeleteThisTestVariable;
 
+    
+    public Image menuImage;
     public Inventory heroInventory;
     public int rows;
     public int columns;
@@ -27,6 +31,8 @@ public class InventoryState extends GameState {
         rows = (int) Math.sqrt(heroInventory.storageSpace) + 1;
         columns = rows;
         hoveredSlot = -1;
+        menuImage= generateImage("/InventorySheen.png");
+        
     }
 
     public void draw() {
@@ -38,6 +44,7 @@ public class InventoryState extends GameState {
 
         int myHeight = thisScreen.myBufferedDimension.height;
         int myWidth = thisScreen.myBufferedDimension.width / 2;
+        thisScreen.gbi.drawImage(menuImage, 0, 0, myWidth * 2, myHeight, null);
         drawInventory(myWidth, myHeight);
         drawDescription(myWidth, myHeight);
     }
@@ -116,5 +123,19 @@ public class InventoryState extends GameState {
 
     public void mouseReleased(MouseEvent e) {
 
+    }
+    
+    
+    
+        public Image generateImage(String myImageName) throws IOException {
+        Image myResult = null;
+
+        try {
+            myResult = ImageIO.read(getClass().getResourceAsStream(myImageName)); //this is the new way
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //hasChanged = true;
+        return myResult;
     }
 }

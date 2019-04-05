@@ -29,6 +29,7 @@ public class Tile {
         myContents = new MapObject[4];
 
         imageName[0] = "/dngn/floor/crystal_floor0.png";
+        //imageName[0] = "/carpet_1.png"; for testing
         imageName[1] = "/empty.png";
 
         image[0] = generateImage(imageName[0]);

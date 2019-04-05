@@ -23,7 +23,7 @@ public class DungeonCrawlerApplet extends JApplet {
         // TODO start asynchronous download of heavy resources
         try {
             GameScreen myScreen = new GameScreen();
-            setSize(640, 340);
+            setSize(1920, 1080);
             //StatusScreen myStatus = new StatusScreen();
             add(myScreen);
             setVisible(true);

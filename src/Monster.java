@@ -1,5 +1,6 @@
 
 import java.io.IOException;
+import java.util.Random;
 
 public class Monster extends Unit {
 
@@ -37,13 +38,35 @@ public class Monster extends Unit {
     public void aiAction(Tile myTiles[][], StatusScreen myStatus) throws IOException {
         MapObject target = null;
         target = scanInRadius(1, myTiles);
-
+        Random rand = new Random();
+        int xMove=0;
+        int yMove=0;
         if (target != null) {
             Unit unitTarget = (Unit) target;
             attack(unitTarget, myTiles);
             myStatus.message = "The Hero has been attacked!";
         } else {
-            move(0, 1, myTiles, myTiles.length, myTiles[0].length);
+            int n=rand.nextInt(4);
+            switch (n){
+                case 0:
+                    xMove=-1;
+                    yMove=0;
+                    break;
+                case 1:
+                    xMove=0;
+                    yMove=1;
+                    break;
+                case 2:
+                    xMove=1;
+                    yMove=0;
+                    break;
+                case 3:
+                    xMove=0;
+                    yMove=-1;
+                    break;
+                    
+            }
+            move(xMove, yMove, myTiles, myTiles.length, myTiles[0].length);
         }
     }
 

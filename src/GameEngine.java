@@ -65,8 +65,8 @@ public class GameEngine extends GameState {
         myHero = new Hero(0, 0, myTiles, "dknight_1.png");
         turnHolder = myHero;
         myMonsters = new ArrayList<Monster>(); // Create an ArrayList object
-        myMonsters.add(new Monster(4, 4, myTiles, "/orange_demon.png"));
-        myMonsters.add(new Monster(4, 3, myTiles, "/elf_m.png"));
+        myMonsters.add(new Monster(4, 4, myTiles, "/beetle_fire_giant_1.png"));
+        myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png"));
         Wall myWall = new Wall(2, 2, myTiles);
         Wall myOtherWall = new Wall(3, 3, myTiles);
         myStatus = new StatusScreen();
@@ -302,13 +302,30 @@ public class GameEngine extends GameState {
         int myHeight = (thisScreen.myBufferedDimension.height / 5) * 4;
         int myWidth = thisScreen.myBufferedDimension.width;
 
-        myGraphic.drawString(myStatus.message, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
+        // myGraphic.drawString(myStatus.message, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
         if (myMonsters.size() != 0) {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + "The Monster's Hp is: " + myMonsters.get(0).hp, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
         } else {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + " All monsters on this floor are dead.", 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
         }
-        myGraphic.drawString("the Current Frame is: " + heroFrame, 200, 50);
+        // myGraphic.drawString("the Current Frame is: " + heroFrame, 200, 50);
+        
+          if (myHero.hp <= (100 / 3) * 2 && myHero.hp > (100 / 3)) { // NO HARDCODED NUMBERS >:(
+            myGraphic.setColor(Color.YELLOW);
+            myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2, myHero.hp, 20);
+            myGraphic.drawString("HP is : " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);//for displaying hp 
+        }
+        if (myHero.hp < (100 / 3) && myHero.hp >= 0) {
+            myGraphic.setColor(Color.RED);
+            myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2, myHero.hp, 20);
+            myGraphic.drawString(" HP is : " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
+        }
+        if (myHero.hp > (100 / 3) * 2) {
+            myGraphic.setColor(Color.GREEN);
+            myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2, myHero.hp, 20);
+            myGraphic.drawString(" HP is : " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
+        }
+        
     }
 
 }
