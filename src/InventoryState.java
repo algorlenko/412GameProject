@@ -21,17 +21,17 @@ public class InventoryState extends GameState {
     public int columns;
     public int hoveredSlot;
 
-    public InventoryState(GameScreen myScreen, GameStateManager passedGSM, Inventory herosInventory) throws IOException {
+    public InventoryState(GameScreen myScreen, GameStateManager passedGSM, Hero myHero) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
         myTestItem = new Equipment("/item/amulet/celtic_red.png", 5, "This is an Amulet of Testing", "AmuletOfTesting");
         DeleteThisTestVariable = 0;
 
-        heroInventory = herosInventory;
+        heroInventory = myHero.myInventory;
         rows = (int) Math.sqrt(heroInventory.storageSpace) + 1;
         columns = rows;
         hoveredSlot = -1;
-        menuImage= generateImage("/InventorySheen.png");
+        menuImage= generateImage("/Menu/InventorySheenB.png");
         
     }
 

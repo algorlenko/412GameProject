@@ -20,6 +20,8 @@ public class GameEngine extends GameState {
 
     ArrayList<Monster> myMonsters;
 
+    ArrayList<Wall> myWalls;
+
     public Monster selectedMonster;
     public int monsterIndex;
 
@@ -49,7 +51,7 @@ public class GameEngine extends GameState {
         //emptyImage = generateImage
         for (int i = 0; i < dungeonColumns; i++) {
             for (int j = 0; j < dungeonRows; j++) {
-                myTiles[i][j] = new Tile(i, j);
+                myTiles[i][j] = new Tile(i, j, "/dngn/floor/crystal_floor0.png");
                 //myTiles[i][j].syncTileWithScreen(); 
             }
 
@@ -65,11 +67,33 @@ public class GameEngine extends GameState {
         myHero = new Hero(0, 0, myTiles, "dknight_1.png");
         turnHolder = myHero;
         myMonsters = new ArrayList<Monster>(); // Create an ArrayList object
-        myMonsters.add(new Monster(4, 4, myTiles, "/beetle_fire_giant_1.png"));
+        myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png"));
         myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png"));
-        Wall myWall = new Wall(2, 2, myTiles);
-        Wall myOtherWall = new Wall(3, 3, myTiles);
+        myWalls = new ArrayList<Wall>();
+        myWalls.add(new Wall(2, 2, myTiles, "/dngn/wall/crystal_wall00.png"));
+        myWalls.add(new Wall(3, 3, myTiles, "/dngn/wall/crystal_wall00.png"));
         myStatus = new StatusScreen();
+        Door myDoor = new Door(5, 5, myTiles);
+    }
+
+    public void makeNewLevel() throws IOException {
+        for (int i = 0; i < dungeonColumns; i++) {
+            for (int j = 0; j < dungeonRows; j++) {
+                myTiles[i][j] = new Tile(i, j, "/dngn/floor/green_bones12.png");
+                //myTiles[i][j].syncTileWithScreen(); 
+            }
+        }
+        myMonsters.clear();
+        myMonsters.add(new Monster(4, 4, myTiles, "/elf_m.png"));
+        myMonsters.add(new Monster(4, 3, myTiles, "/orange_demon.png"));
+        myWalls.clear();
+        myWalls.add(new Wall(10, 2, myTiles, "/dngn/wall/brick_brown0.png"));
+        myWalls.add(new Wall(10, 3, myTiles, "/dngn/wall/brick_brown0.png"));
+                        myTiles[myHero.x][myHero.y].myContents[3] = null;
+                myTiles[myHero.x][myHero.y].imageName[3] = "/empty.png";
+                myHero.x = 9;
+                myHero.y = 9;
+        myHero.loadIntoTile(9, 9, myTiles);
     }
 
     @Override
@@ -136,35 +160,57 @@ public class GameEngine extends GameState {
 
     public void mousePressed(MouseEvent e) {
 
-        Point selectedTile = calculateTile(e.getX(), e.getY());
-        if (selectedTile.x < dungeonColumns && selectedTile.x >= 0 && selectedTile.y < dungeonRows && selectedTile.y >= 0) {
-            //myHero.move(selectedTile.x - myHero.x, selectedTile.y - myHero.y, myTiles, dungeonColumns, dungeonRows, myStatus);
 
-            if (myHero.isAlive) {
-                if (turnHolder == myHero) {
 
-                    if (myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER] instanceof Monster) {
-                        if (selectedTile.x <= myHero.x + 1 && selectedTile.x >= myHero.x - 1 && selectedTile.y <= myHero.y + 1 && selectedTile.y >= myHero.y - 1) {
-                            try // I fucking hate Java for this, I need to get rid of this garbage, but I can't currently, it is all because I need to generate a Treasure Chest Image in the Monster Class for the LootBag
-                            {
-                                myHero.attack((Unit) myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER], myStatus, myTiles);
-                                successfulTurn();
-                                if (turnHolder instanceof Monster) {
-                                    monsterTurn();
-                                }
-                            } catch (Exception exc) {
-                                exc.printStackTrace();
+    }
 
-                            }
-                        } else {
-                            myStatus.message = "Your Target is out of Range.";
-                        }
-                    } else {
-                        myStatus.message = "You cannot Attack this area.";
+    public void attemptUsage(Point selectedTile) {
+        if (myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER] instanceof Useable) {
+            if (selectedTile.x <= myHero.x + 1 && selectedTile.x >= myHero.x - 1 && selectedTile.y <= myHero.y + 1 && selectedTile.y >= myHero.y - 1) {
+                int useResult = ((Useable) myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER]).tryUse(myHero, myStatus, myTiles);
+                if (useResult == 1) {
+                    successfulTurn();
+                    try {
+                        monsterTurn();
+                    } catch (Exception exc) {
+                        exc.printStackTrace();
+
+                    }
+
+                } else if (useResult == 2) {
+                    try {
+                        makeNewLevel();
+                    } catch (Exception exc) {
+                        exc.printStackTrace();
+
                     }
                 }
-
+            } else {
+                myStatus.message = "Your Target is out of Range.";
             }
+
+        }
+    }
+
+    public void attemptAttack(Point selectedTile) {
+        if (myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER] instanceof Monster) {
+            if (selectedTile.x <= myHero.x + 1 && selectedTile.x >= myHero.x - 1 && selectedTile.y <= myHero.y + 1 && selectedTile.y >= myHero.y - 1) {
+                try // I fucking hate Java for this, I need to get rid of this garbage, but I can't currently, it is all because I need to generate a Treasure Chest Image in the Monster Class for the LootBag
+                {
+                    myHero.attack((Unit) myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER], myStatus, myTiles);
+                    successfulTurn();
+                    if (turnHolder instanceof Monster) {
+                        monsterTurn();
+                    }
+                } catch (Exception exc) {
+                    exc.printStackTrace();
+
+                }
+            } else {
+                myStatus.message = "Your Target is out of Range.";
+            }
+        } else {
+            myStatus.message = "You cannot Attack this area.";
         }
 
     }
@@ -219,7 +265,18 @@ public class GameEngine extends GameState {
     }
 
     public void mouseClicked(MouseEvent e) {
+        Point selectedTile = calculateTile(e.getX(), e.getY());
+        if (selectedTile.x < dungeonColumns && selectedTile.x >= 0 && selectedTile.y < dungeonRows && selectedTile.y >= 0) {
+            //myHero.move(selectedTile.x - myHero.x, selectedTile.y - myHero.y, myTiles, dungeonColumns, dungeonRows, myStatus);
 
+            if (myHero.isAlive) {
+                if (turnHolder == myHero) {
+                    attemptAttack(selectedTile);
+                    attemptUsage(selectedTile);
+                }
+
+            }
+        }
     }
 
     public void mouseReleased(MouseEvent e) {
@@ -302,15 +359,15 @@ public class GameEngine extends GameState {
         int myHeight = (thisScreen.myBufferedDimension.height / 5) * 4;
         int myWidth = thisScreen.myBufferedDimension.width;
 
-        // myGraphic.drawString(myStatus.message, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
+        myGraphic.drawString(myStatus.message, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
         if (myMonsters.size() != 0) {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + "The Monster's Hp is: " + myMonsters.get(0).hp, 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
         } else {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + " All monsters on this floor are dead.", 0, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
         }
         // myGraphic.drawString("the Current Frame is: " + heroFrame, 200, 50);
-        
-          if (myHero.hp <= (100 / 3) * 2 && myHero.hp > (100 / 3)) { // NO HARDCODED NUMBERS >:(
+
+        if (myHero.hp <= (100 / 3) * 2 && myHero.hp > (100 / 3)) { // NO HARDCODED NUMBERS >:(
             myGraphic.setColor(Color.YELLOW);
             myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2, myHero.hp, 20);
             myGraphic.drawString("HP is : " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);//for displaying hp 
@@ -325,7 +382,7 @@ public class GameEngine extends GameState {
             myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2, myHero.hp, 20);
             myGraphic.drawString(" HP is : " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
         }
-        
+
     }
 
 }

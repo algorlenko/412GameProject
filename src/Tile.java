@@ -22,13 +22,13 @@ public class Tile {
     MapObject[] myContents;
     boolean hasChanged;
 
-    public Tile(int myX, int myY) throws IOException {
+    public Tile(int myX, int myY, String floorImageString) throws IOException {
 
         imageName = new String[4];
         image = new Image[4];
         myContents = new MapObject[4];
 
-        imageName[0] = "/dngn/floor/crystal_floor0.png";
+        imageName[0] = floorImageString;
         //imageName[0] = "/carpet_1.png"; for testing
         imageName[1] = "/empty.png";
 

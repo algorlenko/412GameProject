@@ -31,7 +31,7 @@ public class Hero extends Unit {
 
                 loadIntoTile(x, y, myTiles);
 
-                myStatus.message = "you have moved into coordinate" + x + " " + y + "and your current error is: ";
+                //myStatus.message = "you have moved into coordinate" + x + " " + y + "and your current error is: ";
 
                 if (myTiles[futureX][futureY].myContents[2] instanceof LootBag) // this entire if statement could be converted into a more comprehensive pickUpItem function
                 {

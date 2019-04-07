@@ -35,4 +35,15 @@ public class Inventory {
 
     }
 
+    public int searchFor(String searchedItem) {
+        for (int i = 0; i < storageSpace; i++) {
+            if (items[i] != null) {
+                if (items[i].itemName == searchedItem) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
 }

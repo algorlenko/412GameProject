@@ -26,7 +26,8 @@ public class GameStateManager {
         // currentState = ADVENTURESTATE;
         //currentState = ADVENTURESTATE;
         gameStates.add(new GameEngine(myScreen, this));
-        gameStates.add(new InventoryState(myScreen, this, gameStates.get(0).myHero.myInventory));
+        Hero myHero = gameStates.get(0).myHero;
+        gameStates.add(new InventoryState(myScreen, this, myHero));
         gameStates.add(new MainMenuState(myScreen, this));
         gameStates.add(new PauseMenuState(myScreen, this));
         setState(ADVENTURESTATE);
@@ -77,7 +78,7 @@ public class GameStateManager {
     }
 
     public void mouseClicked(MouseEvent e) {
-        gameStates.get(currentState).mousePressed(e);
+        gameStates.get(currentState).mouseClicked(e);
         //   gameStates.get(currentState).draw();
         //    myScreen.repaint();
     }
