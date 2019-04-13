@@ -12,27 +12,33 @@ public class InventoryState extends GameState {
     public GameStateManager myGSM;
     public GameScreen thisScreen;
     public Equipment myTestItem;
-    public int DeleteThisTestVariable;
 
     
     public Image menuImage;
     public Inventory heroInventory;
+    public Hero myHero;
     public int rows;
     public int columns;
     public int hoveredSlot;
+    public int selectedSlot;
+    public final int HELMET = 0;
+    public final int TALISMAN = 1;
+    public final int ARMOR = 2;
+    public final int GLOVES = 3;
+public final int WEAPON = 4;
 
-    public InventoryState(GameScreen myScreen, GameStateManager passedGSM, Hero myHero) throws IOException {
+public final int BOOTS = 5;
+    
+    public InventoryState(GameScreen myScreen, GameStateManager passedGSM, Hero theHero) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
-        myTestItem = new Equipment("/item/amulet/celtic_red.png", 5, "This is an Amulet of Testing", "AmuletOfTesting");
-        DeleteThisTestVariable = 0;
-
+        myHero = theHero;
         heroInventory = myHero.myInventory;
-        rows = (int) Math.sqrt(heroInventory.storageSpace) + 1;
+        rows = (int) Math.sqrt(heroInventory.storageSpace);
         columns = rows;
         hoveredSlot = -1;
-        menuImage= generateImage("/Menu/InventorySheenB.png");
-        
+        menuImage= generateImage("/Menu/InventorySheen3.png");
+        selectedSlot = -1;
     }
 
     public void draw() {
@@ -46,6 +52,7 @@ public class InventoryState extends GameState {
         int myWidth = thisScreen.myBufferedDimension.width / 2;
         thisScreen.gbi.drawImage(menuImage, 0, 0, myWidth * 2, myHeight, null);
         drawInventory(myWidth, myHeight);
+        drawEquipped(myWidth, myHeight);
         drawDescription(myWidth, myHeight);
     }
 
@@ -67,29 +74,56 @@ public class InventoryState extends GameState {
         }
     }
 
+    public void drawEquipped(int myWidth, int myHeight)
+    {
+        for(int i =0; i < myHero.SLOTS; i++)
+        if(myHero.equippedItems[i] != null)
+        {
+        thisScreen.gbi.drawImage(myHero.equippedItems[i].image, ((myWidth / columns) * 8), (myHeight / rows) * i, myWidth / columns, myHeight / rows, null);
+        }
+        
+    }
+    
     public void drawDescription(int myWidth, int myHeight) {
-        if (hoveredSlot != -1) {
+        if (hoveredSlot != -1 && hoveredSlot < heroInventory.storageSpace) {
             if (heroInventory.items[hoveredSlot] != null) {
                 int y = hoveredSlot / rows;
-                int x = hoveredSlot - y;
+                int x = hoveredSlot - (y * rows);
                 thisScreen.gbi.drawString(heroInventory.items[hoveredSlot].itemDescription, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
             }
         }
-
+        else if (hoveredSlot >= heroInventory.storageSpace)
+        {
+            int hoveredEquipSlot = hoveredSlot - heroInventory.storageSpace;
+            if (myHero.equippedItems[hoveredEquipSlot] != null) {
+            int y = hoveredEquipSlot;
+                int x = 8;
+                thisScreen.gbi.drawString(myHero.equippedItems[hoveredEquipSlot].itemDescription, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
+            }
+            }
+thisScreen.gbi.drawString("the Hero's current Attack power is: " + myHero.attackPower, 900, 900);
     }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_I) {
+            lightlyResetInventory();
             myGSM.setState(0); // Back to adventure screen
+            
         }
         if (key == KeyEvent.VK_ESCAPE) {
+            lightlyResetInventory();
             myGSM.setState(2); // Goes to Main Menu
 
         }
 
     }
-
+public void lightlyResetInventory()
+{
+    selectedSlot = -1;
+            thisScreen.resetCursor();
+}
+    
     public void keyReleased(KeyEvent e) {
 
     }
@@ -100,27 +134,168 @@ public class InventoryState extends GameState {
 
     public void mouseMoved(MouseEvent e) {
         hoveredSlot = calculateSlot(e.getX(), e.getY());
-        if (hoveredSlot >= heroInventory.storageSpace) {
-            hoveredSlot = -1;
-        }
+        //if (hoveredSlot >= heroInventory.storageSpace) { delete this soon
+          //  hoveredSlot = -1;
+        //}
     }
 
     public int calculateSlot(int x, int y) {
         int myWidth = thisScreen.getSize().width / 2;
         int myHeight = thisScreen.getSize().height;
-        if (x * columns / myWidth >= columns) {
-            return -1;
-        }
-        if (y * rows / myHeight >= rows) {
-            return -1;
-        }
+
+        if(x * columns / myWidth < columns && y * rows / myHeight < rows)
+        {
         return (x * columns / myWidth) + ((y * rows / myHeight) * columns);
+        }
+        else if (x * columns / myWidth >= columns && y * rows / myHeight < rows)
+        {
+           return heroInventory.storageSpace + (y * rows / myHeight);
+        }
+            
+        else
+        {
+            return -1;
+        }
     }
 
+    
+    
     public void mouseClicked(MouseEvent e) {
+        hoveredSlot = calculateSlot(e.getX(), e.getY());
+
+        
+        
+        if(hoveredSlot > -1)
+        {
+        if (hoveredSlot < heroInventory.storageSpace) // this part is buggy
+        {
+            
+         if(heroInventory.items[hoveredSlot] != null  && selectedSlot == -1)
+         {
+           selectedSlot = hoveredSlot;
+           thisScreen.changeCursor(heroInventory.items[selectedSlot].image);
+         }
+         else if (selectedSlot > -1)
+         {
+             if(selectedSlot < heroInventory.storageSpace)
+             {
+             swapItems(selectedSlot, hoveredSlot);
+             }
+             else if(selectedSlot >= heroInventory.storageSpace)
+             {
+                 if(heroInventory.items[hoveredSlot] == null)
+                 {
+                     swapItems(selectedSlot, hoveredSlot);
+                 }
+                 else
+                 {
+                     if(attemptEquippingItem(hoveredSlot, selectedSlot - heroInventory.storageSpace))
+                {
+                    lightlyResetInventory();
+                }
+                 }
+             }
+         }
+        }
+        else if (hoveredSlot >= heroInventory.storageSpace)
+        {
+            if(selectedSlot != -1)
+            {
+                if(attemptEquippingItem(selectedSlot, hoveredSlot - heroInventory.storageSpace))
+                {
+                    lightlyResetInventory();
+                }
+            }
+            else if (myHero.equippedItems[hoveredSlot - heroInventory.storageSpace] != null)
+            {
+                selectedSlot = hoveredSlot;
+                thisScreen.changeCursor(myHero.equippedItems[hoveredSlot - heroInventory.storageSpace].image);
+            }
+        }
+        
+        }
+    }
+    
+    public void swapItems(int firstSelectedSlot, int secondSelectedSlot)
+    {
+        if(selectedSlot != -1)
+        {
+        if(firstSelectedSlot < heroInventory.storageSpace && secondSelectedSlot < heroInventory.storageSpace)
+        {
+            InventoryItem tempItem;
+            tempItem = heroInventory.items[firstSelectedSlot];
+            heroInventory.items[firstSelectedSlot] = heroInventory.items[secondSelectedSlot];
+            heroInventory.items[secondSelectedSlot] = tempItem;
+            lightlyResetInventory();
+        }
+        else if(firstSelectedSlot < heroInventory.storageSpace && secondSelectedSlot >= heroInventory.storageSpace)
+        {
+                        Equipment tempEquip;
+            tempEquip = (Equipment) heroInventory.items[firstSelectedSlot];
+            heroInventory.items[firstSelectedSlot] = myHero.equippedItems[secondSelectedSlot - heroInventory.storageSpace];
+            myHero.unequip(myHero.equippedItems[secondSelectedSlot - heroInventory.storageSpace]);
+            myHero.equip(tempEquip, secondSelectedSlot - heroInventory.storageSpace);
+
+            lightlyResetInventory();
+        }
+        else if(secondSelectedSlot < heroInventory.storageSpace && firstSelectedSlot >= heroInventory.storageSpace)
+                {
+                                            Equipment tempEquip;
+            tempEquip = (Equipment) heroInventory.items[secondSelectedSlot];
+            heroInventory.items[secondSelectedSlot] = myHero.equippedItems[firstSelectedSlot - heroInventory.storageSpace];
+            myHero.unequip(myHero.equippedItems[firstSelectedSlot - heroInventory.storageSpace]);
+            myHero.equip(tempEquip, firstSelectedSlot - heroInventory.storageSpace);
+            lightlyResetInventory();
+                }
+        
+        }
+    }
+    
+public boolean attemptEquippingItem(int attemptedSlot, int attemptedEquipSlot)
+{
+    if(hoveredSlot >= heroInventory.storageSpace && selectedSlot >= heroInventory.storageSpace)
+    {
+        return false;
+    }
+    InventoryItem attemptedItem;
+    if(attemptedSlot < heroInventory.storageSpace)
+    {
+        attemptedItem = heroInventory.items[attemptedSlot];
+    }
+    else
+    {
+        attemptedItem = myHero.equippedItems[attemptedSlot - heroInventory.storageSpace];
+    }
+    
+    if(attemptedItem == null)
+    {
+         swapItems(selectedSlot, hoveredSlot);
+ return true;
+    }
+    if(attemptedItem instanceof Equipment)
+    {
+Equipment attemptedEquipment = (Equipment)attemptedItem;
+        if(equipmentCanGoThere(attemptedEquipment, attemptedEquipSlot))
+        {
+                     swapItems(selectedSlot, hoveredSlot);
+ return true;
+        }
 
     }
+    return false;
+}
+    
+public boolean equipmentCanGoThere(Equipment aE, int aES)
+{
+    return (aE.equipType == "Helmet" && aES == HELMET) || 
+           (aE.equipType == "Talisman" && aES == TALISMAN) || 
+            (aE.equipType == "Armor" && aES == ARMOR) ||
+            (aE.equipType == "Gloves" && aES == GLOVES) || 
+            (aE.equipType == "Weapon" && aES == WEAPON) || 
+            (aE.equipType == "Boots" && aES == BOOTS);
+}
 
+    
     public void mouseReleased(MouseEvent e) {
 
     }

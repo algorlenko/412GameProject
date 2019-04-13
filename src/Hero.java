@@ -3,7 +3,8 @@ import java.io.IOException;
 
 public class Hero extends Unit {
 
-    Equipment equippedItem;
+    final int SLOTS = 6;
+    Equipment[] equippedItems;
     Inventory myInventory;
     int inventorySpace;
 
@@ -11,8 +12,14 @@ public class Hero extends Unit {
         super(myX, myY, myTiles, myImage);
 
         attackPower = 20;
-        inventorySpace = 10;
-        myInventory = new Inventory(25);
+        inventorySpace = 36;
+        myInventory = new Inventory(36);
+        equippedItems = new Equipment[SLOTS];
+        for(int i =0; i<SLOTS; i++)
+        {
+            equippedItems[i] = null;
+            
+        }
     }
 
     public boolean move(int dx, int dy, Tile myTiles[][], int dungeonColumns, int dungeonRows, StatusScreen myStatus) {
@@ -69,4 +76,21 @@ public class Hero extends Unit {
         return true;
     }
 
+    public void equip(Equipment addedEquipment, int slot)
+    {
+                equippedItems[slot] = addedEquipment;
+        if(addedEquipment != null)
+        {
+        attackPower += addedEquipment.powerLevel;
+        }
+    }
+    
+    public void unequip(Equipment removedEquip)
+    {
+        if(removedEquip != null)
+        {
+        attackPower -= removedEquip.powerLevel;
+        }
+    }
+    
 }

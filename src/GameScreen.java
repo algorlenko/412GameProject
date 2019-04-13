@@ -41,6 +41,21 @@ public class GameScreen extends JPanel implements ActionListener {
 
         initScreen();
     }
+public void changeCursor(Image newCursor)
+{
+        Image cursorImage = new ImageIcon("/selector.png").getImage();
+    Point hotspot = new Point(0, 0);
+    String cursorName = "Lightsaber Cursor";
+    setCursor(getToolkit().createCustomCursor(newCursor, hotspot, cursorName));
+    
+}
+public void resetCursor()
+{
+    
+setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    
+}
+
 
     private void initScreen() throws IOException {
         myBufferedDimension = new Dimension(1920, 1080);
@@ -110,17 +125,19 @@ public class GameScreen extends JPanel implements ActionListener {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            myGSM.mousePressed(e);
+            //myGSM.mousePressed(e);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            myGSM.mouseReleased(e);
+            //myGSM.mouseReleased(e);
         }
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            System.out.println("I caught a click.");
             myGSM.mouseClicked(e);
+            
         }
 
     }

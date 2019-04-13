@@ -18,6 +18,8 @@ public class GameStateManager {
     //   public static final int SPELLBOOKTATE = 3;
     //   public static final int NEWCHARACTERSTATE = 4;
 
+    Hero myHero;
+    
     public GameStateManager(GameScreen passedScreen) throws IOException {
 
         // hero = new Design.Hero("/player/base/demonspawn_black_m.png");
@@ -26,7 +28,7 @@ public class GameStateManager {
         // currentState = ADVENTURESTATE;
         //currentState = ADVENTURESTATE;
         gameStates.add(new GameEngine(myScreen, this));
-        Hero myHero = gameStates.get(0).myHero;
+        myHero = gameStates.get(ADVENTURESTATE).myHero;
         gameStates.add(new InventoryState(myScreen, this, myHero));
         gameStates.add(new MainMenuState(myScreen, this));
         gameStates.add(new PauseMenuState(myScreen, this));
@@ -40,6 +42,10 @@ public class GameStateManager {
 
     public void setState(int state) {
         currentState = state;
+        if(state != INVENTORYSTATE)
+        {
+        myScreen.resetCursor();
+        }
         //       gameStates.get(currentState).draw(); //there is no reason this should not work
         //gameStates.get(currentState).init();
 //        myScreen.repaint();

@@ -6,10 +6,10 @@ public class Monster extends Unit {
 
     public InventoryItem[] myDrops;
 
-    public Monster(int myX, int myY, Tile myTiles[][], String myImage) throws IOException {
+    public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot) throws IOException {
         super(myX, myY, myTiles, myImage);
         myDrops = new InventoryItem[10];
-        myDrops[0] = new InventoryItem("/key_gold.png", "The key to the next level.", "L1Key");
+        myDrops[0] = myLoot;
         attackPower = 2;
         for (int i = 1; i < 10; i++) {
             myDrops[i] = null;

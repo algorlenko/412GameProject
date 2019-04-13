@@ -66,9 +66,11 @@ public class GameEngine extends GameState {
 
         myHero = new Hero(0, 0, myTiles, "dknight_1.png");
         turnHolder = myHero;
+        
+        
         myMonsters = new ArrayList<Monster>(); // Create an ArrayList object
-        myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png"));
-        myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png"));
+        myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png", new Equipment ("/item/weapon/mace3.png", 30, "Mace of Power : damage + 30", "MaceOfPower", "Weapon")));
+        myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png", new InventoryItem("/key_gold.png", "The key to the next level.", "L1Key")));
         myWalls = new ArrayList<Wall>();
         myWalls.add(new Wall(2, 2, myTiles, "/dngn/wall/crystal_wall00.png"));
         myWalls.add(new Wall(3, 3, myTiles, "/dngn/wall/crystal_wall00.png"));
@@ -84,8 +86,9 @@ public class GameEngine extends GameState {
             }
         }
         myMonsters.clear();
-        myMonsters.add(new Monster(4, 4, myTiles, "/elf_m.png"));
-        myMonsters.add(new Monster(4, 3, myTiles, "/orange_demon.png"));
+        myMonsters.add(new Monster(4, 4, myTiles, "/elf_m.png", new Equipment ("/item/armour/headgear/cap_jester.png", 20, "Fool's Hat: damage + 20", "FoolHat", "Helmet")));
+        myMonsters.add(new Monster(4, 3, myTiles, "orange_demon.png", new Equipment ("/item/armour/boots4_green.png", 20, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots")));
+        myMonsters.add(new Monster(5, 5, myTiles, "orange_demon.png", new Equipment ("/item/weapon/mace2.png", 3, "Mace of Steel : damage + 3", "MaceOfSteel", "Weapon")));
         myWalls.clear();
         myWalls.add(new Wall(10, 2, myTiles, "/dngn/wall/brick_brown0.png"));
         myWalls.add(new Wall(10, 3, myTiles, "/dngn/wall/brick_brown0.png"));
