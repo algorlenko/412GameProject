@@ -29,8 +29,9 @@ public class DungeonCrawlerOther extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        setResizable(false);
 
-        setResizable(true);
 
         setTitle("Dungeon Crawler Other");
         setLocationRelativeTo(null);
