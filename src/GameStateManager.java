@@ -1,4 +1,5 @@
 
+import java.awt.FontFormatException;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -55,7 +56,7 @@ public class GameStateManager {
         //  gameStates.get(currentState).update();
     }
 
-    public void draw() {
+    public void draw() throws FontFormatException,IOException {
         gameStates.get(currentState).draw();
     }
 

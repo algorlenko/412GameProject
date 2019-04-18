@@ -19,7 +19,7 @@ public class GameEngine extends GameState  {
     public GameScreen thisScreen;
     //public Hero myHero; now all the states have a hero, who will be the same every time. This is how I am currently tackling having a shared inventory.
     Tile[][] myTiles;
-
+    public Image statusImage;
     ArrayList<Monster> myMonsters;
 
     ArrayList<Wall> myWalls;
@@ -45,7 +45,7 @@ public class GameEngine extends GameState  {
     public GameEngine(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         
         
-        
+        statusImage = generateImage("/StatusHUD.png");
         
         dungeonColumns = 20;
         dungeonRows = 10;
@@ -373,7 +373,7 @@ public class GameEngine extends GameState  {
     
         myGraphic.setFont(StatusFont);
         myGraphic.setPaint(new Color(255,255,255));
- 
+        myGraphic.drawImage(statusImage, 0, myHeight, myWidth, myHeight/4, null);
         myGraphic.drawString(myStatus.message, 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
         /*if (myMonsters.size() != 0) {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + "\nThe Monster's Hp is: " + myMonsters.get(0).hp, 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
