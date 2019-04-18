@@ -1,6 +1,8 @@
 
+import java.awt.FontFormatException;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public abstract class GameState {
 
@@ -10,7 +12,7 @@ public abstract class GameState {
     //public abstract void update();
     public Hero myHero;
 
-    public abstract void draw();
+    public abstract void draw() throws FontFormatException, IOException;
 
     public abstract void keyPressed(KeyEvent e);
 
