@@ -1,20 +1,15 @@
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.EventQueue;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
-
 import java.util.ArrayList; // import the ArrayList class
 
 public class GameEngine extends GameState  {
-    
     
     public GameScreen thisScreen;
     //public Hero myHero; now all the states have a hero, who will be the same every time. This is how I am currently tackling having a shared inventory.
@@ -43,7 +38,6 @@ public class GameEngine extends GameState  {
     public int heroFrame; // delete this
 
     public GameEngine(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
-        
         
         statusImage = generateImage("/StatusHUD.png");
         
@@ -167,8 +161,6 @@ public class GameEngine extends GameState  {
     }
 
     public void mousePressed(MouseEvent e) {
-
-
 
     }
 
@@ -367,41 +359,10 @@ public class GameEngine extends GameState  {
     }
 
     private void drawStatus(Graphics2D myGraphic) throws FontFormatException, IOException{
-        
         Font StatusFont = new Font("TimesRoman", Font.ROMAN_BASELINE, 30);
-        
-        
-
         int myHeight = (thisScreen.myBufferedDimension.height / 5) * 4;
         int myWidth = thisScreen.myBufferedDimension.width;
-    
-        myGraphic.setFont(StatusFont);
-        myGraphic.setPaint(new Color(255,255,255));
-        myGraphic.drawImage(statusImage, 0, myHeight, myWidth, myHeight/4, null);
-        myGraphic.drawString(myStatus.message, 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
-        /*if (myMonsters.size() != 0) {
-            myGraphic.drawString("Your current Hp is: " + myHero.hp + "\nThe Monster's Hp is: " + myMonsters.get(0).hp, 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
-        } else {
-            myGraphic.drawString("Your current Hp is: " + myHero.hp + "\nAll monsters on this floor are dead.", 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
-        }*/
-        // myGraphic.drawString("the Current Frame is: " + heroFrame, 200, 50);
-
-        if (myHero.hp <= (100 / 3) * 2 && myHero.hp > (100 / 3)) { // NO HARDCODED NUMBERS >:(
-            myGraphic.setColor(Color.YELLOW);
-            myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3+110, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2-20, myHero.hp, 20);
-            myGraphic.drawString("HP: " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);//for displaying hp 
-        }
-        if (myHero.hp < (100 / 3) && myHero.hp >= 0) {
-            myGraphic.setColor(Color.RED);
-            myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3+110, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2-20, myHero.hp, 20);
-            myGraphic.drawString("HP: " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
-        }
-        if (myHero.hp > (100 / 3) * 2) {
-            myGraphic.setColor(Color.GREEN);
-            myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3+110, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2 -20, myHero.hp, 20);
-            myGraphic.drawString("HP: " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
-        }
-
+       myStatus.drawStatus(myGraphic, statusImage, StatusFont, myWidth, myHeight, thisScreen, myHero);
     }
 
 }

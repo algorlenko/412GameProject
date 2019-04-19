@@ -24,8 +24,8 @@ public class InventoryState extends GameState {
     public final int HELMET = 0;
     public final int TALISMAN = 1;
     public final int ARMOR = 2;
-    public final int GLOVES = 3;
-public final int WEAPON = 4;
+    public final int WEAPON = 3;
+public final int OFFHAND = 4;
 
 public final int BOOTS = 5;
     
@@ -37,7 +37,7 @@ public final int BOOTS = 5;
         rows = (int) Math.sqrt(heroInventory.storageSpace);
         columns = rows;
         hoveredSlot = -1;
-        menuImage= generateImage("/Menu/InventorySheen3.png");
+        menuImage= generateImage("/Menu/InventorySheen4.png");
         selectedSlot = -1;
     }
 
@@ -79,7 +79,7 @@ public final int BOOTS = 5;
         for(int i =0; i < myHero.SLOTS; i++)
         if(myHero.equippedItems[i] != null)
         {
-        thisScreen.gbi.drawImage(myHero.equippedItems[i].image, ((myWidth / columns) * 8), (myHeight / rows) * i, myWidth / columns, myHeight / rows, null);
+        thisScreen.gbi.drawImage(myHero.equippedItems[i].image, ((myWidth / columns) * 10), (myHeight / rows) * i, myWidth / columns, myHeight / rows, null);
         }
         
     }
@@ -97,7 +97,7 @@ public final int BOOTS = 5;
             int hoveredEquipSlot = hoveredSlot - heroInventory.storageSpace;
             if (myHero.equippedItems[hoveredEquipSlot] != null) {
             int y = hoveredEquipSlot;
-                int x = 8;
+                int x = 9;
                 thisScreen.gbi.drawString(myHero.equippedItems[hoveredEquipSlot].itemDescription, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
             }
             }
@@ -290,8 +290,8 @@ public boolean equipmentCanGoThere(Equipment aE, int aES)
     return (aE.equipType == "Helmet" && aES == HELMET) || 
            (aE.equipType == "Talisman" && aES == TALISMAN) || 
             (aE.equipType == "Armor" && aES == ARMOR) ||
-            (aE.equipType == "Gloves" && aES == GLOVES) || 
             (aE.equipType == "Weapon" && aES == WEAPON) || 
+            (aE.equipType == "Offhand" && aES == OFFHAND) || 
             (aE.equipType == "Boots" && aES == BOOTS);
 }
 

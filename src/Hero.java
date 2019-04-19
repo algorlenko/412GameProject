@@ -93,4 +93,9 @@ public class Hero extends Unit {
         }
     }
     
+    public void calculateStats()
+    {
+        // this will be a function that will make strength autmoaticallt update HP and damage, and will make equipping Items apply their relevant stat boosts
+    }
+    
 }
