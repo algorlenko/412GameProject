@@ -41,21 +41,20 @@ public class GameScreen extends JPanel implements ActionListener {
 
         initScreen();
     }
-public void changeCursor(Image newCursor)
-{
-        Image cursorImage = new ImageIcon("/selector.png").getImage();
-    Point hotspot = new Point(0, 0);
-    String cursorName = "Lightsaber Cursor";
-    setCursor(getToolkit().createCustomCursor(newCursor, hotspot, cursorName));
-    
-}
-public void resetCursor()
-{
-    
-setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    
-}
 
+    public void changeCursor(Image newCursor) {
+        Image cursorImage = new ImageIcon("/selector.png").getImage();
+        Point hotspot = new Point(0, 0);
+        String cursorName = "Lightsaber Cursor";
+        setCursor(getToolkit().createCustomCursor(newCursor, hotspot, cursorName));
+
+    }
+
+    public void resetCursor() {
+
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+
+    }
 
     private void initScreen() throws IOException {
         myBufferedDimension = new Dimension(1920, 1080);
@@ -85,8 +84,12 @@ setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         Graphics2D g2d = (Graphics2D) g;
 
         // Creates the buffered image.
-        myGSM.draw();
+        try {
+            myGSM.draw();
+        } catch (Exception exc) {
+            exc.printStackTrace();
 
+        }
         //drawTiles(gbi);
         //drawStatus(gbi);
         g2d.drawImage(buffImage, 0, 0, this.getSize().width, this.getSize().height, null);
@@ -137,7 +140,7 @@ setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         public void mouseClicked(MouseEvent e) {
             System.out.println("I caught a click.");
             myGSM.mouseClicked(e);
-            
+
         }
 
     }

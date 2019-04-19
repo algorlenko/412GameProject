@@ -266,6 +266,10 @@ public class GameEngine extends GameState  {
 
         }
         turnHolder = myHero;
+        if(!myHero.isAlive)
+        {
+            myGSM.setState(4);
+        }
     }
 
     public void mouseMoved(MouseEvent e) {
