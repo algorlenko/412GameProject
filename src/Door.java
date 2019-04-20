@@ -46,13 +46,13 @@ public class Door extends MapObject implements Useable {
             int removedItem;
             removedItem = myHero.myInventory.searchFor("L1Key");
             myHero.myInventory.clearSlot(removedItem);
-            myStatus.message = "You have unlocked the door using your key.";
+            myStatus.pushMessage("You have unlocked the door using your key.");
             return 1;
         }
-        myStatus.message = "You do not have the key.";
+        myStatus.pushMessage("You do not have the key.");
         return -1;
         }
-     myStatus.message = "The Door is already open.";
+     myStatus.pushMessage("The Door is already open.");
      return -1;
     }
     }

@@ -7,10 +7,11 @@ public class Hero extends Unit {
     Equipment[] equippedItems;
     Inventory myInventory;
     int inventorySpace;
+    int goldCoins;
 
-    public Hero(int myX, int myY, Tile myTiles[][], String myImage) throws IOException {
-        super(myX, myY, myTiles, myImage);
-
+    public Hero(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
+        super(myX, myY, myTiles, myImage, myMaxHP);
+        goldCoins = 0;
         attackPower = 20;
         inventorySpace = 36;
         myInventory = new Inventory(36);
@@ -44,16 +45,16 @@ public class Hero extends Unit {
                 {
                     if (pickUpItems((LootBag) myTiles[futureX][futureY].myContents[2])) {
                         myTiles[x][y].clearAtLayer(2);
-                        myStatus.message = "You have picked up an item";
+                        myStatus.pushMessage("You have picked up an item");
                     }
                 }
 
                 return true;
             }
-            myStatus.message = "You cannnot move there";
+            myStatus.pushMessage("You cannnot move there");
             return false;
         }
-        myStatus.message = "You cannnot move there";
+        myStatus.pushMessage("You cannnot move there");
         return false;
     }
 

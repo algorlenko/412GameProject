@@ -12,17 +12,24 @@ import java.util.ArrayList; // import the ArrayList class
 public class GameEngine extends GameState  {
     
     public GameScreen thisScreen;
+    
+    public int currentFloor;
     //public Hero myHero; now all the states have a hero, who will be the same every time. This is how I am currently tackling having a shared inventory.
     Tile[][] myTiles;
     public Image statusImage;
     ArrayList<Monster> myMonsters;
 
+    
+    public Point hoveredTile;
+    
     ArrayList<Wall> myWalls;
 
     public Monster selectedMonster;
     public int monsterIndex;
 
     Unit turnHolder;
+    
+    public Door myDoor;
 
     public final int UNITLAYER = 3; //if you change this unitlayer, you need to also change it in the Unit class.
 
@@ -39,13 +46,18 @@ public class GameEngine extends GameState  {
 
     public GameEngine(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         
+        currentFloor = 1;
         statusImage = generateImage("/StatusHUD.png");
         
         dungeonColumns = 20;
         dungeonRows = 10;
         thisScreen = myScreen;
         myTiles = new Tile[dungeonColumns][dungeonRows];
-
+hoveredTile = new Point(-1, -1);
+        Font GeneralFont = new Font("TimesRoman", Font.ROMAN_BASELINE, 30);
+        myScreen.gbi.setFont(GeneralFont);
+        
+        
         myGSM = passedGSM;
         //emptyImage = generateImage
         for (int i = 0; i < dungeonColumns; i++) {
@@ -63,39 +75,22 @@ public class GameEngine extends GameState  {
         FPStest[3] = generateImage("dknight_4.png");
         heroFrame = 0;
 
-        myHero = new Hero(0, 0, myTiles, "dknight_1.png");
+        myHero = new Hero(0, 0, myTiles, "dknight_1.png", 100);
         turnHolder = myHero;
         
         
         myMonsters = new ArrayList<Monster>(); // Create an ArrayList object
-        myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png", new Equipment ("/item/weapon/mace3.png", 30, "Mace of Power : damage + 30", "MaceOfPower", "Weapon")));
-        myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png", new InventoryItem("/key_gold.png", "The key to the next level.", "L1Key")));
+        myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png", new Equipment ("/item/weapon/mace3.png", 30, "Mace of Power : damage + 30", "MaceOfPower", "Weapon"), 100));
+        myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png", new InventoryItem("/key_gold.png", "The key to the next level.", "L1Key"), 100));
         myWalls = new ArrayList<Wall>();
         myWalls.add(new Wall(2, 2, myTiles, "/dngn/wall/crystal_wall00.png"));
         myWalls.add(new Wall(3, 3, myTiles, "/dngn/wall/crystal_wall00.png"));
         myStatus = new StatusScreen();
-        Door myDoor = new Door(5, 5, myTiles);
+        myDoor = new Door(5, 5, myTiles);
     }
 
     public void makeNewLevel() throws IOException {
-        for (int i = 0; i < dungeonColumns; i++) {
-            for (int j = 0; j < dungeonRows; j++) {
-                myTiles[i][j] = new Tile(i, j, "/dngn/floor/green_bones12.png");
-                //myTiles[i][j].syncTileWithScreen(); 
-            }
-        }
-        myMonsters.clear();
-        myMonsters.add(new Monster(4, 4, myTiles, "/elf_m.png", new Equipment ("/item/armour/headgear/cap_jester.png", 20, "Fool's Hat: damage + 20", "FoolHat", "Helmet")));
-        myMonsters.add(new Monster(4, 3, myTiles, "orange_demon.png", new Equipment ("/item/armour/boots4_green.png", 20, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots")));
-        myMonsters.add(new Monster(5, 5, myTiles, "orange_demon.png", new Equipment ("/item/weapon/mace2.png", 3, "Mace of Steel : damage + 3", "MaceOfSteel", "Weapon")));
-        myWalls.clear();
-        myWalls.add(new Wall(10, 2, myTiles, "/dngn/wall/brick_brown0.png"));
-        myWalls.add(new Wall(10, 3, myTiles, "/dngn/wall/brick_brown0.png"));
-                        myTiles[myHero.x][myHero.y].myContents[3] = null;
-                myTiles[myHero.x][myHero.y].imageName[3] = "/empty.png";
-                myHero.x = 9;
-                myHero.y = 9;
-        myHero.loadIntoTile(9, 9, myTiles);
+LevelGenerator.makeNewLevel(this);
     }
 
     @Override
@@ -186,7 +181,7 @@ public class GameEngine extends GameState  {
                     }
                 }
             } else {
-                myStatus.message = "Your Target is out of Range.";
+                myStatus.pushMessage("Your Target is out of Range.");
             }
 
         }
@@ -207,10 +202,10 @@ public class GameEngine extends GameState  {
 
                 }
             } else {
-                myStatus.message = "Your Target is out of Range.";
+                myStatus.pushMessage("Your Target is out of Range.");
             }
         } else {
-            myStatus.message = "You cannot Attack this area.";
+            myStatus.pushMessage("You cannot Attack this area.");
         }
 
     }
@@ -265,7 +260,14 @@ public class GameEngine extends GameState  {
     }
 
     public void mouseMoved(MouseEvent e) {
+hoveredTile = calculateTile(e.getX(), e.getY());
 
+        if (hoveredTile.x < dungeonColumns && hoveredTile.x >= 0 && hoveredTile.y < dungeonRows && hoveredTile.y >= 0)
+        {
+            return;
+        }
+hoveredTile.x = -1;
+hoveredTile.y = -1;
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -330,6 +332,7 @@ public class GameEngine extends GameState  {
         Graphics2D myGraphic = thisScreen.gbi;
         drawTiles(myGraphic);
         drawStatus(myGraphic);
+        drawHovering(myGraphic);
     }
 
     private void drawTiles(Graphics2D myGraphic) {
@@ -358,11 +361,26 @@ public class GameEngine extends GameState  {
         myHero.image = FPStest[heroFrame]; // delete this
     }
 
+    public void drawHovering(Graphics2D myGraphic)
+    {
+       if(hoveredTile.x != -1 && hoveredTile.y != -1)
+       {
+                   int myHeight = (thisScreen.myBufferedDimension.height / 5) * 4;
+        int myWidth = thisScreen.myBufferedDimension.width;
+        MapObject hoveredObject = myTiles[hoveredTile.x][hoveredTile.y].myContents[UNITLAYER];
+           if(hoveredObject instanceof Unit)
+           {
+               Unit hoveredUnit = (Unit) hoveredObject;
+          myGraphic.drawString(hoveredUnit.hp + " / " + hoveredUnit.maxHP, ((myWidth / dungeonColumns) * hoveredTile.x), (myHeight / dungeonRows) * hoveredTile.y);
+           }
+       }
+    }
+    
     private void drawStatus(Graphics2D myGraphic) throws FontFormatException, IOException{
-        Font StatusFont = new Font("TimesRoman", Font.ROMAN_BASELINE, 30);
+
         int myHeight = (thisScreen.myBufferedDimension.height / 5) * 4;
         int myWidth = thisScreen.myBufferedDimension.width;
-       myStatus.drawStatus(myGraphic, statusImage, StatusFont, myWidth, myHeight, thisScreen, myHero);
+       myStatus.drawStatus(myGraphic, statusImage, myWidth, myHeight, thisScreen, myHero);
     }
 
 }

@@ -3,18 +3,20 @@ import java.io.IOException;
 
 public class Unit extends MapObject {
 
+    int maxHP;
     int hp;
     boolean isAlive;
     int attackPower;
 
-    public Unit(int myX, int myY, Tile myTiles[][], String myImage) throws IOException {
+    public Unit(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         myLayer = 3; //if you change this unitLayer you need to change it in the GameEngine/AdventureState class as well.
         unitImage = myImage;
         image = generateImage(unitImage);
         x = myX;
         y = myY;
         loadIntoTile(x, y, myTiles);
-        hp = 100;
+        maxHP = myMaxHP;
+        hp = maxHP;
         isAlive = true;
     }
 

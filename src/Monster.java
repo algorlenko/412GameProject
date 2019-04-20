@@ -6,8 +6,8 @@ public class Monster extends Unit {
 
     public InventoryItem[] myDrops;
 
-    public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot) throws IOException {
-        super(myX, myY, myTiles, myImage);
+    public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP) throws IOException {
+        super(myX, myY, myTiles, myImage, myMaxHP);
         myDrops = new InventoryItem[10];
         myDrops[0] = myLoot;
         attackPower = 2;
@@ -44,7 +44,7 @@ public class Monster extends Unit {
         if (target != null) {
             Unit unitTarget = (Unit) target;
             attack(unitTarget, myTiles);
-            myStatus.message = "The Hero has been attacked!";
+            myStatus.pushMessage("The Hero has been attacked!");
         } else {
             int n=rand.nextInt(4);
             switch (n){
@@ -91,7 +91,7 @@ public class Monster extends Unit {
     @Override
     public void deathFunction(Tile myTiles[][]) throws IOException {
         super.deathFunction(myTiles);
-        if (myDrops != null) {
+        if (myDrops[0] != null) {
             if (myTiles[x][y].myContents[2] == null) {
                 new LootBag(x, y, myTiles, myDrops);
             } else if (myTiles[x][y].myContents[2] instanceof LootBag) {
