@@ -62,14 +62,16 @@ public class Hero extends Unit {
         recipient.takeDamage(attackPower, myTiles);
     }
 
-    public boolean pickUpItems(LootBag target) { // this is poorly written and should be rewritten with arraylists
+    public boolean pickUpItems(LootBag target) { // this is still kinda poorly written
 
-        for (int i = 0; i < 10; i++) {
-            if (target.droppedItems[i] == null) {
+        for (int i = 0; i < target.droppedItems.size(); i++) {
+            if (target.droppedItems.get(i) == null) {
                 return true;
             }
             if (myInventory.hasSpace()) {
-                myInventory.addItem(target.droppedItems[i]);
+                myInventory.addItem(target.droppedItems.get(i));
+                target.droppedItems.remove(i);
+                i--;
             } else {
                 return false;
             }

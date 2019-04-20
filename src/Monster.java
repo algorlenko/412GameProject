@@ -1,19 +1,25 @@
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Monster extends Unit {
 
-    public InventoryItem[] myDrops;
+    public ArrayList<InventoryItem> myDrops;
 
     public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP) throws IOException {
         super(myX, myY, myTiles, myImage, myMaxHP);
-        myDrops = new InventoryItem[10];
-        myDrops[0] = myLoot;
-        attackPower = 2;
-        for (int i = 1; i < 10; i++) {
-            myDrops[i] = null;
+        myDrops = new ArrayList <InventoryItem>();
+        if(myLoot != null)
+        {
+        myDrops.add(myLoot);
         }
+        else
+        {
+            myDrops = null;
+        }
+       // myDrops[0] = myLoot;
+        attackPower = 2;
 
     }
 
@@ -91,7 +97,7 @@ public class Monster extends Unit {
     @Override
     public void deathFunction(Tile myTiles[][]) throws IOException {
         super.deathFunction(myTiles);
-        if (myDrops[0] != null) {
+        if (myDrops != null) {
             if (myTiles[x][y].myContents[2] == null) {
                 new LootBag(x, y, myTiles, myDrops);
             } else if (myTiles[x][y].myContents[2] instanceof LootBag) {
