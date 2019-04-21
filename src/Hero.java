@@ -7,7 +7,7 @@ public class Hero extends Unit {
     Equipment[] equippedItems;
     Inventory myInventory;
     int inventorySpace;
-    int goldCoins;
+    double goldCoins;
 
     public Hero(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         super(myX, myY, myTiles, myImage, myMaxHP);
@@ -43,10 +43,31 @@ public class Hero extends Unit {
 
                 if (myTiles[futureX][futureY].myContents[2] instanceof LootBag) // this entire if statement could be converted into a more comprehensive pickUpItem function
                 {
-                    if (pickUpItems((LootBag) myTiles[futureX][futureY].myContents[2])) {
-                        myTiles[x][y].clearAtLayer(2);
-                        myStatus.pushMessage("You have picked up an item");
+                    double howMuchGold;
+                    String tempMessage;
+                    LootBag myGrabbedLoot;
+                    myGrabbedLoot = ((LootBag) myTiles[futureX][futureY].myContents[2]);
+                    howMuchGold = myGrabbedLoot.goldCoins;
+                    if(myGrabbedLoot.droppedItems == null)
+                    {
+                        tempMessage = "You have picked up " + (int) howMuchGold + " gold coins.";
                     }
+                    else if (myGrabbedLoot.droppedItems.size() == 1)
+                    {
+                        tempMessage = "You have picked up an item, and " + (int) howMuchGold + " gold coins.";
+                    }
+                    else
+                    {
+                        tempMessage = "You have picked up some items, and " + (int) howMuchGold + " gold coins.";
+                    }
+                    if (pickUpItems(myGrabbedLoot)) {
+                        myTiles[x][y].clearAtLayer(2);
+                    }
+                    else
+                    {
+                        tempMessage = "Your Inventory is Full, but you grabbed the " + (int) howMuchGold + " gold coins.";
+                    }
+                    myStatus.pushMessage(tempMessage);
                 }
 
                 return true;
@@ -64,6 +85,10 @@ public class Hero extends Unit {
 
     public boolean pickUpItems(LootBag target) { // this is still kinda poorly written
 
+        goldCoins += target.goldCoins;
+        target.goldCoins = 0;
+        if(target.droppedItems != null)
+        {
         for (int i = 0; i < target.droppedItems.size(); i++) {
             if (target.droppedItems.get(i) == null) {
                 return true;
@@ -75,6 +100,7 @@ public class Hero extends Unit {
             } else {
                 return false;
             }
+        }
         }
         return true;
     }
