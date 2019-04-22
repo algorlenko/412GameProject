@@ -9,12 +9,16 @@ public class InventoryItem {
     Image image;
     String itemName;
     String itemDescription;
+    boolean isSellable;
+    long goldValue;
 
     public InventoryItem(String myImageName, String myDescription, String myItemName) throws IOException {
         itemName = myItemName;
         imageName = myImageName;
         image = generateImage(imageName);
         itemDescription = myDescription;
+        isSellable = false;
+        goldValue = 100;
     }
 
     public Image generateImage(String myImageName) throws IOException {

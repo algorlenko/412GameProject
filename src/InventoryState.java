@@ -116,6 +116,11 @@ thisScreen.gbi.drawString("the Hero's current Attack power is: " + myHero.attack
             myGSM.setState(2); // Goes to Main Menu
 
         }
+        if (key == KeyEvent.VK_S) {
+            lightlyResetInventory();
+            myGSM.setState(5); // Goes to Main Menu
+
+        }
 
     }
 public void lightlyResetInventory()

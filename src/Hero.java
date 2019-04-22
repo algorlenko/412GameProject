@@ -7,7 +7,7 @@ public class Hero extends Unit {
     Equipment[] equippedItems;
     Inventory myInventory;
     int inventorySpace;
-    double goldCoins;
+    long goldCoins;
 
     public Hero(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         super(myX, myY, myTiles, myImage, myMaxHP);
@@ -43,29 +43,29 @@ public class Hero extends Unit {
 
                 if (myTiles[futureX][futureY].myContents[2] instanceof LootBag) // this entire if statement could be converted into a more comprehensive pickUpItem function
                 {
-                    double howMuchGold;
+                    long howMuchGold;
                     String tempMessage;
                     LootBag myGrabbedLoot;
                     myGrabbedLoot = ((LootBag) myTiles[futureX][futureY].myContents[2]);
                     howMuchGold = myGrabbedLoot.goldCoins;
                     if(myGrabbedLoot.droppedItems == null)
                     {
-                        tempMessage = "You have picked up " + (int) howMuchGold + " gold coins.";
+                        tempMessage = "You have picked up " + howMuchGold + " gold coins.";
                     }
                     else if (myGrabbedLoot.droppedItems.size() == 1)
                     {
-                        tempMessage = "You have picked up an item, and " + (int) howMuchGold + " gold coins.";
+                        tempMessage = "You have picked up an item, and " + howMuchGold + " gold coins.";
                     }
                     else
                     {
-                        tempMessage = "You have picked up some items, and " + (int) howMuchGold + " gold coins.";
+                        tempMessage = "You have picked up some items, and " + howMuchGold + " gold coins.";
                     }
                     if (pickUpItems(myGrabbedLoot)) {
                         myTiles[x][y].clearAtLayer(2);
                     }
                     else
                     {
-                        tempMessage = "Your Inventory is Full, but you grabbed the " + (int) howMuchGold + " gold coins.";
+                        tempMessage = "Your Inventory is Full, but you grabbed the " + howMuchGold + " gold coins.";
                     }
                     myStatus.pushMessage(tempMessage);
                 }

@@ -7,7 +7,7 @@ public class Monster extends Unit {
 
     public ArrayList<InventoryItem> myDrops;
 
-    double myBounty;
+    long myBounty;
     
     public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP) throws IOException { // this is the simpler constructor
         super(myX, myY, myTiles, myImage, myMaxHP);
@@ -26,9 +26,9 @@ public class Monster extends Unit {
 
     }
 
-        public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP, double myBounty) throws IOException { // this will be the more in-depth constructor
+        public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP, long itsBounty) throws IOException { // this will be the more in-depth constructor
         super(myX, myY, myTiles, myImage, myMaxHP);
-        myBounty = 100;
+        myBounty = itsBounty;
         myDrops = new ArrayList <InventoryItem>();
         if(myLoot != null)
         {

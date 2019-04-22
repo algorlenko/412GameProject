@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class LootBag extends MapObject {
 
     
-    double goldCoins;
+    long goldCoins;
     ArrayList <InventoryItem> droppedItems; //as a large global note, I am finding that basically everything needs to have access to everything, and therefore, I think on future projects, I will give all subclasses a property that is the class that they are part of
 
-    public LootBag(int myX, int myY, Tile myTiles[][], ArrayList <InventoryItem> myItems, double myBounty) throws IOException {
+    public LootBag(int myX, int myY, Tile myTiles[][], ArrayList <InventoryItem> myItems, long myBounty) throws IOException {
         myLayer = 2;
         droppedItems = myItems;
         if(myItems == null)
@@ -26,7 +26,7 @@ public class LootBag extends MapObject {
         loadIntoTile(x, y, myTiles);
     }
 
-    public void addToBag(ArrayList <InventoryItem> addedItems, double addedBounty) //this is poorly written and should be done using lists
+    public void addToBag(ArrayList <InventoryItem> addedItems, long addedBounty) //this is poorly written and should be done using lists
     {
         goldCoins += addedBounty;
         if(droppedItems == null)

@@ -35,7 +35,7 @@ message3 = " ";
         myGraphic.drawString(message2, 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
         myGraphic.drawString(message1, 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) * 3 / 4);
         
-                myGraphic.drawString("Your Current Gold is: " + (int) myHero.goldCoins, 1000, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
+                myGraphic.drawString("Your Current Gold is: " + myHero.goldCoins, 1000, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
         /*if (myMonsters.size() != 0) {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + "\nThe Monster's Hp is: " + myMonsters.get(0).hp, 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
         } else {

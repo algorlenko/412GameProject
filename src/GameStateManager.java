@@ -15,6 +15,7 @@ public class GameStateManager {
     public static final int INVENTORYSTATE = 1;
     public static final int PAUSEMENUSTATE = 3;
     public static final int DEATHSTATE = 4; 
+    public static final int SHOPSTATE = 5;
     //   public static final int SPELLBOOKTATE = 3;
     //   public static final int NEWCHARACTERSTATE = 4;
     public GameStateManager(GameScreen passedScreen) throws IOException {
@@ -29,6 +30,7 @@ public class GameStateManager {
         gameStates.add(new MainMenuState(myScreen, this));
         gameStates.add(new PauseMenuState(myScreen, this));
         gameStates.add(new DeathState(myScreen,this));
+        gameStates.add(new ShopState(myScreen, this, myHero));
         setState(ADVENTURESTATE);
         //gameStates.add(new AdventureState(this));
         //gameStates.add(new InventoryState(this));

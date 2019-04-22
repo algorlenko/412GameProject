@@ -11,6 +11,7 @@ String equipType;
         super(myImageName, myDescription, myItemName);
         powerLevel = myPowerLevel;
         equipType = myType;
+        isSellable = true;
     }
 
 }
