@@ -84,7 +84,7 @@ public class ShopState extends GameState {
                 itemNumber = (j * columns) + i;
                 if (itemNumber < heroInventory.storageSpace) {
                     if (heroInventory.items[itemNumber] != null) {
-                        thisScreen.gbi.drawImage(heroInventory.items[itemNumber].image, ((myWidth / columns) * i)+15, (myHeight / rows) * j+20, (int)(myWidth * 0.8)/ columns, (int)(myHeight * 0.8) / rows, null);
+                        thisScreen.gbi.drawImage(heroInventory.items[itemNumber].image, ((myWidth / columns) * i) + 15, (myHeight / rows) * j + 20, (int) (myWidth * 0.8) / columns, (int) (myHeight * 0.8) / rows, null);
                     }
 
                 }
@@ -96,7 +96,7 @@ public class ShopState extends GameState {
     public void drawEquipped(int myWidth, int myHeight) {
         for (int i = 0; i < myHero.SLOTS; i++) {
             if (myHero.equippedItems[i] != null) {
-                thisScreen.gbi.drawImage(myHero.equippedItems[i].image, ((myWidth / columns) * 10)+15, ((myHeight / rows) * i)+20, (int)(myWidth * 0.8)/ columns, (int)(myHeight * 0.8) / rows, null);
+                thisScreen.gbi.drawImage(myHero.equippedItems[i].image, ((myWidth / columns) * 10) + 15, ((myHeight / rows) * i) + 20, (int) (myWidth * 0.8) / columns, (int) (myHeight * 0.8) / rows, null);
             }
         }
 
@@ -105,7 +105,7 @@ public class ShopState extends GameState {
     public void drawShopStock(int myWidth, int myHeight) {
         for (int i = 0; i < STOCKSIZE; i++) {
             if (shopStock[i] != null) {
-                thisScreen.gbi.drawImage(shopStock[i].image, ((myWidth / columns) * (12 + (i % STOCKROWS)))+15, ((myHeight / rows) * (2 + (i / STOCKROWS)))+20, (int)(myWidth * 0.8)/ columns, (int)(myHeight * 0.8) / rows, null);
+                thisScreen.gbi.drawImage(shopStock[i].image, ((myWidth / columns) * (12 + (i % STOCKROWS))) + 15, ((myHeight / rows) * (2 + (i / STOCKROWS))) + 20, (int) (myWidth * 0.8) / columns, (int) (myHeight * 0.8) / rows, null);
             }
         }
 
@@ -126,7 +126,8 @@ public class ShopState extends GameState {
                 thisScreen.gbi.drawString(myHero.equippedItems[hoveredEquipSlot].itemDescription, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
             }
         }
-        thisScreen.gbi.drawString("the Hero's current Attack power is: " + myHero.attackPower + "and your current Gold is: " + (int) myHero.goldCoins, 900, 900);
+        thisScreen.gbi.drawString("Current Attack Power: " + myHero.attackPower, 750, 50);
+        thisScreen.gbi.drawString("Current Gold is: " + (int) myHero.goldCoins, 750, 100);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -225,18 +226,20 @@ public class ShopState extends GameState {
     }
 
     public void sellItem() {
-        
-            if (selectedSlot < heroInventory.storageSpace && heroInventory.items[selectedSlot].isSellable) {
+
+        if (selectedSlot < heroInventory.storageSpace) {
+            if (heroInventory.items[selectedSlot].isSellable) {
                 myHero.goldCoins += heroInventory.items[selectedSlot].goldValue;
                 heroInventory.items[selectedSlot] = null;
                 lightlyResetInventory();
-            } else if (myHero.equippedItems[selectedSlot - heroInventory.storageSpace].isSellable) {
-                myHero.goldCoins += myHero.equippedItems[selectedSlot - heroInventory.storageSpace].goldValue;
-                myHero.unequip(myHero.equippedItems[selectedSlot - heroInventory.storageSpace]);
-                myHero.equippedItems[selectedSlot - heroInventory.storageSpace] = null;
-                lightlyResetInventory();
             }
-        
+        } else if (myHero.equippedItems[selectedSlot - heroInventory.storageSpace].isSellable) {
+            myHero.goldCoins += myHero.equippedItems[selectedSlot - heroInventory.storageSpace].goldValue;
+            myHero.unequip(myHero.equippedItems[selectedSlot - heroInventory.storageSpace]);
+            myHero.equippedItems[selectedSlot - heroInventory.storageSpace] = null;
+            lightlyResetInventory();
+        }
+
     }
 
     public void buyItem() {

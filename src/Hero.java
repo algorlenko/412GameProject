@@ -14,14 +14,13 @@ public class Hero extends Unit {
         super(myX, myY, myTiles, myImage, myMaxHP);
         goldCoins = 0;
         baseAttackPower = 20;
-        attackPower=baseAttackPower;
+        attackPower = baseAttackPower;
         inventorySpace = 36;
         myInventory = new Inventory(36);
         equippedItems = new Equipment[SLOTS];
-        for(int i =0; i<SLOTS; i++)
-        {
+        for (int i = 0; i < SLOTS; i++) {
             equippedItems[i] = null;
-            
+
         }
     }
 
@@ -42,7 +41,6 @@ public class Hero extends Unit {
                 loadIntoTile(x, y, myTiles);
 
                 //myStatus.message = "you have moved into coordinate" + x + " " + y + "and your current error is: ";
-
                 if (myTiles[futureX][futureY].myContents[2] instanceof LootBag) // this entire if statement could be converted into a more comprehensive pickUpItem function
                 {
                     long howMuchGold;
@@ -50,23 +48,16 @@ public class Hero extends Unit {
                     LootBag myGrabbedLoot;
                     myGrabbedLoot = ((LootBag) myTiles[futureX][futureY].myContents[2]);
                     howMuchGold = myGrabbedLoot.goldCoins;
-                    if(myGrabbedLoot.droppedItems == null)
-                    {
+                    if (myGrabbedLoot.droppedItems == null) {
                         tempMessage = "You have picked up " + howMuchGold + " gold coins.";
-                    }
-                    else if (myGrabbedLoot.droppedItems.size() == 1)
-                    {
+                    } else if (myGrabbedLoot.droppedItems.size() == 1) {
                         tempMessage = "You have picked up an item, and " + howMuchGold + " gold coins.";
-                    }
-                    else
-                    {
+                    } else {
                         tempMessage = "You have picked up some items, and " + howMuchGold + " gold coins.";
                     }
                     if (pickUpItems(myGrabbedLoot)) {
                         myTiles[x][y].clearAtLayer(2);
-                    }
-                    else
-                    {
+                    } else {
                         tempMessage = "Your Inventory is Full, but you grabbed the " + howMuchGold + " gold coins.";
                     }
                     myStatus.pushMessage(tempMessage);
@@ -89,44 +80,41 @@ public class Hero extends Unit {
 
         goldCoins += target.goldCoins;
         target.goldCoins = 0;
-        if(target.droppedItems != null)
-        {
-        for (int i = 0; i < target.droppedItems.size(); i++) {
-            if (target.droppedItems.get(i) == null) {
-                return true;
+        if (target.droppedItems != null) {
+            for (int i = 0; i < target.droppedItems.size(); i++) {
+                if (target.droppedItems.get(i) == null) {
+                    return true;
+                }
+                if (myInventory.hasSpace()) {
+                    myInventory.addItem(target.droppedItems.get(i));
+                    target.droppedItems.remove(i);
+                    i--;
+                } else {
+                    return false;
+                }
             }
-            if (myInventory.hasSpace()) {
-                myInventory.addItem(target.droppedItems.get(i));
-                target.droppedItems.remove(i);
-                i--;
-            } else {
-                return false;
-            }
-        }
         }
         return true;
     }
 
-    public void equip(Equipment addedEquipment, int slot)
-    {
+    public void equip(Equipment addedEquipment, int slot) {
         equippedItems[slot] = addedEquipment;
         calculateStats();
-        
+
     }
-    
-    public void unequip(Equipment removedEquip)
-    {
+
+    public void unequip(Equipment removedEquip) {
         calculateStats();
     }
-    
-    public void calculateStats()
-    {
-        attackPower=baseAttackPower;
-        for(int i=0;i<SLOTS;i++){
-            if(equippedItems[i]!=null)
-                attackPower+=equippedItems[i].powerLevel;
+
+    public void calculateStats() {
+        attackPower = baseAttackPower;
+        for (int i = 0; i < SLOTS; i++) {
+            if (equippedItems[i] != null) {
+                attackPower += equippedItems[i].powerLevel;
+            }
         }
         // this will be a function that will make strength autmoaticallt update HP and damage, and will make equipping Items apply their relevant stat boosts
     }
-    
+
 }

@@ -1,3 +1,4 @@
+
 import java.awt.Image;
 
 import java.awt.event.KeyEvent;
@@ -8,10 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-
-
-
 public class DeathState extends GameState {
+
     public GameStateManager myGSM;
     public GameScreen thisScreen;
     public Image menuImage;
@@ -21,11 +20,11 @@ public class DeathState extends GameState {
     public int menuGap;
     public int selectedItem;
     public int itemCount;
-    
+
     public DeathState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
-       menuImage = generateImage("/Menu/DeathScreen1.png"); //the image is pretty ugly im sorry armeen 
+        menuImage = generateImage("/Menu/DeathScreen1.png"); //the image is pretty ugly im sorry armeen 
         selector = generateImage("/selector.png");
         selectorX = 990;
         selectorY = 382;
@@ -33,33 +32,30 @@ public class DeathState extends GameState {
         selectedItem = 0;
         itemCount = 2;
     }
-    
+
     public void draw() {
         // thisScreen.gbi.drawString(("Presss Enter To return to the Game. Press Z if you would like to exit the game."), 100, 100);
         thisScreen.gbi.drawImage(menuImage, 0, 0, thisScreen.myBufferedDimension.width, thisScreen.myBufferedDimension.height, null);
         drawArrow();
     }
 
-
-
-
     public void drawArrow() {
         // selector below
-        if (selectedItem ==1){
-            thisScreen.gbi.drawImage(selector, selectorX, selectorY + (menuGap * (selectedItem +1)), thisScreen.myBufferedDimension.width / 12, thisScreen.myBufferedDimension.height / 12, null);
+        if (selectedItem == 1) {
+            thisScreen.gbi.drawImage(selector, selectorX, selectorY + (menuGap * (selectedItem + 1)), thisScreen.myBufferedDimension.width / 12, thisScreen.myBufferedDimension.height / 12, null);
         }
-        if (selectedItem ==0){ //had to fix by brute force but oh well
+        if (selectedItem == 0) { //had to fix by brute force but oh well
             thisScreen.gbi.drawImage(selector, selectorX, selectorY + (menuGap * selectedItem), thisScreen.myBufferedDimension.width / 12, thisScreen.myBufferedDimension.height / 12, null);
         }
     }
-    
+
     @Override
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ENTER) {
             if (selectedItem == 0) {
-                myGSM.resetGame(); 
+                myGSM.resetGame();
                 // myGSM.setState(0); // Go to adventure screen (New Game) TODO, make it work 
             }
             if (selectedItem == 1) {
@@ -69,7 +65,6 @@ public class DeathState extends GameState {
         }
 
         //Shortcuts Below
-
         if (key == KeyEvent.VK_X) {
             System.exit(0); // Exit
         }
@@ -78,9 +73,6 @@ public class DeathState extends GameState {
             myGSM.resetGame();
             //myGSM.setState(0); // Go to adventure screen (New Game)
         }
-
-
-
 
         if (key == KeyEvent.VK_DOWN) {
             selectedItem++;
@@ -106,15 +98,9 @@ public class DeathState extends GameState {
         return myResult;
     }
 
-
-
-
     public void keyReleased(KeyEvent e) {
 
     }
-
-
-
 
     public void mousePressed(MouseEvent e) {
         System.out.println(e.getPoint());

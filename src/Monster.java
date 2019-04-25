@@ -8,42 +8,35 @@ public class Monster extends Unit {
     public ArrayList<InventoryItem> myDrops;
 
     long myBounty;
-    
+
     public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP) throws IOException { // this is the simpler constructor
         super(myX, myY, myTiles, myImage, myMaxHP);
         myBounty = 100;
-        myDrops = new ArrayList <InventoryItem>();
-        if(myLoot != null)
-        {
-        myDrops.add(myLoot);
-        }
-        else
-        {
+        myDrops = new ArrayList<InventoryItem>();
+        if (myLoot != null) {
+            myDrops.add(myLoot);
+        } else {
             myDrops = null;
         }
-       // myDrops[0] = myLoot;
+        // myDrops[0] = myLoot;
         attackPower = 2;
 
     }
 
-        public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP, long itsBounty) throws IOException { // this will be the more in-depth constructor
+    public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP, long itsBounty) throws IOException { // this will be the more in-depth constructor
         super(myX, myY, myTiles, myImage, myMaxHP);
         myBounty = itsBounty;
-        myDrops = new ArrayList <InventoryItem>();
-        if(myLoot != null)
-        {
-        myDrops.add(myLoot);
-        }
-        else
-        {
+        myDrops = new ArrayList<InventoryItem>();
+        if (myLoot != null) {
+            myDrops.add(myLoot);
+        } else {
             myDrops = null;
         }
-       // myDrops[0] = myLoot;
+        // myDrops[0] = myLoot;
         attackPower = 2;
 
     }
-    
-    
+
     public void move(int dx, int dy, Tile myTiles[][], int dungeonColumns, int dungeonRows) {
         int futureX = x + dx;
         int futureY = y + dy;
@@ -66,32 +59,32 @@ public class Monster extends Unit {
         MapObject target = null;
         target = scanInRadius(1, myTiles);
         Random rand = new Random();
-        int xMove=0;
-        int yMove=0;
+        int xMove = 0;
+        int yMove = 0;
         if (target != null) {
             Unit unitTarget = (Unit) target;
             attack(unitTarget, myTiles);
             myStatus.pushMessage("The Hero has been attacked!");
         } else {
-            int n=rand.nextInt(4);
-            switch (n){
+            int n = rand.nextInt(4);
+            switch (n) {
                 case 0:
-                    xMove=-1;
-                    yMove=0;
+                    xMove = -1;
+                    yMove = 0;
                     break;
                 case 1:
-                    xMove=0;
-                    yMove=1;
+                    xMove = 0;
+                    yMove = 1;
                     break;
                 case 2:
-                    xMove=1;
-                    yMove=0;
+                    xMove = 1;
+                    yMove = 0;
                     break;
                 case 3:
-                    xMove=0;
-                    yMove=-1;
+                    xMove = 0;
+                    yMove = -1;
                     break;
-                    
+
             }
             move(xMove, yMove, myTiles, myTiles.length, myTiles[0].length);
         }
@@ -118,15 +111,15 @@ public class Monster extends Unit {
     @Override
     public void deathFunction(Tile myTiles[][]) throws IOException {
         super.deathFunction(myTiles);
-       // if (myDrops != null) {
-            if (myTiles[x][y].myContents[2] == null) {
-                new LootBag(x, y, myTiles, myDrops, myBounty);
-            } else if (myTiles[x][y].myContents[2] instanceof LootBag) {
-                LootBag currentBag = (LootBag) myTiles[x][y].myContents[2];
-                currentBag.addToBag(myDrops, myBounty);
-            }
+        // if (myDrops != null) {
+        if (myTiles[x][y].myContents[2] == null) {
+            new LootBag(x, y, myTiles, myDrops, myBounty);
+        } else if (myTiles[x][y].myContents[2] instanceof LootBag) {
+            LootBag currentBag = (LootBag) myTiles[x][y].myContents[2];
+            currentBag.addToBag(myDrops, myBounty);
+        }
 
-       // }
+        // }
     }
 
 }
