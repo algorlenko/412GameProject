@@ -84,7 +84,7 @@ public class ShopState extends GameState {
                 itemNumber = (j * columns) + i;
                 if (itemNumber < heroInventory.storageSpace) {
                     if (heroInventory.items[itemNumber] != null) {
-                        thisScreen.gbi.drawImage(heroInventory.items[itemNumber].image, ((myWidth / columns) * i), (myHeight / rows) * j, myWidth / columns, myHeight / rows, null);
+                        thisScreen.gbi.drawImage(heroInventory.items[itemNumber].image, ((myWidth / columns) * i)+15, (myHeight / rows) * j+20, (int)(myWidth * 0.8)/ columns, (int)(myHeight * 0.8) / rows, null);
                     }
 
                 }
@@ -96,7 +96,7 @@ public class ShopState extends GameState {
     public void drawEquipped(int myWidth, int myHeight) {
         for (int i = 0; i < myHero.SLOTS; i++) {
             if (myHero.equippedItems[i] != null) {
-                thisScreen.gbi.drawImage(myHero.equippedItems[i].image, ((myWidth / columns) * 10), (myHeight / rows) * i, myWidth / columns, myHeight / rows, null);
+                thisScreen.gbi.drawImage(myHero.equippedItems[i].image, ((myWidth / columns) * 10)+15, ((myHeight / rows) * i)+20, (int)(myWidth * 0.8)/ columns, (int)(myHeight * 0.8) / rows, null);
             }
         }
 
@@ -105,7 +105,7 @@ public class ShopState extends GameState {
     public void drawShopStock(int myWidth, int myHeight) {
         for (int i = 0; i < STOCKSIZE; i++) {
             if (shopStock[i] != null) {
-                thisScreen.gbi.drawImage(shopStock[i].image, ((myWidth / columns) * (12 + (i % STOCKROWS))), (myHeight / rows) * (2 + (i / STOCKROWS)), myWidth / columns, myHeight / rows, null);
+                thisScreen.gbi.drawImage(shopStock[i].image, ((myWidth / columns) * (12 + (i % STOCKROWS)))+15, ((myHeight / rows) * (2 + (i / STOCKROWS)))+20, (int)(myWidth * 0.8)/ columns, (int)(myHeight * 0.8) / rows, null);
             }
         }
 

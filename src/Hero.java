@@ -8,11 +8,13 @@ public class Hero extends Unit {
     Inventory myInventory;
     int inventorySpace;
     long goldCoins;
+    int baseAttackPower;
 
     public Hero(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         super(myX, myY, myTiles, myImage, myMaxHP);
         goldCoins = 0;
-        attackPower = 20;
+        baseAttackPower = 20;
+        attackPower=baseAttackPower;
         inventorySpace = 36;
         myInventory = new Inventory(36);
         equippedItems = new Equipment[SLOTS];
@@ -107,23 +109,23 @@ public class Hero extends Unit {
 
     public void equip(Equipment addedEquipment, int slot)
     {
-                equippedItems[slot] = addedEquipment;
-        if(addedEquipment != null)
-        {
-        attackPower += addedEquipment.powerLevel;
-        }
+        equippedItems[slot] = addedEquipment;
+        calculateStats();
+        
     }
     
     public void unequip(Equipment removedEquip)
     {
-        if(removedEquip != null)
-        {
-        attackPower -= removedEquip.powerLevel;
-        }
+        calculateStats();
     }
     
     public void calculateStats()
     {
+        attackPower=baseAttackPower;
+        for(int i=0;i<SLOTS;i++){
+            if(equippedItems[i]!=null)
+                attackPower+=equippedItems[i].powerLevel;
+        }
         // this will be a function that will make strength autmoaticallt update HP and damage, and will make equipping Items apply their relevant stat boosts
     }
     

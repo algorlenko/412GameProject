@@ -65,7 +65,7 @@ public final int BOOTS = 5;
                 itemNumber = (j * columns) + i;
                 if (itemNumber < heroInventory.storageSpace) {
                     if (heroInventory.items[itemNumber] != null) {
-                        thisScreen.gbi.drawImage(heroInventory.items[itemNumber].image, ((myWidth / columns) * i), (myHeight / rows) * j, myWidth / columns, myHeight / rows, null);
+                        thisScreen.gbi.drawImage(heroInventory.items[itemNumber].image, ((myWidth / columns) * i)+20, (myHeight / rows) * j+20, (int)(myWidth * 0.8)/ columns, (int)(myHeight * 0.8) / rows, null);
                     }
 
                 }
@@ -101,7 +101,7 @@ public final int BOOTS = 5;
                 thisScreen.gbi.drawString(myHero.equippedItems[hoveredEquipSlot].itemDescription, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
             }
             }
-thisScreen.gbi.drawString("the Hero's current Attack power is: " + myHero.attackPower, 900, 900);
+thisScreen.gbi.drawString("The Hero's Current Attack Power Is: " + myHero.attackPower, 1000, 100);
     }
 
     public void keyPressed(KeyEvent e) {
