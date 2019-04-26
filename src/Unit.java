@@ -40,7 +40,7 @@ public class Unit extends MapObject {
         int pastY = y;
 
         if (!(futureX < 0 || futureX > dungeonColumns - 1 || futureY < 0 || futureY > dungeonRows - 1)) {
-            if (!(myTiles[futureX][futureY].myContents[myLayer] instanceof Wall)) {
+            if ((myTiles[futureX][futureY].myContents[myLayer] == null)) {
                 x = futureX;
                 y = futureY;
                 myTiles[pastX][pastY].myContents[myLayer] = null;
@@ -49,5 +49,24 @@ public class Unit extends MapObject {
                 loadIntoTile(x, y, myTiles);
             }
         }
+    }
+    
+    
+        public boolean moveTo(int futureX, int futureY, Tile myTiles[][], int dungeonColumns, int dungeonRows) {
+        int pastX = x;
+        int pastY = y;
+
+        if (!(futureX < 0 || futureX > dungeonColumns - 1 || futureY < 0 || futureY > dungeonRows - 1)) {
+            if ((myTiles[futureX][futureY].myContents[myLayer] == null)) {
+                x = futureX;
+                y = futureY;
+                myTiles[pastX][pastY].myContents[myLayer] = null;
+                myTiles[pastX][pastY].imageName[myLayer] = "/empty.png";
+
+                loadIntoTile(x, y, myTiles);
+                return true;
+            }
+        }
+        return false;
     }
 }

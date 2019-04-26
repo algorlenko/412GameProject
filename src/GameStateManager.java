@@ -18,6 +18,7 @@ public class GameStateManager {
     public static final int PAUSEMENUSTATE = 3;
     public static final int DEATHSTATE = 4;
     public static final int SHOPSTATE = 5;
+    public static final int SPELLBOOKSTATE = 6; // Alex added this
 
     //   public static final int SPELLBOOKTATE = 3;
     //   public static final int NEWCHARACTERSTATE = 4;
@@ -27,13 +28,15 @@ public class GameStateManager {
         myScreen = passedScreen;
         // currentState = ADVENTURESTATE;
         //currentState = ADVENTURESTATE;
-        gameStates.add(new GameEngine(myScreen, this));
+        GameEngine myGameEngine = new GameEngine(myScreen, this); // Alex added this
+        gameStates.add(myGameEngine); // Alex added this
         myHero = gameStates.get(0).myHero;
         gameStates.add(new InventoryState(myScreen, this, myHero));
         gameStates.add(new MainMenuState(myScreen, this));
         gameStates.add(new PauseMenuState(myScreen, this));
         gameStates.add(new DeathState(myScreen, this));
         gameStates.add(new ShopState(myScreen, this, myHero));
+        gameStates.add(new SpellBookState(myScreen, this, myHero, myGameEngine)); //Alex added this
         setState(ADVENTURESTATE);
         //gameStates.add(new AdventureState(this));
         //gameStates.add(new InventoryState(this));

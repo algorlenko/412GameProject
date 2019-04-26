@@ -35,7 +35,7 @@ public class LootBag extends MapObject {
 
                 }
             }
-        } else if (addedItems == null) {
+        } else if (addedItems != null) { // Alex fixed this
             droppedItems.addAll(addedItems);
         }
         /*

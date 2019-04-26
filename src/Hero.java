@@ -9,12 +9,18 @@ public class Hero extends Unit {
     int inventorySpace;
     long goldCoins;
     int baseAttackPower;
+    public Spell selectedSpell;
+    int baseIntelligence; // added by Alex
+    int intelligence;
 
     public Hero(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         super(myX, myY, myTiles, myImage, myMaxHP);
+
         goldCoins = 0;
         baseAttackPower = 20;
         attackPower = baseAttackPower;
+        baseIntelligence = 50; // added by Alex
+        intelligence = baseIntelligence;
         inventorySpace = 36;
         myInventory = new Inventory(36);
         equippedItems = new Equipment[SLOTS];
@@ -109,9 +115,11 @@ public class Hero extends Unit {
 
     public void calculateStats() {
         attackPower = baseAttackPower;
+        intelligence = baseIntelligence;
         for (int i = 0; i < SLOTS; i++) {
             if (equippedItems[i] != null) {
                 attackPower += equippedItems[i].powerLevel;
+                intelligence += equippedItems[i].powerLevel;
             }
         }
         // this will be a function that will make strength autmoaticallt update HP and damage, and will make equipping Items apply their relevant stat boosts

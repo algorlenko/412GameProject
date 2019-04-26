@@ -43,6 +43,7 @@ public class GameEngine extends GameState {
     public Image emptyImage;
     public Image[] FPStest; //delete everything associated with this hardcoded garbage very soon.
     public int heroFrame; // delete this
+    public Spell selectedSpell;
 
     public GameEngine(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
 
@@ -73,6 +74,7 @@ public class GameEngine extends GameState {
         FPStest[2] = generateImage("dknight_3.png");
         FPStest[3] = generateImage("dknight_4.png");
         heroFrame = 0;
+        selectedSpell = null; // Alex added this
 
         myHero = new Hero(0, 0, myTiles, "dknight_1.png", 100);
         turnHolder = myHero;
@@ -106,6 +108,11 @@ public class GameEngine extends GameState {
 
         if (key == KeyEvent.VK_P) {
             myGSM.setState(3);
+        }
+
+        if (key == KeyEvent.VK_S) {
+            spellButtonClicked();
+            return;
         }
 
         if (myHero.isAlive) {
@@ -267,18 +274,41 @@ public class GameEngine extends GameState {
     }
 
     public void mouseClicked(MouseEvent e) {
+        if (e.getY() >= thisScreen.getSize().height * 4 / 5) // Alex added this statement
+        {
+            spellButtonClicked();
+            return;
+        }
         Point selectedTile = calculateTile(e.getX(), e.getY());
         if (selectedTile.x < dungeonColumns && selectedTile.x >= 0 && selectedTile.y < dungeonRows && selectedTile.y >= 0) {
             //myHero.move(selectedTile.x - myHero.x, selectedTile.y - myHero.y, myTiles, dungeonColumns, dungeonRows, myStatus);
 
             if (myHero.isAlive) {
                 if (turnHolder == myHero) {
-                    attemptAttack(selectedTile);
-                    attemptUsage(selectedTile);
+                    if (selectedSpell == null) // this condition was added by Alex
+                    {
+                        attemptAttack(selectedTile);
+                        attemptUsage(selectedTile);
+                    } else // this else was added by Alex
+                    {
+                        selectedSpell.castSpell(myHero, selectedTile.x, selectedTile.y);
+                        if (turnHolder instanceof Monster) {
+                            try {
+                                monsterTurn();
+                            } catch (Exception exc) {
+
+                            }
+                        }
+                    }
                 }
 
             }
         }
+    }
+
+    public void spellButtonClicked() // Alex added this
+    {
+        myGSM.setState(6); // goes to SpellBook
     }
 
     public void mouseReleased(MouseEvent e) {
