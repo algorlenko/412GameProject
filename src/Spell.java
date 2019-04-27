@@ -28,6 +28,9 @@ public class Spell {
         if (spellName == "Arcane Blast") {
             arcaneBlastAction(castingUnit, targetedX, targetedY, myEngine.myTiles, myEngine.dungeonColumns, myEngine.dungeonRows);
         }
+        if (spellName == "Raise Skeleton") {
+            summonSkeletonAction(castingUnit, targetedX, targetedY, myEngine.myTiles, myEngine.dungeonColumns, myEngine.dungeonRows);
+        }
     }
 
     public void teleportAction(Unit castingUnit, int destinationX, int destinationY, Tile[][] myTiles, int dungeonColumns, int dungeonRows) {
@@ -50,24 +53,43 @@ public class Spell {
             if (castingUnit == myEngine.myHero) {
                 if (myTiles[destinationX][destinationY].myContents[UNITLAYER] instanceof Monster) {
                     Monster target = (Monster) myTiles[destinationX][destinationY].myContents[UNITLAYER];
-                    try
-                    {
-                    target.takeDamage(myEngine.myHero.intelligence, myTiles);
-                    }
-                    catch (Exception exc)
-                    {
-                        
+                    try {
+                        target.takeDamage(myEngine.myHero.intelligence, myTiles);
+                    } catch (Exception exc) {
+
                     }
                     blastSuccess = true;
-            myEngine.myStatus.pushMessage("You have blasted the target for " + myEngine.myHero.intelligence + " damage.");
+                    myEngine.myStatus.pushMessage("You have blasted the target for " + myEngine.myHero.intelligence + " damage.");
+                    myEngine.thisScreen.resetCursor();
+                    myEngine.selectedSpell = null; // this could also be myHero.selectedSpell
+                    myEngine.successfulTurn();
+                } else {
+                    myEngine.myStatus.pushMessage("You can not blast there");
+                }
+            }
+        }
+    }
+
+    public void summonSkeletonAction(Unit castingUnit, int destinationX, int destinationY, Tile[][] myTiles, int dungeonColumns, int dungeonRows) {
+      //  boolean summonSuccess;
+        if (destinationX < dungeonColumns && destinationX >= 0 && destinationY < dungeonRows && destinationY >= 0) {
+            if (myTiles[destinationX][destinationY].myContents[UNITLAYER] == null) {
+                try
+                {
+                myEngine.friendlyCreatures.add(new FriendlyCreature(destinationX, destinationY, "/mon/death_knight.png", myEngine.myHero.intelligence * 3, myEngine.myHero.intelligence, myEngine));
+                myEngine.myStatus.pushMessage("You have Summoned an Undead Ally.");
             myEngine.thisScreen.resetCursor();
             myEngine.selectedSpell = null; // this could also be myHero.selectedSpell
             myEngine.successfulTurn();
                 }
-                else
-                {
-                    myEngine.myStatus.pushMessage("You can not blast there");
-                }
+                catch(Exception exc)
+                        {
+                            
+                        }
+            }
+            else
+            {
+                myEngine.myStatus.pushMessage("You can not Summon there.");
             }
         }
     }

@@ -55,7 +55,9 @@ public class Monster extends Unit {
         }
     }
 
-    public void aiAction(Tile myTiles[][], StatusScreen myStatus) throws IOException {
+    
+    //oldAIcode
+   /*  public void aiAction(Tile myTiles[][], StatusScreen myStatus) throws IOException {
         MapObject target = null;
         target = scanInRadius(1, myTiles);
         Random rand = new Random();
@@ -89,7 +91,49 @@ public class Monster extends Unit {
             move(xMove, yMove, myTiles, myTiles.length, myTiles[0].length);
         }
     }
+*/
+    
+     public void aiAction(Tile myTiles[][], StatusScreen myStatus) throws IOException {
+        MapObject target = null;
+        target = scanInRadius(1, myTiles); // first we try to see if there is a hero or friendly within attacking range
+        // Random rand = new Random();
 
+        if (target != null) {
+            Unit unitTarget = (Unit) target;
+            attack(unitTarget, myTiles);
+            myStatus.pushMessage("The Monster has Attacked dealing " + attackPower + " damage.");
+            return;
+        } else {
+            target = scanInRadius(4, myTiles); // if not, we check to see if they are within aggro distance and if we are, we follow them.
+            if (target != null) {
+followTarget(target, myTiles);
+            }
+ 
+        }
+        // move(xMove, yMove, myTiles, myTiles.length, myTiles[0].length);
+
+    }
+    
+        public void followTarget(MapObject target, Tile[][] myTiles) // I could potentially add in diagonal movement and just generally more intelligent calculation this in particualr also uses sloppier code than the allied creature, the allied Creature class is the gold standard for future work.
+    {
+                int xMove = 0;
+        int yMove = 0;
+        xMove = target.x - x;
+yMove = target.y - y; 
+if(Math.abs(xMove) > Math.abs(yMove))
+{
+    xMove = (int) Math.signum(xMove);;
+    yMove = 0;
+}
+else
+{
+    yMove = (int) Math.signum(yMove);
+    xMove = 0;
+}
+            move(xMove, yMove, myTiles, myTiles.length, myTiles[0].length);
+    }
+    
+    
     public void attack(Unit recipient, Tile myTiles[][]) throws IOException {
         recipient.takeDamage(attackPower, myTiles);
     }
@@ -99,7 +143,7 @@ public class Monster extends Unit {
         for (int i = -myRadius; i <= myRadius; i++) {
             for (int j = -myRadius; j <= myRadius; j++) {
                 if (!(x + i < 0 || x + i > myTiles.length - 1 || y + j < 0 || y + j > myTiles[0].length - 1 || (i == 0 && j == 0))) {
-                    if (myTiles[x + i][y + j].myContents[myLayer] instanceof Hero) {
+                    if (myTiles[x + i][y + j].myContents[myLayer] instanceof Hero || myTiles[x + i][y + j].myContents[myLayer] instanceof FriendlyCreature) {
                         return myTiles[x + i][y + j].myContents[myLayer];
                     }
                 }

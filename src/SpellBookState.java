@@ -30,6 +30,7 @@ public class SpellBookState extends GameState {
 
     public Spell teleportSpell;
 public Spell arcaneBlastSpell;
+public Spell raiseSkeletonSpell;
     public GameEngine myEngine;
     
     public SpellBookState(GameScreen myScreen, GameStateManager passedGSM, Hero theHero, GameEngine passedEngine) throws IOException {
@@ -45,6 +46,7 @@ public Spell arcaneBlastSpell;
         myEngine = passedEngine;
         teleportSpell = new Spell(myEngine, "Teleport", "/gui/spells/translocation/controlled_blink.png");
         arcaneBlastSpell = new Spell(myEngine, "Arcane Blast", "/gui/spells/conjuration/force_lance.png");
+        raiseSkeletonSpell = new Spell(myEngine, "Raise Skeleton", "/gui/spells/necromancy/animate_dead.png");
     }
 
     public void draw() {
@@ -62,8 +64,9 @@ drawSpells(myWidth, myHeight);
 
     public void drawSpells(int myWidth, int myHeight)
     {
-        thisScreen.gbi.drawImage(teleportSpell.spellImage, 100, 100, myWidth / 2, myHeight / 2, null);
-        thisScreen.gbi.drawImage(arcaneBlastSpell.spellImage, 1000, 100, myWidth/2, myHeight/2, null);
+        thisScreen.gbi.drawImage(teleportSpell.spellImage, 100, 100, myWidth / 3, myHeight / 3, null);
+        thisScreen.gbi.drawImage(arcaneBlastSpell.spellImage, 1000, 100, myWidth/3, myHeight/3, null);
+        thisScreen.gbi.drawImage(raiseSkeletonSpell.spellImage, 100, myHeight / 2, myWidth / 3, myHeight / 3, null);
     }
     
     public void drawDescription(int myWidth, int myHeight) {
@@ -90,6 +93,12 @@ thisScreen.changeCursor(myEngine.selectedSpell.spellImage);
             myGSM.setState(0); // Back to adventure screen
 
         }
+                                if (key == KeyEvent.VK_3) {
+myEngine.selectedSpell = raiseSkeletonSpell; // or this could be myHero.selectedSpell
+thisScreen.changeCursor(myEngine.selectedSpell.spellImage);
+            myGSM.setState(0); // Back to adventure screen
+
+        }
         
     }
 
@@ -106,12 +115,18 @@ thisScreen.changeCursor(myEngine.selectedSpell.spellImage);
     }
 
     public int calculateSpell(int x, int y) {
-if(x < thisScreen.getWidth() / 2)
+if(x > thisScreen.getWidth() / 2)
 {
-        return 1;
+        return 2;
+}
+else if(y > thisScreen.getHeight() / 2)
+{
+    return 3;
 }
 else
-    return 2;
+{
+    return 1;
+}
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -127,6 +142,13 @@ else if(chosenSpell == 2)
         myEngine.selectedSpell = arcaneBlastSpell; // or this could be myHero.selectedSpell
 thisScreen.changeCursor(myEngine.selectedSpell.spellImage);
             myGSM.setState(0); // Back to adventure screen
+}
+else if(chosenSpell == 3)
+{
+myEngine.selectedSpell = raiseSkeletonSpell; // or this could be myHero.selectedSpell
+thisScreen.changeCursor(myEngine.selectedSpell.spellImage);
+            myGSM.setState(0); // Back to adventure screen
+
 }
     }
 

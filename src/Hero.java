@@ -38,12 +38,21 @@ public class Hero extends Unit {
 
         if (!(futureX < 0 || futureX > dungeonColumns - 1 || futureY < 0 || futureY > dungeonRows - 1)) {
             //if(!(myTiles[futureX][futureY].myContents[1] instanceof Wall))
-            if (myTiles[futureX][futureY].myContents[myLayer] == null) {
+            if (myTiles[futureX][futureY].myContents[myLayer] == null || myTiles[futureX][futureY].myContents[myLayer] instanceof FriendlyCreature) { // Gorlenko modified this
                 x = futureX;
                 y = futureY;
+                if(myTiles[futureX][futureY].myContents[myLayer] instanceof FriendlyCreature)
+                {
+                    myTiles[futureX][futureY].myContents[myLayer].x = pastX;
+                           myTiles[futureX][futureY].myContents[myLayer].y = pastY;
+                           myTiles[futureX][futureY].myContents[myLayer].loadIntoTile(pastX, pastY, myTiles);
+                    // If the hero moves into a friendly monster he needs to be able to swap with him
+                }
+                else
+                {
                 myTiles[pastX][pastY].myContents[myLayer] = null;
                 myTiles[pastX][pastY].imageName[myLayer] = "/empty.png";
-
+                }
                 loadIntoTile(x, y, myTiles);
 
                 //myStatus.message = "you have moved into coordinate" + x + " " + y + "and your current error is: ";

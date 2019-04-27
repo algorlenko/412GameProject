@@ -20,6 +20,11 @@ public class GameEngine extends GameState {
     public Image statusImage;
     ArrayList<Monster> myMonsters;
 
+ArrayList<FriendlyCreature> friendlyCreatures; // Gorlenko Added this 
+ public FriendlyCreature selectedAlly;
+    
+    
+    
     public Point hoveredTile;
 
     ArrayList<Wall> myWalls;
@@ -79,6 +84,7 @@ public class GameEngine extends GameState {
         myHero = new Hero(0, 0, myTiles, "dknight_1.png", 100);
         turnHolder = myHero;
 
+        friendlyCreatures = new ArrayList<FriendlyCreature>(); // Gorlenko added this
         myMonsters = new ArrayList<Monster>(); // Create an ArrayList object
         myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png", new Equipment("/item/weapon/mace3.png", 30, "Mace of Power : damage + 30", "MaceOfPower", "Weapon"), 100));
         myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png", new InventoryItem("/key_gold.png", "The key to the next level.", "L1Key"), 100));
@@ -215,8 +221,30 @@ public class GameEngine extends GameState {
 
     }
 
-    public void successfulTurn() {
-        if (turnHolder == myHero && myMonsters.size() != 0) {
+    public void successfulTurn() { // this Function modified by Gorlenko
+        if (turnHolder == myHero) {
+            if(friendlyCreatures.size() != 0)
+            {
+                turnHolder = friendlyCreatures.get(0);
+                allyTurn();
+                if(myMonsters.size() != 0)
+                {
+                    turnHolder = myMonsters.get(0);
+                }
+                else
+                {
+                    turnHolder = myHero;
+                }
+            }
+            else if(myMonsters.size() != 0)
+            {
+            turnHolder = myMonsters.get(0);
+            return;
+            }
+        }
+        
+        
+                if (turnHolder == myHero && myMonsters.size() != 0) {
             turnHolder = myMonsters.get(0);
             return;
         }
@@ -227,6 +255,55 @@ public class GameEngine extends GameState {
         //  }
     }
 
+    public void allyTurn() // This function was added by Gorlenko
+    {
+        if(friendlyCreatures.size() == 0)
+        {
+            return;
+        }
+        else
+        {
+            for (int i = 0; i < friendlyCreatures.size(); i++) {
+
+            if (friendlyCreatures.get(i).isAlive == false) {
+                friendlyCreatures.remove(i);
+                if (i != friendlyCreatures.size()) {
+                    i--;
+                    continue;
+                } else {
+                    break;
+                }
+
+            }
+
+            if (friendlyCreatures.size() == 0) {
+                break;
+            }
+
+            turnHolder = friendlyCreatures.get(i);
+            selectedAlly = (FriendlyCreature) turnHolder; //this may need improvments
+            try
+            {
+            selectedAlly.aiAction(myTiles, myStatus);
+            }
+            catch(Exception exc)
+            {
+                
+            }
+            if (friendlyCreatures.get(i).isAlive == false) {
+                friendlyCreatures.remove(i);
+                if (i != friendlyCreatures.size()) {
+                    i--;
+                }
+            }
+
+        }
+
+        }
+        
+    }
+    
+    
     public void monsterTurn() throws IOException {
         for (int i = 0; i < myMonsters.size(); i++) {
 

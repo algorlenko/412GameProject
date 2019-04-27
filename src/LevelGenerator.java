@@ -7,6 +7,7 @@ public abstract class LevelGenerator {
 
         // GOING TO SWITCH THESE FOR TESTING
         // SPEAKING OF SWITCH, SWITCH WAS THE MATRIX'S BEST CHARACTER
+        myEngine.friendlyCreatures.clear(); // I think we can actually do all the list clearing here to cut down on lines.
         switch (myEngine.currentFloor) {
 
             case 1:
@@ -31,6 +32,7 @@ public abstract class LevelGenerator {
                 //myEngine.myTiles[i][j].syncTileWithScreen(); 
             }
         }
+      //  myEngine.friendlyCreatures.clear(); // This line needs to be done every single time a new level is made.
         myEngine.myMonsters.clear();
         myEngine.myMonsters.add(new Monster(4, 4, myEngine.myTiles, "/elf_m.png", new Equipment("/item/armour/headgear/cap_jester.png", 20, "Fool's Hat: damage + 20", "FoolHat", "Helmet"), 100));
         myEngine.myMonsters.add(new Monster(4, 3, myEngine.myTiles, "/orange_demon.png", new Equipment("/item/armour/boots4_green.png", 20, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots"), 100));

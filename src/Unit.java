@@ -11,7 +11,14 @@ public class Unit extends MapObject {
     public Unit(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         myLayer = 3; //if you change this unitLayer you need to change it in the GameEngine/AdventureState class as well.
         unitImage = myImage;
+        try
+        {
         image = generateImage(unitImage);
+        }
+        catch(Exception exc)
+        {
+            
+        }
         x = myX;
         y = myY;
         loadIntoTile(x, y, myTiles);
