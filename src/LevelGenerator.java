@@ -33,6 +33,7 @@ public abstract class LevelGenerator {
             }
         }
       //  myEngine.friendlyCreatures.clear(); // This line needs to be done every single time a new level is made.
+      myEngine.localShopKeep = new ShopKeeper(7, 7, myEngine);
         myEngine.myMonsters.clear();
         myEngine.myMonsters.add(new Monster(4, 4, myEngine.myTiles, "/elf_m.png", new Equipment("/item/armour/headgear/cap_jester.png", 20, "Fool's Hat: damage + 20", "FoolHat", "Helmet"), 100));
         myEngine.myMonsters.add(new Monster(4, 3, myEngine.myTiles, "/orange_demon.png", new Equipment("/item/armour/boots4_green.png", 20, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots"), 100));
@@ -40,8 +41,8 @@ public abstract class LevelGenerator {
         myEngine.myWalls.clear();
         myEngine.myWalls.add(new Wall(10, 2, myEngine.myTiles, "/dngn/wall/brick_brown0.png"));
         myEngine.myWalls.add(new Wall(10, 3, myEngine.myTiles, "/dngn/wall/brick_brown0.png"));
-        myEngine.myTiles[myEngine.myHero.x][myEngine.myHero.y].myContents[3] = null;
-        myEngine.myTiles[myEngine.myHero.x][myEngine.myHero.y].imageName[3] = "/empty.png";
+       // myEngine.myTiles[myEngine.myHero.x][myEngine.myHero.y].myContents[3] = null;
+       // myEngine.myTiles[myEngine.myHero.x][myEngine.myHero.y].imageName[3] = "/empty.png";
         myEngine.myHero.x = 9;
         myEngine.myHero.y = 9;
         myEngine.myHero.loadIntoTile(9, 9, myEngine.myTiles);
@@ -63,6 +64,8 @@ public abstract class LevelGenerator {
             }
         }
 
+        
+        
         // Carpeting baby // Hey remember when Bjork laid an egg on the red carpet?
         myEngine.myTiles[3][2] = new Tile(3, 2, "/Floor/uf_terrain/carpet_5.png");
         myEngine.myTiles[2][1] = new Tile(2, 1, "/Floor/uf_terrain/carpet.png");
@@ -86,6 +89,7 @@ public abstract class LevelGenerator {
         myEngine.myTiles[2][2] = new Tile(2, 2, "/Floor_Custom/carpet_6.png");
          */
         // MONSTER is the best anime of all time #FreeKenzoTenma #HotCocoa
+              myEngine.localShopKeep = new ShopKeeper(15, 9, myEngine);
         myEngine.myMonsters.clear();
         myEngine.myMonsters.add(new Monster(3, 3, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null, 100));
         myEngine.myMonsters.add(new Monster(0, 7, myEngine.myTiles, "/Enemigos/uf_heroes/beetle_fire_1.png", null, 100));

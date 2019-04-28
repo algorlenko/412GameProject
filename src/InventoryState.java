@@ -114,12 +114,15 @@ public class InventoryState extends GameState {
             myGSM.setState(2); // Goes to Main Menu
 
         }
+        
+        // Now the only way to access the shop is by clicking on the shopkeeper when you are next to him.
+        /* 
         if (key == KeyEvent.VK_S) {
             lightlyResetInventory();
-            myGSM.setState(5); // Goes to Main Menu
+            myGSM.setState(5); // Goes to shop State
 
         }
-
+*/
     }
 
     public void lightlyResetInventory() {

@@ -49,7 +49,9 @@ ArrayList<FriendlyCreature> friendlyCreatures; // Gorlenko Added this
     public Image[] FPStest; //delete everything associated with this hardcoded garbage very soon.
     public int heroFrame; // delete this
     public Spell selectedSpell;
-
+public ShopKeeper localShopKeep;
+    
+    
     public GameEngine(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
 
         currentFloor = 1;
@@ -93,6 +95,7 @@ ArrayList<FriendlyCreature> friendlyCreatures; // Gorlenko Added this
         myWalls.add(new Wall(3, 3, myTiles, "/dngn/wall/crystal_wall00.png"));
         myStatus = new StatusScreen();
         myDoor = new Door(5, 5, myTiles);
+        localShopKeep = new ShopKeeper(7, 7, this);
     }
 
     public void makeNewLevel() throws IOException {
@@ -173,7 +176,18 @@ ArrayList<FriendlyCreature> friendlyCreatures; // Gorlenko Added this
     public void attemptUsage(Point selectedTile) {
         if (myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER] instanceof Useable) {
             if (selectedTile.x <= myHero.x + 1 && selectedTile.x >= myHero.x - 1 && selectedTile.y <= myHero.y + 1 && selectedTile.y >= myHero.y - 1) {
-                int useResult = ((Useable) myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER]).tryUse(myHero, myStatus, myTiles);
+                int useResult = ((Useable) myTiles[selectedTile.x][selectedTile.y].myContents[UNITLAYER]).tryUse(this);
+                if (useResult == 3) // if the object you used was a shopkeeper
+                {
+                    successfulTurn();
+                    try {
+                        monsterTurn(); // Monsters will still get their turn to avoid glitches, I may change this later.
+                    } catch (Exception exc) {
+                        exc.printStackTrace();
+
+                    }
+                    myGSM.setState(5); // set State to Shop State
+                }
                 if (useResult == 1) {
                     successfulTurn();
                     try {

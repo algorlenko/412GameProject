@@ -26,9 +26,9 @@ public class Door extends MapObject implements Useable {
         loadIntoTile(x, y, myTiles);
     }
 
-    public int tryUse(Hero myHero, StatusScreen myStatus, Tile myTiles[][]) {
+    public int tryUse(GameEngine myEngine) {
         if (isOpen == false) {
-            return tryOpen(myHero, myStatus, myTiles);
+            return tryOpen(myEngine.myHero, myEngine.myStatus, myEngine.myTiles);
         } else {
             return 2;
         }

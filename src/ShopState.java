@@ -139,7 +139,7 @@ public class ShopState extends GameState {
         }
         if (key == KeyEvent.VK_ESCAPE) {
             lightlyResetInventory();
-            myGSM.setState(2); // Goes to Main Menu
+            myGSM.setState(0); // Back to adventure screen I dont see a reason to go to main menu here.
 
         }
 
