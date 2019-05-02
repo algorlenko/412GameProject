@@ -46,11 +46,17 @@ public class FriendlyCreature extends Unit {
             myStatus.pushMessage("Your Ally has attacked the Enemy for " + attackPower + " damage.");
             return;
         } else {
-            target = scanInRadius(4, myTiles); // scan for enemy monsters to move closer to.
+            target = scanForHero(4, myTiles); // if the hero is close follow him
             if (target != null) {
-followTarget(target);
+                followTarget(target);
+                return;
             }
-            else // if the ally can't find any monsters to engange he will follow the hero.
+
+            target = scanInRadius(4, myTiles); // scan for close by monsters to engage
+            if (target != null) {
+                followTarget(target);
+                return;
+            } else // if the ally can't find any monsters to engange he will follow the hero.
             {
                 target = myEngine.myHero;
                 followTarget(target);
@@ -62,26 +68,20 @@ followTarget(target);
 
     public void followTarget(MapObject target) // I could potentially add in diagonal movement and just generally more intelligent calculation
     {
-                int xMove = 0;
+        int xMove = 0;
         int yMove = 0;
         xMove = target.x - x;
-yMove = target.y - y; 
-if(Math.abs(xMove) > Math.abs(yMove))
-{
-    xMove = (int) Math.signum(xMove);;
-    yMove = 0;
-}
-else
-{
-    yMove = (int) Math.signum(yMove);
-    xMove = 0;
-}
-move(xMove, yMove, myEngine.myTiles, myEngine.dungeonColumns, myEngine.dungeonRows);
+        yMove = target.y - y;
+        if (Math.abs(xMove) > Math.abs(yMove)) {
+            xMove = (int) Math.signum(xMove);;
+            yMove = 0;
+        } else {
+            yMove = (int) Math.signum(yMove);
+            xMove = 0;
+        }
+        move(xMove, yMove, myEngine.myTiles, myEngine.dungeonColumns, myEngine.dungeonRows);
     }
-    
-    
-    
-    
+
     public void attack(Unit recipient, Tile myTiles[][]) throws IOException {
         recipient.takeDamage(attackPower, myTiles);
     }
@@ -92,6 +92,20 @@ move(xMove, yMove, myEngine.myTiles, myEngine.dungeonColumns, myEngine.dungeonRo
             for (int j = -myRadius; j <= myRadius; j++) {
                 if (!(x + i < 0 || x + i > myTiles.length - 1 || y + j < 0 || y + j > myTiles[0].length - 1 || (i == 0 && j == 0))) {
                     if (myTiles[x + i][y + j].myContents[myLayer] instanceof Monster) {
+                        return myTiles[x + i][y + j].myContents[myLayer];
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public MapObject scanForHero(int myRadius, Tile myTiles[][]) {
+
+        for (int i = -myRadius; i <= myRadius; i++) {
+            for (int j = -myRadius; j <= myRadius; j++) {
+                if (!(x + i < 0 || x + i > myTiles.length - 1 || y + j < 0 || y + j > myTiles[0].length - 1 || (i == 0 && j == 0))) {
+                    if (myTiles[x + i][y + j].myContents[myLayer] instanceof Hero) {
                         return myTiles[x + i][y + j].myContents[myLayer];
                     }
                 }
