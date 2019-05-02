@@ -43,7 +43,7 @@ public class ShopState extends GameState {
         rows = (int) Math.sqrt(heroInventory.storageSpace);
         columns = rows;
         hoveredSlot = -1;
-        menuImage = generateImage("/Menu/tempShopKeep.png");
+        menuImage = generateImage("/Menu/tempShopkeep.png");
         selectedSlot = -1;
         shopStock = new InventoryItem[STOCKSIZE];
         initStock();
