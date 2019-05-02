@@ -51,9 +51,40 @@ public class ShopState extends GameState {
 
     public void initStock() {
         try {
-            for (int i = 0; i < STOCKSIZE; i++) {
-                shopStock[i] = new Equipment("/item/weapon/scythe3.png", 100, "Scythe of Power", "ScytheofPower", "Weapon");
-            }
+                       
+            shopStock[0] = new Equipment("/item/weapon/scythe3.png", 100, 0,0, "Scythe of Power - Damage 100", "ScytheofPower", "Weapon"); //populating the shop through brute force
+            shopStock[1] = new Equipment("/item/weapon/falchion1.png", 15, 0,0, "Basic Falchion - Damage 15", "BasicFalchion", "Weapon");
+            shopStock[2] = new Equipment("/item/weapon/triple_sword.png", 25, 0,0, "Triple Sword - Damage 25", "TripleSword", "Weapon");
+            shopStock[3] = new Equipment("/item/weapon/short_sword1.png", 15, 0,0, "Short Sword - Damage 15", "ShortSword", "Weapon");
+            shopStock[4] = new Equipment("/item/weapon/scythe1.png", 20, 0,0, "Scyth - Damage 20", "Scyth", "Weapon");
+            shopStock[5] = new Equipment("/item/weapon/spear1.png", 5, 0,0,"Rusty Spear - Damage 5", "Spear", "Weapon");
+            shopStock[6] = new Equipment("/item/weapon/staff_mummy.png", 10, 0,0,"Staff - Damage 10", "Staff", "Weapon"); //could boost magic once i see that implementation
+            shopStock[7] = new Equipment("/item/weapon/hand_axe1.png", 5, 0,0, "Hand Axe - Damage 15", "Hand Axe", "Weapon");
+            shopStock[8] = new Equipment("/item/weapon/long_sword1.png", 40,0,0, "Hero's Sword - Damage 40", "HeroSword", "Weapon");
+            shopStock[9] = new Equipment("/item/armour/headgear/helmet1.png", 0, 5,0,"Basic Helmet - Armor + 5", "BasicHelmet", "Helmet");//Not sure how to classify
+            shopStock[10] = new Equipment("/item/armour/headgear/helmet_ego1.png", 0, 30,0, "Helm of Vahalla - Armor + 30", "VallhalaHelm", "Helmet");//Not sure how to classify
+            shopStock[11] = new Equipment("/item/armour/gold_dragon_armour.png", 0, 20,0,"Dragon Aromour - +20 Armor", "Dragon Armor", "Armor");//Not sure how to classify
+            shopStock[12] = new Equipment("/item/armour/cloak3.png", 0, 0, 10,"Wizard Robe - Intellegence + 5", "WizardRobe", "Armor"); //potential magic boost
+            shopStock[13] = new Equipment("/item/armour/boots2_jackboots.png", 0, 10,0, "Boots - Armor +10", "Boots", "Boots"); 
+            shopStock[14] = new Equipment("/item/ring/artefact/urand_shadows.png", 0, 10, 20, "Ring of Power, + 20 Intellegence", "RingOfPower", "Tailsman"); //potential magic boost
+            shopStock[15] = new Equipment("/item/ring/artefact/urand_octoring.png", 0, 10, 15, "Magic Ring + 15 Intellengence", "MagicRing", "Tailsman"); //potential magic boost
+           
+            shopStock[0].goldValue = 1000; //setting values for the shop, hardcoding cuz thinking is hard 
+            shopStock[1].goldValue=200;
+            shopStock[2].goldValue=300;
+            shopStock[3].goldValue=200;
+            shopStock[4].goldValue=250;
+            shopStock[5].goldValue=100;
+            shopStock[6].goldValue=100;
+            shopStock[7].goldValue=100;
+            shopStock[8].goldValue=500;
+            shopStock[9].goldValue=100;
+            shopStock[10].goldValue=400;
+            shopStock[11].goldValue=300;
+            shopStock[12].goldValue=300;
+            shopStock[13].goldValue=200;
+            shopStock[14].goldValue=500;
+            shopStock[15].goldValue=500;
         } catch (Exception e) {
 
         }
@@ -116,16 +147,24 @@ public class ShopState extends GameState {
             if (heroInventory.items[hoveredSlot] != null) {
                 int y = hoveredSlot / rows;
                 int x = hoveredSlot - (y * rows);
-                thisScreen.gbi.drawString(heroInventory.items[hoveredSlot].itemDescription, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
+                thisScreen.gbi.drawString(heroInventory.items[hoveredSlot].itemDescription + " PRICE: " +heroInventory.items[hoveredSlot].goldValue, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
             }
         } else if (hoveredSlot >= heroInventory.storageSpace && hoveredSlot < (heroInventory.storageSpace + 6)) {
             int hoveredEquipSlot = hoveredSlot - heroInventory.storageSpace;
             if (myHero.equippedItems[hoveredEquipSlot] != null) {
                 int y = hoveredEquipSlot;
                 int x = 9;
-                thisScreen.gbi.drawString(myHero.equippedItems[hoveredEquipSlot].itemDescription, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
+                thisScreen.gbi.drawString(myHero.equippedItems[hoveredEquipSlot].itemDescription + " PRICE: " + myHero.equippedItems[hoveredEquipSlot].goldValue , ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
             }
         }
+        else if(hoveredSlot >= SHOPOFFSET){
+            int y = 3;
+            int x = 7;
+            if (shopStock[hoveredSlot - SHOPOFFSET] != null) 
+                thisScreen.gbi.drawString(shopStock[hoveredSlot - SHOPOFFSET].itemDescription + " PRICE: " + shopStock[hoveredSlot - SHOPOFFSET].goldValue, ((myWidth / columns) * x), (myHeight / rows) * y + 50); //we need to replace this 50 with something non hardcoded ASAP
+            
+        }
+            
         thisScreen.gbi.drawString("Current Attack Power: " + myHero.attackPower, 750, 50);
         thisScreen.gbi.drawString("Current Gold is: " + (int) myHero.goldCoins, 750, 100);
     }

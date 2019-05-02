@@ -9,13 +9,17 @@ public class Hero extends Unit {
     int inventorySpace;
     long goldCoins;
     int baseAttackPower;
+
     public Spell selectedSpell;
     int baseIntelligence; // added by Alex
     int intelligence;
+    int maxArmor;
+    int baseMaxHP; 
+    int armor; //Hunter     
 
     public Hero(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         super(myX, myY, myTiles, myImage, myMaxHP);
-
+        baseMaxHP = myMaxHP;
         goldCoins = 0;
         baseAttackPower = 20;
         attackPower = baseAttackPower;
@@ -23,6 +27,11 @@ public class Hero extends Unit {
         intelligence = baseIntelligence;
         inventorySpace = 36;
         myInventory = new Inventory(36);
+        
+        maxMana = 100; 
+        baseMaxMana = maxMana; 
+        mana = maxMana; 
+        
         equippedItems = new Equipment[SLOTS];
         for (int i = 0; i < SLOTS; i++) {
             equippedItems[i] = null;
@@ -30,6 +39,10 @@ public class Hero extends Unit {
         }
     }
 
+    
+    
+    
+    
     public boolean move(int dx, int dy, Tile myTiles[][], int dungeonColumns, int dungeonRows, StatusScreen myStatus) {
         int futureX = x + dx;
         int futureY = y + dy;
@@ -86,6 +99,22 @@ public class Hero extends Unit {
         myStatus.pushMessage("You cannnot move there");
         return false;
     }
+    
+    @Override
+     public void takeDamage(int damageAmount, Tile myTiles[][]) throws IOException {
+        
+            hp -= damageAmount;
+        
+             
+            
+             
+            
+        
+        
+        if (hp <= 0) {
+            deathFunction(myTiles);
+        }
+    }
 
     public void attack(Unit recipient, StatusScreen myStatus, Tile myTiles[][]) throws IOException {
         recipient.takeDamage(attackPower, myTiles);
@@ -125,13 +154,26 @@ public class Hero extends Unit {
     public void calculateStats() {
         attackPower = baseAttackPower;
         intelligence = baseIntelligence;
+        int oldMaxHP = maxHP; 
+        maxHP = baseMaxHP;
         for (int i = 0; i < SLOTS; i++) {
             if (equippedItems[i] != null) {
                 attackPower += equippedItems[i].powerLevel;
-                intelligence += equippedItems[i].powerLevel;
+                intelligence += equippedItems[i].intelligenceLevel;
+                maxHP += equippedItems[i].armourLevel;
+                
             }
         }
+       hp = ((hp * maxHP) / (oldMaxHP)) +1;
         // this will be a function that will make strength autmoaticallt update HP and damage, and will make equipping Items apply their relevant stat boosts
     }
 
+    
+    public void recover(){
+        hp = maxHP; 
+        mana = maxMana; 
+    
+    
+    }
+    
 }

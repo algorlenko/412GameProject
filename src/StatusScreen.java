@@ -37,7 +37,12 @@ public class StatusScreen {
             myGraphic.drawString("Your current Hp is: " + myHero.hp + "\nAll monsters on this floor are dead.", 50, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);
         }*/
         // myGraphic.drawString("the Current Frame is: " + heroFrame, 200, 50);
-
+        
+       
+        //ABOVE for ARMor BAR
+        myGraphic.setColor(Color.BLUE);
+        myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 2 +210, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2 - 75, myHero.mana, 20);
+        myGraphic.drawString("Mana: " + myHero.mana + "/" + myHero.maxMana, (thisScreen.myBufferedDimension.width / 4) * 2, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);//for displaying hp 
         if (myHero.hp <= (myHero.maxHP / 3) * 2 && myHero.hp > (100 / 3)) { // NO HARDCODED NUMBERS >:( I have dehardcoded some but not all of it
             myGraphic.setColor(Color.YELLOW);
         }
@@ -49,7 +54,9 @@ public class StatusScreen {
             // myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3+110, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2 -20, myHero.hp, 20);
         }
         myGraphic.fillRect((thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2 - 20, myHero.hp, 20);
-        //myGraphic.drawString("HP: " + myHero.hp, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 2);
+        
+        
+        
         myGraphic.drawString("HP: " + myHero.hp + " / " + myHero.maxHP, (thisScreen.myBufferedDimension.width / 4) * 3, myHeight + (thisScreen.myBufferedDimension.height - myHeight) / 4);//for displaying hp 
         myGraphic.setColor(Color.WHITE);
     }

@@ -9,9 +9,10 @@ public class Spell {
     public GameEngine myEngine;
     public String spellName;
     public Image spellImage;
-
-    public Spell(GameEngine passedEngine, String myName, String myImageName) {
+    public int manaCost;
+    public Spell(GameEngine passedEngine, String myName, String myImageName, int myManaCost) {
         myEngine = passedEngine;
+        manaCost = myManaCost; 
         spellName = myName;
         try {
             spellImage = generateImage(myImageName);
@@ -39,6 +40,7 @@ public class Spell {
             myEngine.myStatus.pushMessage("You have Teleported.");
             myEngine.thisScreen.resetCursor();
             myEngine.selectedSpell = null; // this could also be myHero.selectedSpell
+            castingUnit.mana-= manaCost; 
             myEngine.successfulTurn();
         } else if (!teleportSuccess && castingUnit == myEngine.myHero) {
             myEngine.myStatus.pushMessage("You cannot Teleport there.");
@@ -62,7 +64,9 @@ public class Spell {
                     myEngine.myStatus.pushMessage("You have blasted the target for " + myEngine.myHero.intelligence + " damage.");
                     myEngine.thisScreen.resetCursor();
                     myEngine.selectedSpell = null; // this could also be myHero.selectedSpell
+                    castingUnit.mana -= manaCost; 
                     myEngine.successfulTurn();
+                    
                 } else {
                     myEngine.myStatus.pushMessage("You can not blast there");
                 }
@@ -80,6 +84,7 @@ public class Spell {
                 myEngine.myStatus.pushMessage("You have Summoned an Undead Ally.");
             myEngine.thisScreen.resetCursor();
             myEngine.selectedSpell = null; // this could also be myHero.selectedSpell
+            castingUnit.mana -= manaCost; 
             myEngine.successfulTurn();
                 }
                 catch(Exception exc)

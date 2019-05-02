@@ -6,7 +6,10 @@ public class Unit extends MapObject {
     int maxHP;
     int hp;
     boolean isAlive;
-    int attackPower;
+    int attackPower;    
+    int mana; 
+    int maxMana; 
+    int baseMaxMana; 
 
     public Unit(int myX, int myY, Tile myTiles[][], String myImage, int myMaxHP) throws IOException {
         myLayer = 3; //if you change this unitLayer you need to change it in the GameEngine/AdventureState class as well.
@@ -24,11 +27,16 @@ public class Unit extends MapObject {
         loadIntoTile(x, y, myTiles);
         maxHP = myMaxHP;
         hp = maxHP;
+        //armor = 0; 
         isAlive = true;
+
     }
 
     public void takeDamage(int damageAmount, Tile myTiles[][]) throws IOException {
+        
         hp -= damageAmount;
+        
+               
         if (hp <= 0) {
             deathFunction(myTiles);
         }

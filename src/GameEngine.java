@@ -88,7 +88,7 @@ public ShopKeeper localShopKeep;
 
         friendlyCreatures = new ArrayList<FriendlyCreature>(); // Gorlenko added this
         myMonsters = new ArrayList<Monster>(); // Create an ArrayList object
-        myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png", new Equipment("/item/weapon/mace3.png", 30, "Mace of Power : damage + 30", "MaceOfPower", "Weapon"), 100));
+        myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png", new Equipment("/item/weapon/mace3.png", 10,0,0, "Mace of Power : damage + 10", "MaceOfPower", "Weapon"), 100));
         myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png", new InventoryItem("/key_gold.png", "The key to the next level.", "L1Key"), 100));
         myWalls = new ArrayList<Wall>();
         myWalls.add(new Wall(2, 2, myTiles, "/dngn/wall/crystal_wall00.png"));
@@ -99,7 +99,14 @@ public ShopKeeper localShopKeep;
     }
 
     public void makeNewLevel() throws IOException {
+       
+        try{
         LevelGenerator.makeNewLevel(this);
+        }
+        catch (Exception exc){
+            
+        
+        }
     }
 
     @Override
@@ -111,7 +118,13 @@ public ShopKeeper localShopKeep;
         }
 
         if (key == KeyEvent.VK_ESCAPE) {
-            myGSM.setState(2); // Goes to Main Menu
+            if (myHero.selectedSpell == null){
+                myGSM.setState(2); // Goes to Main Menu
+            }
+            else{
+                myHero.selectedSpell= null; 
+                thisScreen.resetCursor();
+            }
 
         }
 
