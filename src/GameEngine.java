@@ -111,6 +111,9 @@ public ShopKeeper localShopKeep;
         myStatus = new StatusScreen();
         myDoor = new Door(5, 5, myTiles);
         localShopKeep = new ShopKeeper(7, 7, this);
+        this.myStatus.pushMessage("You wake up in an open garden. How ");
+        this.myStatus.pushMessage("did you get here? There is crazy ");
+        this.myStatus.pushMessage("person guarding the only way out of here.");
     }
 
     public void makeNewLevel() throws IOException {
