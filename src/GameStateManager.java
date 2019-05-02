@@ -50,7 +50,7 @@ public class GameStateManager {
             gameStates.set(ADVENTURESTATE, new GameEngine(myScreen, this));
             myHero = gameStates.get(ADVENTURESTATE).myHero;
             gameStates.set(INVENTORYSTATE, new InventoryState(myScreen, this, myHero));
-            gameStates.set(SHOPSTATE, new InventoryState(myScreen, this, myHero));
+            gameStates.set(SHOPSTATE, new ShopState(myScreen, this, myHero));
             GameEngine myGameEngine = (GameEngine) gameStates.get(ADVENTURESTATE);
             gameStates.set(SPELLBOOKSTATE, new SpellBookState(myScreen, this, myHero, myGameEngine)); 
             
