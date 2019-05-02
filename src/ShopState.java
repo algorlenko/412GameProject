@@ -64,10 +64,10 @@ public class ShopState extends GameState {
             shopStock[9] = new Equipment("/item/armour/headgear/helmet1.png", 0, 5,0,"Basic Helmet - Armor + 5", "BasicHelmet", "Helmet");//Not sure how to classify
             shopStock[10] = new Equipment("/item/armour/headgear/helmet_ego1.png", 0, 30,0, "Helm of Vahalla - Armor + 30", "VallhalaHelm", "Helmet");//Not sure how to classify
             shopStock[11] = new Equipment("/item/armour/gold_dragon_armour.png", 0, 20,0,"Dragon Aromour - +20 Armor", "Dragon Armor", "Armor");//Not sure how to classify
-            shopStock[12] = new Equipment("/item/armour/cloak3.png", 0, 0, 10,"Wizard Robe - Intellegence + 5", "WizardRobe", "Armor"); //potential magic boost
+            shopStock[12] = new Equipment("/item/armour/cloak3.png", 0, 0, 25,"Wizard Robe - Intellegence + 25", "WizardRobe", "Armor"); //potential magic boost
             shopStock[13] = new Equipment("/item/armour/boots2_jackboots.png", 0, 10,0, "Boots - Armor +10", "Boots", "Boots"); 
-            shopStock[14] = new Equipment("/item/ring/artefact/urand_shadows.png", 0, 10, 20, "Ring of Power, + 20 Intellegence", "RingOfPower", "Tailsman"); //potential magic boost
-            shopStock[15] = new Equipment("/item/ring/artefact/urand_octoring.png", 0, 10, 15, "Magic Ring + 15 Intellengence", "MagicRing", "Tailsman"); //potential magic boost
+            shopStock[14] = new Equipment("/item/ring/artefact/urand_shadows.png", 0, 10, 25, "Ring of Power, + 20 Intellegence + 10 Defense ", "RingOfPower", "Talisman"); //potential magic boost
+            shopStock[15] = new Equipment("/item/ring/artefact/urand_octoring.png", 0, 0, 15, "Magic Ring + 15 Intellengence", "MagicRing", "Talisman"); //potential magic boost
            
             shopStock[0].goldValue = 1000; //setting values for the shop, hardcoding cuz thinking is hard 
             shopStock[1].goldValue=200;
@@ -83,7 +83,7 @@ public class ShopState extends GameState {
             shopStock[11].goldValue=300;
             shopStock[12].goldValue=300;
             shopStock[13].goldValue=200;
-            shopStock[14].goldValue=500;
+            shopStock[14].goldValue=700;
             shopStock[15].goldValue=500;
         } catch (Exception e) {
 
@@ -213,11 +213,11 @@ public class ShopState extends GameState {
         } else if (x * columns / myWidth >= columns && y * rows / myHeight < rows && x < 2 * myWidth) {
             return heroInventory.storageSpace + (y * rows / myHeight);
         } else if (x >= 2 * myWidth && y * rows / myHeight >= 2) {
-            System.out.println(SHOPOFFSET + (x * columns / myWidth) - 12 + (((y * rows / myHeight) - 2) * STOCKROWS));
+           // System.out.println(SHOPOFFSET + (x * columns / myWidth) - 12 + (((y * rows / myHeight) - 2) * STOCKROWS));
             return SHOPOFFSET + (x * columns / myWidth) - 12 + (((y * rows / myHeight) - 2) * STOCKROWS);
 
         } else if (x >= 2 * myWidth && y * rows / myHeight < 2) {
-            System.out.println(SHOPOFFSET - 1);
+            //System.out.println(SHOPOFFSET - 1);
             return SHOPOFFSET - 1;
         } else {
             return -1;

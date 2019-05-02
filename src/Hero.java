@@ -165,6 +165,10 @@ public class Hero extends Unit {
             }
         }
        hp = ((hp * maxHP) / (oldMaxHP)) +1;
+       if(hp > maxHP)
+       {
+           hp = maxHP;
+       }
         // this will be a function that will make strength autmoaticallt update HP and damage, and will make equipping Items apply their relevant stat boosts
     }
 

@@ -138,7 +138,7 @@ public class GameScreen extends JPanel implements ActionListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println("I caught a click.");
+         //   System.out.println("I caught a click.");
             myGSM.mouseClicked(e);
 
         }

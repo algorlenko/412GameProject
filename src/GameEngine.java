@@ -54,7 +54,7 @@ public ShopKeeper localShopKeep;
     
     public GameEngine(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
 
-        currentFloor = 1;
+       currentFloor = 1;
         statusImage = generateImage("/StatusHUD.png");
 
         dungeonColumns = 20;
@@ -69,7 +69,7 @@ public ShopKeeper localShopKeep;
         //emptyImage = generateImage
         for (int i = 0; i < dungeonColumns; i++) {
             for (int j = 0; j < dungeonRows; j++) {
-                myTiles[i][j] = new Tile(i, j, "/dngn/floor/crystal_floor0.png");
+                myTiles[i][j] = new Tile(i, j, "/Floor/uf_terrain/ground_dirt_dark_3.png");
                 //myTiles[i][j].syncTileWithScreen(); 
             }
 
@@ -83,16 +83,31 @@ public ShopKeeper localShopKeep;
         heroFrame = 0;
         selectedSpell = null; // Alex added this
 
-        myHero = new Hero(0, 0, myTiles, "dknight_1.png", 100);
-        turnHolder = myHero;
 
         friendlyCreatures = new ArrayList<FriendlyCreature>(); // Gorlenko added this
         myMonsters = new ArrayList<Monster>(); // Create an ArrayList object
         myMonsters.add(new Monster(4, 4, myTiles, "/Enemigos/beetle_fire_giant_1.png", new Equipment("/item/weapon/mace3.png", 10,0,0, "Mace of Power : damage + 10", "MaceOfPower", "Weapon"), 100));
         myMonsters.add(new Monster(4, 3, myTiles, "/cultist_3.png", new InventoryItem("/key_gold.png", "The key to the next level.", "L1Key"), 100));
         myWalls = new ArrayList<Wall>();
-        myWalls.add(new Wall(2, 2, myTiles, "/dngn/wall/crystal_wall00.png"));
-        myWalls.add(new Wall(3, 3, myTiles, "/dngn/wall/crystal_wall00.png"));
+        
+        for (int i = 1; i < dungeonColumns - 1; i++)
+        {
+            myWalls.add(new Wall(i, 0, myTiles, "/Floor/uf_terrain/wall_hedge_15.png")); 
+        }
+        for (int i = 0; i < dungeonColumns; i++)
+        {
+            for(int j=0;j<dungeonRows;j++){
+                if( j==dungeonRows-1 || i==0 || i==dungeonColumns-1)
+                    myWalls.add(new Wall(i, j, myTiles, "/Floor/uf_terrain/wall_hedge_7.png")); 
+            }
+            
+        }
+        
+//        myWalls.add(new Wall(2, 2, myTiles, "/Floor/uf_terrain/wall_hedge_15.png"));
+//        myWalls.add(new Wall(3, 3, myTiles, "/Floor/uf_terrain/wall_hedge_15.png"));
+
+        myHero = new Hero(1, 1, myTiles, "dknight_1.png", 100);
+        turnHolder = myHero;
         myStatus = new StatusScreen();
         myDoor = new Door(5, 5, myTiles);
         localShopKeep = new ShopKeeper(7, 7, this);
@@ -114,6 +129,8 @@ public ShopKeeper localShopKeep;
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_I) {
+            myHero.selectedSpell= null; 
+            thisScreen.resetCursor();
             myGSM.setState(1); // Goes to Inventory Screen
         }
 
@@ -129,6 +146,8 @@ public ShopKeeper localShopKeep;
         }
 
         if (key == KeyEvent.VK_P) {
+            thisScreen.resetCursor();
+            myHero.selectedSpell= null; 
             myGSM.setState(3);
         }
 
@@ -363,6 +382,7 @@ public ShopKeeper localShopKeep;
         }
         turnHolder = myHero;
         if (!myHero.isAlive) {
+            myHero.selectedSpell= null; 
             myGSM.setState(4);
         }
     }

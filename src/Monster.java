@@ -36,6 +36,20 @@ public class Monster extends Unit {
         attackPower = 2;
 
     }
+    
+    public Monster(int myX, int myY, Tile myTiles[][], String myImage, InventoryItem myLoot, int myMaxHP, long itsBounty, int myAttack) throws IOException { // this will be the more in-depth constructor
+        super(myX, myY, myTiles, myImage, myMaxHP);
+        myBounty = itsBounty;
+        myDrops = new ArrayList<InventoryItem>();
+        if (myLoot != null) {
+            myDrops.add(myLoot);
+        } else {
+            myDrops = null;
+        }
+        // myDrops[0] = myLoot;
+        attackPower = myAttack;
+
+    }
 
     public void move(int dx, int dy, Tile myTiles[][], int dungeonColumns, int dungeonRows) {
         int futureX = x + dx;

@@ -19,22 +19,45 @@ public abstract class LevelGenerator {
              // iPod = new AudioPlayer("/Musica/edit2.wav");
              // iPod.play(); IT WORKS :) but i can't make it stop...
                 armeenMakesTheBestLevels(myEngine);
+                myEngine.myStatus.pushMessage("You come down a set of stairs to a find even more monsters.");
+                myEngine.myStatus.pushMessage("You need to find your way out of here.");
+                myEngine.myStatus.pushMessage("Guess you’ll have to fight your way out.");
                 break;                
             }
             case 2: // could use some more enemies? nah
                 levelFour(myEngine);
+                myEngine.myStatus.pushMessage("Are those blue dragons?! And skeleton soldiers?!");
+                myEngine.myStatus.pushMessage("What is this place?");
+                myEngine.myStatus.pushMessage("You need to get out here fast.");
                 break;
             case 3:
                 levelFive(myEngine);
+                myEngine.myStatus.pushMessage("As you go deeper down the stairs");
+                myEngine.myStatus.pushMessage("you notice a funny hazy feeling. ");
+                myEngine.myStatus.pushMessage("How did you learn to fight like this?");
                 break;
             case 4:
                 levelSix(myEngine);
+                myEngine.myStatus.pushMessage("Something isn’t right here, where");
+                myEngine.myStatus.pushMessage("did this sand come from. And all");
+                myEngine.myStatus.pushMessage("of these crazy monsters, it is so confusing.");
                 break;
             case 5:
+                
+
+
                 levelEight(myEngine);
+                myEngine.myStatus.pushMessage("You walk into a room that appears completely open.");
+                myEngine.myStatus.pushMessage("You get really dizzy and feel the room spinning around you.");
+                myEngine.myStatus.pushMessage("Does this place end? Is this hell?");
                 break;
             case 6:
+                
+
                 levelSeven(myEngine);
+                myEngine.myStatus.pushMessage("Is it you or are the walls closing in?");
+                myEngine.myStatus.pushMessage("Those aren’t walls! Quick fight your way out.");
+                myEngine.myStatus.pushMessage("");
                 break;
             default:
                 break;
@@ -47,7 +70,32 @@ public abstract class LevelGenerator {
                 -levelSix: Doesn't exist yet, but whatevs. 1/10
                 -makeLevelTwo: Horrible, an absolute abomination. -5/10
                 -levelSeven: Fiendishly difficult unless you teleport, should probably be the last level.
+               
                 
+                1. You wake up in an open garden. How did you get here? There is crazy person guarding the only way out of here.
+
+2. You come down a set of stairs to a find even more monsters. You need to find your way out of here. 
+Guess you’ll have to fight your way out.
+
+3. Are those blue dragons?! And skeleton soldiers?! 
+What is this place?
+You need to get out here fast.
+
+4. As you go deeper down the stairs you notice a funny hazy feeling. 
+How did you learn to fight like this?
+
+5. Something isn’t right here, where did this sand come from. 
+And all of these crazy monsters, it is so confusing.
+
+6. You walk into a room that appears completely open.
+You get really dizzy and feel the room spinning around you.
+Does this place end? Is this hell?
+
+7. Is it you or are the walls closing in?
+Those aren’t walls! Quick fight your way out.
+
+8. The walls down here are attacking you too!
+You start to hear a constant faint beeping.
                 Recommended Order:
                 -Arm
                 -Four
@@ -101,16 +149,16 @@ public abstract class LevelGenerator {
         
         // MONSTER is the best anime of all time #FreeKenzoTenma #HotCocoa
         myEngine.myMonsters.clear();
-        myEngine.myMonsters.add(new Monster(3, 3, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
-        myEngine.myMonsters.add(new Monster(5, 7, myEngine.myTiles, "/Enemigos/uf_heroes/beetle_fire_1.png", null,100));
-        myEngine.myMonsters.add(new Monster(9, 2, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", new InventoryItem("/item/book/parchment.png", "GO CRAZY GO STUPID ",
-                "nothing"),100));
-        myEngine.myMonsters.add(new Monster(11, 2, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
+        myEngine.myMonsters.add(new Monster(3, 3, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100,100,5));
+        myEngine.myMonsters.add(new Monster(5, 7, myEngine.myTiles, "/Enemigos/uf_heroes/beetle_fire_1.png", null,100,100,2));
+        myEngine.myMonsters.add(new Monster(9, 2, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", new InventoryItem("/item/book/parchment.png", "You will die here ",
+                "nothing"),100,100,4));
+        myEngine.myMonsters.add(new Monster(11, 2, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100,100,5));
         myEngine.myMonsters.add(new Monster(10, 3, myEngine.myTiles, "/Enemigos/uf_heroes/skeleton_1.png", new InventoryItem("/item/book/book_of_the_dead.png", "You were born in a town "
-                + "straight out of a fairytale.", "L1Key"), 100));
-        myEngine.myMonsters.add(new Monster(8, 7, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
-        myEngine.myMonsters.add(new Monster(11, 8, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
-        myEngine.myMonsters.add(new Monster(15, 8, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
+                + "straight out of a fairytale.", "L1Key"), 100,100,4));
+        myEngine.myMonsters.add(new Monster(8, 7, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100,100,4));
+        myEngine.myMonsters.add(new Monster(11, 8, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100,100,4));
+        myEngine.myMonsters.add(new Monster(15, 8, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100,100,4));
 
         myEngine.myWalls.clear();
         
@@ -324,13 +372,13 @@ public abstract class LevelGenerator {
         }
         myEngine.myMonsters.clear();
         myEngine.myMonsters.add(new Monster(1, 7, myEngine.myTiles, "/Enemigos/uf_heroes/elf_1.png", new Equipment ("/item/armour/headgear/cap_jester.png", -100,0,0, 
-                "I can give you an application for the circus if you want to keep acting a damn fool: damage - 100", "FoolHat", "Helmet"), 100)); // Enemies can have health above 100, pls fix
-        myEngine.myMonsters.add(new Monster(3, 4, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", new Equipment ("/item/armour/boots4_green.png", 20,0,0, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots"), 100));
-        myEngine.myMonsters.add(new Monster(10, 5, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", new Equipment ("/item/weapon/mace2.png", 3,0,0, "Mace of Steel : damage + 3", "MaceOfSteel", "Weapon"), 100));
-        myEngine.myMonsters.add(new Monster(14, 7, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(8, 5, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", new Equipment ("/item/weapon/mace2.png", 3,0,0, "Mace of Steel : damage + 3", "MaceOfSteel", "Weapon"), 100));
-        myEngine.myMonsters.add(new Monster(11, 1, myEngine.myTiles, "/Enemigos/uf_heroes/skeleton_1.png", new InventoryItem("/item/book/book_of_the_dead.png", "You're a ghost, a fucking tragedy. "
-                + "Everything you touch, everything that touches you...dies.", "L1Key"), 100));
+                "I can give you an application for the circus if you want to keep acting a damn fool: damage - 100", "FoolHat", "Helmet"), 120,0,5)); // Enemies can have health above 100, pls fix
+        myEngine.myMonsters.add(new Monster(3, 4, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", new Equipment ("/item/armour/shields/shield1.png", 0,15,0, "Sheild: armor + 15", "Sheild", "Offhand"), 75,100,6));
+        myEngine.myMonsters.add(new Monster(10, 5, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", new Equipment ("/item/armour/leather_armour1.png", 1,15,0, "Leather Armor : armor + 15", "Larmor", "Armor"), 75,100,6));
+        myEngine.myMonsters.add(new Monster(14, 7, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", null, 100,100,4));
+        myEngine.myMonsters.add(new Monster(8, 5, myEngine.myTiles, "/Enemigos/uf_heroes/demon_blue_1.png", new Equipment ("/item/armour/robe1.png", 0,0,5, "Cloak, intellegence + 5", "Cloak", "Armor"), 75,100,6));
+        myEngine.myMonsters.add(new Monster(11, 1, myEngine.myTiles, "/Enemigos/uf_heroes/skeleton_1.png", new InventoryItem("/item/book/book_of_the_dead.png", "PRO TIP: You can't equp books "
+                + "Everything you touch, everything that touches you...dies.", "L1Key"), 200,200,5));
         
         myEngine.myWalls.clear();
 
@@ -427,15 +475,15 @@ public abstract class LevelGenerator {
         }
         
         myEngine.myMonsters.clear();
-        myEngine.myMonsters.add(new Monster(2, 3, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", new Equipment ("/item/armour/headgear/helmet_art1.png", 20,0,0, 
-                "Nice ass hat", "FoolHat", "Helmet"), 100));
-        myEngine.myMonsters.add(new Monster(6, 4, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(3, 7, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", new Equipment ("/item/armour/boots4_green.png", 20,0,0, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots"), 100));
-        myEngine.myMonsters.add(new Monster(5, 6, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(16, 7, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(8, 5, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", new Equipment ("/item/weapon/mace2.png", 3,0,0, "Mace of Steel : damage + 3", "MaceOfSteel", "Weapon"), 100));
+        myEngine.myMonsters.add(new Monster(2, 3, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", new Equipment ("/item/armour/scale_mail1.png", 0,30,0, 
+                "Scale Mail, Armor + 30", "scaleMail", "Armor"), 50,150,12));
+        myEngine.myMonsters.add(new Monster(6, 4, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", null, 50,120,12));
+        myEngine.myMonsters.add(new Monster(3, 7, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", new Equipment ("/item/armour/shields/large_shield1.png", 0,10,5, "Wizards Sheild : Armor +10, Intellegence +5", "LargeSheild", "Armor"), 50,0,12));
+        myEngine.myMonsters.add(new Monster(5, 6, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", null, 100, 100,5));
+        myEngine.myMonsters.add(new Monster(16, 7, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", null,50,100,12));
+        myEngine.myMonsters.add(new Monster(8, 5, myEngine.myTiles, "/Enemigos/uf_heroes/necromancer_1.png", new Equipment ("/item/weapon/spear3.png", 14,0,0, "Spear : damage + 14", "spear", "Weapon"), 50,100,12));
         myEngine.myMonsters.add(new Monster(11, 1, myEngine.myTiles, "/Enemigos/uf_heroes/skeleton_1.png", new InventoryItem("/item/food/lemon.png", "😬 Warning:"
-                + " Good luck 😬", "L1Key"), 100));
+                + " Good luck 😬", "L1Key"), 200,100,5));
         
         myEngine.myWalls.clear();
         
@@ -485,7 +533,7 @@ public abstract class LevelGenerator {
     }
     
     public static void levelSeven/*oh shit*/(GameEngine myEngine) throws IOException {
-        
+        myEngine.myMonsters.clear();
         // DEFAULT FLOOR
         for (int i = 0; i < myEngine.dungeonColumns; i++) {
             for (int j = 0; j < myEngine.dungeonRows; j++) {
@@ -519,7 +567,7 @@ public abstract class LevelGenerator {
 //                "nothing"),100));
 //        myEngine.myMonsters.add(new Monster(11, 2, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
         myEngine.myMonsters.add(new Monster(10, 6, myEngine.myTiles, "/Enemigos/uf_heroes/skeleton_1.png", new InventoryItem("/item/book/book_of_the_dead.png", "If you teleported to the end, "
-                + "you're a bitch", "L1Key"), 100));
+                + "The Real Monster is you", "L1Key"), 100));
 //        myEngine.myMonsters.add(new Monster(8, 7, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
 //        myEngine.myMonsters.add(new Monster(11, 8, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
 //        myEngine.myMonsters.add(new Monster(15, 8, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", null,100));
@@ -601,10 +649,12 @@ public abstract class LevelGenerator {
     
     public static void levelEight(GameEngine myEngine) throws IOException { // Will have four rooms, different textures (checkerboard!)
         
+        
+                myEngine.myWalls.clear();
         // default floor tiles
         for (int i = 0; i < myEngine.dungeonColumns; i++) { // columns
             for (int j = 0; j < myEngine.dungeonRows; j++) { // rows
-                    myEngine.myTiles[i][j] = new Tile(i, j, "/Floor/uf_terrain/floor_extra_16f.png");
+                    myEngine.myTiles[i][j] = new Tile(i, j, "/Floor/uf_terrain/floor_extra_16.png");
             }
         }
         
@@ -614,6 +664,7 @@ public abstract class LevelGenerator {
             for(int j = 0; j < 5; j++)
             {
                 myEngine.myTiles[i][j] = new Tile(i, j, "/Floor/uf_terrain/floor_extra_16.png");
+                
             }
         }
         
@@ -622,7 +673,7 @@ public abstract class LevelGenerator {
         {
             for(int j = 5; j < myEngine.dungeonRows; j++)
             {
-                myEngine.myTiles[i][j] = new Tile(i, j, "/Floor/uf_terrain/floor_extra_16.png");
+               myEngine.myTiles[i][j] = new Tile(i, j, "/Floor/uf_terrain/floor_extra_16.png");
             }
         }
         
@@ -647,48 +698,54 @@ public abstract class LevelGenerator {
         {
             for(int j=0;j<myEngine.dungeonRows;j++){
                 if( j==myEngine.dungeonRows-1 || i==0 || i==myEngine.dungeonColumns-1)
-                    myEngine.myWalls.add(new Wall(i, j, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_6b.png")); 
+                    //myEngine.myWalls.add(new Wall(i, j, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_6b.png"));
+                    myEngine.myWalls.add(new Wall(i, j, myEngine.myTiles, "/empty.png")); 
             }
             
         }
         // top walls
         for (int i = 1; i < myEngine.dungeonColumns - 1; i++)
         {
-            myEngine.myWalls.add(new Wall(i, 0, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_14b.png")); 
+            //myEngine.myWalls.add(new Wall(i, 0, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_14b.png"));
+            myEngine.myWalls.add(new Wall(i, 0, myEngine.myTiles, "/empty.png")); 
         }
         
         // Middle Wall
         for (int i = 0; i < myEngine.dungeonRows; i++)
         {
             if(i % 2 == 0 && i != 6)
-                myEngine.myWalls.add(new Wall(9, i, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_8b.png")); 
+               // myEngine.myWalls.add(new Wall(9, i, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_8b.png")); 
+                myEngine.myWalls.add(new Wall(9, i, myEngine.myTiles, "empty.png")); 
             else if (i != 6)
-                myEngine.myWalls.add(new Wall(9, i, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_7b.png")); 
+                //myEngine.myWalls.add(new Wall(9, i, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_7b.png"));
+            myEngine.myWalls.add(new Wall(9, i, myEngine.myTiles, "/empty.png"));
         }
-        myEngine.myWalls.add(new Wall(9, 5, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_16b.png")); 
-        
+        //myEngine.myWalls.add(new Wall(9, 5, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_16b.png")); 
+        myEngine.myWalls.add(new Wall(9, 5, myEngine.myTiles, "/empty.png")); 
         // ...other Middle Wall
         for (int i = 1; i < myEngine.dungeonColumns - 1; i++)
         {
             if((i % 2 == 1 || i % 3 == 0) && i != 15 && i != 9)
-                myEngine.myWalls.add(new Wall(i, 4, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_14b.png")); 
+                //myEngine.myWalls.add(new Wall(i, 4, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_14b.png")); 
+                myEngine.myWalls.add(new Wall(i, 4, myEngine.myTiles, "/empty.png")); // we are cmmenting the beautiful walls in exchange for a trippy level.
             else if (i != 15 && i != 9)
-                myEngine.myWalls.add(new Wall(i, 4, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_15b.png")); 
+               // myEngine.myWalls.add(new Wall(i, 4, myEngine.myTiles, "/Floor/uf_terrain/wall_crypt_15b.png")); 
+                myEngine.myWalls.add(new Wall(i, 4, myEngine.myTiles, "/empty.png")); 
         }
         
         myEngine.myMonsters.clear();
-        myEngine.myMonsters.add(new Monster(2, 3, myEngine.myTiles, "/Enemigos/uf_heroes/golem_ice_1.png", new Equipment ("/item/armour/headgear/helmet_art1.png", 20,0,0, 
-                "Nice ass hat", "FoolHat", "Helmet"), 100));
-        myEngine.myMonsters.add(new Monster(6, 4, myEngine.myTiles, "/Enemigos/uf_heroes/beholder_deep_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(3, 7, myEngine.myTiles, "/Enemigos/uf_heroes/golem_ice_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(13, 8, myEngine.myTiles, "/Enemigos/uf_heroes/golem_ice_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(10, 5, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_air_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(16, 7, myEngine.myTiles, "/Enemigos/uf_heroes/beholder_deep_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(7, 6, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_air_1.png", null, 100));
+        myEngine.myMonsters.add(new Monster(2, 3, myEngine.myTiles, "/Enemigos/uf_heroes/golem_ice_1.png", new Equipment ("/item/armour/headgear/helmet_art1.png", 0,35,0, 
+                "Helm of Choas, armor + 35", "choasHelm", "Helmet"), 150,100,6));
+        myEngine.myMonsters.add(new Monster(6, 4, myEngine.myTiles, "/Enemigos/uf_heroes/beholder_deep_1.png", null, 100,100,8));
+        myEngine.myMonsters.add(new Monster(3, 7, myEngine.myTiles, "/Enemigos/uf_heroes/golem_ice_1.png", null, 150,200,8));
+        myEngine.myMonsters.add(new Monster(13, 8, myEngine.myTiles, "/Enemigos/uf_heroes/golem_ice_1.png", null, 150,200,8));
+        myEngine.myMonsters.add(new Monster(10, 5, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_air_1.png", null, 125,100,6));
+        myEngine.myMonsters.add(new Monster(16, 7, myEngine.myTiles, "/Enemigos/uf_heroes/beholder_deep_1.png", null, 100,100,8));
+        myEngine.myMonsters.add(new Monster(7, 6, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_air_1.png", null, 125,100,6));
         myEngine.myMonsters.add(new Monster(11, 1, myEngine.myTiles, "/Enemigos/uf_heroes/cultist_1.png", new InventoryItem("/item/food/lemon.png", "😬 Warning:"
-                + " Good luck 😬", "L1Key"), 100));
+                + " Good luck 😬", "L1Key"), 50,100,12));
         
-        myEngine.myWalls.clear();
+
         
                 myEngine.myHero.x = 17;
                 myEngine.myHero.y = 2;
@@ -806,17 +863,17 @@ public abstract class LevelGenerator {
                 myEngine.myWalls.add(new Wall(14, i, myEngine.myTiles, "/Floor/uf_terrain/wall_ruins_6.png")); // Makes a column of wall at X coordinate 15 until row 5
         }
         myEngine.myMonsters.clear();
-        myEngine.myMonsters.add(new Monster(1, 8, myEngine.myTiles, "/Enemigos/uf_heroes/ogre_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(3, 4, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/armour/boots4_green.png", 20,0,0, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots"), 100));
-        myEngine.myMonsters.add(new Monster(17, 4, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/armour/boots4_green.png", 20,0,0, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots"), 100));
-        myEngine.myMonsters.add(new Monster(11, 4, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/weapon/mace2.png", 3,0,0, "Mace of Steel : damage + 3", "MaceOfSteel", "Weapon"), 100));
-        myEngine.myMonsters.add(new Monster(12, 8, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/weapon/mace2.png", 3,0,0, "Mace of Steel : damage + 3", "MaceOfSteel", "Weapon"), 100));
-        myEngine.myMonsters.add(new Monster(14, 7, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(9, 1, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(6, 4, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 100));
-        myEngine.myMonsters.add(new Monster(7, 6, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 100));
+        myEngine.myMonsters.add(new Monster(1, 8, myEngine.myTiles, "/Enemigos/uf_heroes/ogre_1.png", null, 175,200,4));
+        myEngine.myMonsters.add(new Monster(3, 4, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/weapon/flail1.png", 20,0,0, "Flail : damage + 20", "Flail1", "Boots"), 150,100,6));
+        myEngine.myMonsters.add(new Monster(17, 4, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/armour/boots4_green.png", 20,0,0, "Boots of Speed : damage + 20", "BootsofSpeed", "Boots"), 150,200,6));
+        myEngine.myMonsters.add(new Monster(11, 4, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/weapon/giant_spiked_club.png", 8,0,0, "Brute Club : damage + 8", "BruteClub", "Weapon"), 150,200,6));
+        myEngine.myMonsters.add(new Monster(12, 8, myEngine.myTiles, "/Enemigos/uf_heroes/elemental_earth_1.png", new Equipment ("/item/weapon/bullwhip2.png", 12,0,0, "Whip : damage + 12", "Whip", "Weapon"), 150,100,6));
+        myEngine.myMonsters.add(new Monster(14, 7, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 175,100,4));
+        myEngine.myMonsters.add(new Monster(9, 1, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 175,100,4));
+        myEngine.myMonsters.add(new Monster(6, 4, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 175,100,4));
+        myEngine.myMonsters.add(new Monster(7, 6, myEngine.myTiles, "/Enemigos/uf_heroes/golem_stone_1.png", null, 175,100,4));
         myEngine.myMonsters.add(new Monster(5, 7, myEngine.myTiles, "/Enemigos/uf_heroes/pixie_b_1.png", new InventoryItem("/item/book/book_of_the_dead.png", "You're too stupid to understand. "
-                + "All these doors lead to the same place.", "L1Key"), 100));
+                + "All these doors lead to the same place.", "L1Key"), 25,0,1));
         
         myEngine.myWalls.clear();
 

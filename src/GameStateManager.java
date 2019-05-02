@@ -47,9 +47,13 @@ public class GameStateManager {
 
     public void resetGame() {
         try {
-            gameStates.set(0, new GameEngine(myScreen, this));
-            myHero = gameStates.get(0).myHero;
-            gameStates.set(1, new InventoryState(myScreen, this, myHero));
+            gameStates.set(ADVENTURESTATE, new GameEngine(myScreen, this));
+            myHero = gameStates.get(ADVENTURESTATE).myHero;
+            gameStates.set(INVENTORYSTATE, new InventoryState(myScreen, this, myHero));
+            gameStates.set(SHOPSTATE, new InventoryState(myScreen, this, myHero));
+            GameEngine myGameEngine = (GameEngine) gameStates.get(ADVENTURESTATE);
+            gameStates.set(SPELLBOOKSTATE, new SpellBookState(myScreen, this, myHero, myGameEngine)); 
+            
             setState(0);
         } catch (Exception exc) {
 
