@@ -36,7 +36,7 @@ public class InventoryState extends GameState {
         rows = (int) Math.sqrt(heroInventory.storageSpace);
         columns = rows;
         hoveredSlot = -1;
-        menuImage = generateImage("/Menu/InventorySheen2B.png");
+        menuImage = generateImage("/Menu/inventorysheen2b.png");
         selectedSlot = -1;
     }
 

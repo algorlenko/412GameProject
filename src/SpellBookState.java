@@ -43,7 +43,7 @@ public class SpellBookState extends GameState {
         rows = (int) Math.sqrt(heroInventory.storageSpace);
         columns = rows;
         hoveredSlot = -1;
-        menuImage = generateImage("/Menu/bookCropped.png");
+        menuImage = generateImage("/Menu/bookcropped.png");
         selectedSlot = -1;
         myEngine = passedEngine;
         teleportSpell = new Spell(myEngine, "Teleport", "/gui/spells/translocation/controlled_blink.png", 30);

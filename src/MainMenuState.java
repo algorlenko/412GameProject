@@ -20,7 +20,7 @@ public class MainMenuState extends GameState {
     public MainMenuState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
-        menuImage = generateImage("/Main_Menu_Placeholder3.png");
+        menuImage = generateImage("/main_menu_placeholder3.png");
         selector = generateImage("/selector.png");
         selectorX = 990;
         selectorY = 382;

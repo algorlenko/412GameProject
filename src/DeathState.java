@@ -24,7 +24,7 @@ public class DeathState extends GameState {
     public DeathState(GameScreen myScreen, GameStateManager passedGSM) throws IOException {
         thisScreen = myScreen;
         myGSM = passedGSM;
-        menuImage = generateImage("/Menu/DeathScreen1.png"); //the image is pretty ugly im sorry armeen 
+        menuImage = generateImage("/Menu/deathscreen1.png"); //the image is pretty ugly im sorry armeen 
         selector = generateImage("/selector.png");
         selectorX = 990;
         selectorY = 382;
