@@ -12,7 +12,7 @@ GameEngine myEngine;
         myLayer = 3;
 myEngine = passedEngine;
 
-        unitImage = "/Enemigos/merchant_a_shopKeeper.png";
+        unitImage = "/Enemigos/merchant_a_shopkeeper.png";
         image = generateImage(unitImage);
         x = myX;
         y = myY;
